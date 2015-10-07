@@ -5,31 +5,35 @@ import flixel.FlxG;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
-/**
- * ...
- * @author ...
- */
+
 class Player extends FlxSprite
 {
 	public static inline var RUN_SPEED:Int = 90;
 	var parent:PlayState;
+	var front = true;
 	
 	public function new(X:Float=0, Y:Float=0, Parent:PlayState) 
 	{
 		super(X, Y);
-		//makeGraphic(16, 16);
-		loadGraphic("assets/images/linda.png", true, 16, 16);
-		animation.add("walk", [4, 5, 6, 7], 12, true);
-		animation.add("idle", [5]);
+		makeGraphic(64, 128);
+		//loadGraphic("assets/images/...", true, 64, 128);
+		//animation.add("walkLR", .., .., true);
+		//animation.add("walkU", .., .., true);
+		//animation.add("walkD", .., .., true);
+		//animation.add("idleLR", ..);
+		//animation.add("idleU", ..);
+		//animation.add("idleD", ..);
 		drag.set(RUN_SPEED * 8, RUN_SPEED * 8);
 		maxVelocity.set(RUN_SPEED*2, RUN_SPEED*2);
 		parent = Parent;
-		scale.set(2, 2);
 		updateHitbox();
 	}
 	
 	public override function update():Void {
+		//reset the accelration each update so the player doesn't continually move in one direction
 		acceleration.x = 0;
+		acceleration.y = 0;
+		//check inputs and assign corresponding acceleration
 		if (FlxG.keys.anyPressed(["LEFT", "A"])) {
 			acceleration.x = -drag.x;
 			flipX = true;
@@ -38,11 +42,41 @@ class Player extends FlxSprite
 			acceleration.x = drag.x;
 			flipX = false;
 		}
-		if (velocity.x > 0 || velocity.x < 0) {
-			animation.play("walk");
+		if (FlxG.keys.anyPressed(["UP", "W"])) {
+			acceleration.y = -drag.y;
+		}
+		if (FlxG.keys.anyPressed(["DOWN", "S"])) {
+			acceleration.y = drag.y;
+		}
+		//check velocities to play corresponding animations
+		if (velocity.x != 0) {
+			if (velocity.y > 0) {
+				//animation.play("walkLR_D");
+				front = true;
+			}
+			else if (velocity.y < 0) {
+				//animation.play("walkLR_U");
+				front = false;
+			}
+			//animation.play("walkLR");
 		}
 		else {
-			animation.play("idle");
+			if (velocity.y > 0) {
+				//animation.play("walkD");
+				front = true;
+			}
+			else if (velocity.y < 0) {
+				//animation.play("walkU");
+				front = false;
+			}
+			else {
+				if (front) {
+					//animation.play("idleD");
+				}
+				else {
+					//animation.play("idleU");
+				}
+			}
 		}
 		super.update();
 	}
