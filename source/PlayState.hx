@@ -108,6 +108,7 @@ class PlayState extends FlxState {
 		else {
 			player.touchingShelf = false;
 			lastHitShelf.stopTimer();
+			readBar.kill();
 			useText.alive = true;
 			useText.exists = true;
 		}

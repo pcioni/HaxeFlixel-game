@@ -499,7 +499,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "143",
+			build: "145",
 			company: "HaxeFlixel",
 			file: "Haxegame",
 			fps: 60,
