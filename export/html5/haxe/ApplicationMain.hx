@@ -50,10 +50,13 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+<<<<<<< HEAD
 		urls.push ("assets/images/shelf.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+=======
+>>>>>>> dc33b73e57306614eaddea3f7b8d84a49b8b8e1e
 		urls.push ("assets/music/music-goes-here.txt");
 		types.push (lime.Assets.AssetType.TEXT);
 		
@@ -146,7 +149,11 @@ class ApplicationMain {
 		
 		config = {
 			
+<<<<<<< HEAD
 			build: "76",
+=======
+			build: "1",
+>>>>>>> dc33b73e57306614eaddea3f7b8d84a49b8b8e1e
 			company: "HaxeFlixel",
 			file: "Haxegame",
 			fps: 60,
@@ -231,6 +238,7 @@ class ApplicationMain {
 			
 		}
 		
+<<<<<<< HEAD
 		#if !flash
 		if (openfl.Lib.current.stage.window.fullscreen) {
 			
@@ -240,6 +248,9 @@ class ApplicationMain {
 		
 		openfl.Lib.current.stage.dispatchEvent (new openfl.events.Event (openfl.events.Event.RESIZE, false, false));
 		#end
+=======
+		openfl.Lib.current.stage.dispatchEvent (new openfl.events.Event (openfl.events.Event.RESIZE, false, false));
+>>>>>>> dc33b73e57306614eaddea3f7b8d84a49b8b8e1e
 		
 	}
 	
