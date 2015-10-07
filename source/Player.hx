@@ -5,14 +5,19 @@ import flixel.FlxG;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
+import flixel.util.FlxSpriteUtil;
+import lime.math.Vector2;
 
 class Player extends FlxSprite
 {
 	public static inline var RUN_SPEED:Int = 120;
+	public static inline var PADDING:Int = 40;
+	public static inline var LIGHT_R:Int = 128 + 32;
 	var parent:PlayState;
 	var front = true;
-	var lightOn = false;
-	var lightTimer = 5;
+	public var lightOn = false;
+	var centerX:Int;
+	var centerY:Int; 
 	
 	public function new(X:Float=0, Y:Float=0, Parent:PlayState) 
 	{
@@ -31,31 +36,38 @@ class Player extends FlxSprite
 		updateHitbox();
 	}
 	
+	public function getCenter():Vector2 {
+		return new Vector2(centerX, centerY);
+	}
+	
+	public function getLRadius():Int {
+		return LIGHT_R;
+	}
+	
 	public override function update():Void {
 		//reset the accelration each update so the player doesn't continually move in one direction
 		acceleration.x = 0;
 		acceleration.y = 0;
-		if ( x > 10 && x + width < 1270 && y > 10 && y + height < 758) {
 		//check inputs and assign corresponding acceleration
-		if (FlxG.keys.anyPressed(["LEFT", "A"])) {
+		if (FlxG.keys.anyPressed(["LEFT", "A"]) && x > PADDING) {
 			acceleration.x = -drag.x;
 			flipX = true;
 		}
-		if (FlxG.keys.anyPressed(["RIGHT", "D"])) {
+		if (FlxG.keys.anyPressed(["RIGHT", "D"]) && x + width < FlxG.width - PADDING) {
 			acceleration.x = drag.x;
 			flipX = false;
 		}
-		if (FlxG.keys.anyPressed(["UP", "W"])) {
+		if (FlxG.keys.anyPressed(["UP", "W"]) && y > PADDING) {
 			acceleration.y = -drag.y;
 		}
-		if (FlxG.keys.anyPressed(["DOWN", "S"])) {
+		if (FlxG.keys.anyPressed(["DOWN", "S"]) && y + height < FlxG.height - PADDING) {
 			acceleration.y = drag.y;
 		}
+		//check for input to toggled light
+		if (FlxG.keys.justPressed.SPACE) {
+			if (lightOn) { lightOn = false; }
+			else { lightOn = true; } 
 		}
-		if (x <= 10) { x = 11; }
-		if (x + width >= 1270) { x = 1271 - width; }
-		if (y <= 10) { y = 11; }
-		if (y + height >= 758) { y = 759 - height; }
 		//check velocities to play corresponding animations
 		if (velocity.x != 0) {
 			if (velocity.y > 0) {
@@ -86,6 +98,9 @@ class Player extends FlxSprite
 				}
 			}
 		}
+		//set center of sprite
+		centerX = Std.int(x + width/2);
+		centerY = Std.int(y + height/2);
 		super.update();
 	}
 	

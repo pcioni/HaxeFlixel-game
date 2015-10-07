@@ -2,7 +2,9 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxSpriteUtil;
 import flixel.FlxState;
+import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
@@ -15,12 +17,17 @@ import flixel.tile.FlxTilemap;
 class PlayState extends FlxState
 {
 	var player:Player;
+	var canvas:FlxSprite;
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
+		FlxG.state.bgColor = FlxColor.CHARCOAL;
 		add(player = new Player(100, 50, this));
+		canvas = new FlxSprite();
+		canvas.makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT, true);
+		add(canvas);
 		super.create();
 	}
 	
@@ -38,6 +45,12 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
+		FlxSpriteUtil.fill(canvas, FlxColor.TRANSPARENT);
+		if (player.lightOn) {
+			var lineStyle = { thickness: 0.0, color: FlxColor.TRANSPARENT };
+			var fillStyle = {hasFill: true, color: FlxColor.YELLOW, alpha: 0.00 };
+			FlxSpriteUtil.drawCircle(canvas, player.getCenter().x, player.getCenter().y, player.getLRadius(), FlxColor.TRANSPARENT, lineStyle, fillStyle);
+		}
 		super.update();
 	}	
 }
