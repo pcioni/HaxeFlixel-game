@@ -8,9 +8,11 @@ import flixel.util.FlxMath;
 
 class Player extends FlxSprite
 {
-	public static inline var RUN_SPEED:Int = 90;
+	public static inline var RUN_SPEED:Int = 120;
 	var parent:PlayState;
 	var front = true;
+	var lightOn = false;
+	var lightTimer = 5;
 	
 	public function new(X:Float=0, Y:Float=0, Parent:PlayState) 
 	{
@@ -33,6 +35,7 @@ class Player extends FlxSprite
 		//reset the accelration each update so the player doesn't continually move in one direction
 		acceleration.x = 0;
 		acceleration.y = 0;
+		if ( x > 10 && x + width < 1270 && y > 10 && y + height < 758) {
 		//check inputs and assign corresponding acceleration
 		if (FlxG.keys.anyPressed(["LEFT", "A"])) {
 			acceleration.x = -drag.x;
@@ -48,6 +51,11 @@ class Player extends FlxSprite
 		if (FlxG.keys.anyPressed(["DOWN", "S"])) {
 			acceleration.y = drag.y;
 		}
+		}
+		if (x <= 10) { x = 11; }
+		if (x + width >= 1270) { x = 1271 - width; }
+		if (y <= 10) { y = 11; }
+		if (y + height >= 758) { y = 759 - height; }
 		//check velocities to play corresponding animations
 		if (velocity.x != 0) {
 			if (velocity.y > 0) {
