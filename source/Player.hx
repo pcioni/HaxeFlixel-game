@@ -30,7 +30,7 @@ class Player extends FlxSprite
 		//animation.add("idleLR", ..);
 		//animation.add("idleU", ..);
 		//animation.add("idleD", ..);
-		drag.set(RUN_SPEED * 6, RUN_SPEED * 6);
+		drag.set(RUN_SPEED * 9, RUN_SPEED * 9);
 		maxVelocity.set(RUN_SPEED*2, RUN_SPEED*2);
 		parent = Parent;
 		updateHitbox();
@@ -49,19 +49,31 @@ class Player extends FlxSprite
 		acceleration.x = 0;
 		acceleration.y = 0;
 		//check inputs and assign corresponding acceleration
-		if (FlxG.keys.anyPressed(["LEFT", "A"]) && x > PADDING) {
-			acceleration.x = -drag.x;
-			flipX = true;
+		if (FlxG.keys.anyPressed(["LEFT", "A"])) {
+			if (x > PADDING) {
+				acceleration.x = -drag.x;
+				flipX = true;
+			}
+			else { x = PADDING; }
 		}
-		if (FlxG.keys.anyPressed(["RIGHT", "D"]) && x + width < FlxG.width - PADDING) {
-			acceleration.x = drag.x;
-			flipX = false;
+		if (FlxG.keys.anyPressed(["RIGHT", "D"])) {
+			if (x + width < FlxG.width - PADDING) {
+				acceleration.x = drag.x;
+				flipX = false;
+			}
+			else { x = FlxG.width - PADDING - width; }
 		}
-		if (FlxG.keys.anyPressed(["UP", "W"]) && y > PADDING) {
-			acceleration.y = -drag.y;
+		if (FlxG.keys.anyPressed(["UP", "W"])) {
+			if (y > PADDING) {
+				acceleration.y = -drag.y;
+			}
+			else { y = PADDING; }
 		}
-		if (FlxG.keys.anyPressed(["DOWN", "S"]) && y + height < FlxG.height - PADDING) {
-			acceleration.y = drag.y;
+		if (FlxG.keys.anyPressed(["DOWN", "S"])) {
+			if (y + height < FlxG.height - PADDING) {
+				acceleration.y = drag.y;
+			}
+			else { y = FlxG.height - PADDING - height; }
 		}
 		//check for input to toggled light
 		if (FlxG.keys.justPressed.SPACE) {

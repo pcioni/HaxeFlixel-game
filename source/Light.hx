@@ -40,7 +40,7 @@ class Light
 		circleIn.alpha = 0.5;
 		FlxSpriteUtil.drawCircle(circleMid, X, Y, R * 2, FlxColor.WHITE);
 		circleMid.alpha = 0.25;
-		FlxSpriteUtil.drawCircle(circleOut, X, Y, R * 2.5, FlxColor.WHITE);
+		FlxSpriteUtil.drawCircle(circleOut, X, Y, R * 3, FlxColor.WHITE);
 		circleOut.alpha = 0.125;
 	}
 	
