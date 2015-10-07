@@ -17,7 +17,7 @@ import flixel.tile.FlxTilemap;
 class PlayState extends FlxState
 {
 	var player:Player;
-	var canvas:FlxSprite;
+	var light:Light;
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -25,9 +25,7 @@ class PlayState extends FlxState
 	{
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
 		add(player = new Player(100, 50, this));
-		canvas = new FlxSprite();
-		canvas.makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT, true);
-		add(canvas);
+		light = new Light(this);
 		super.create();
 	}
 	
@@ -45,11 +43,11 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
-		FlxSpriteUtil.fill(canvas, FlxColor.TRANSPARENT);
+		//Clears the light for next drawing
+		light.clear();
+		//Checks if the light is toggled on then draws the light
 		if (player.lightOn) {
-			var lineStyle = { thickness: 0.0, color: FlxColor.TRANSPARENT };
-			var fillStyle = {hasFill: true, color: FlxColor.YELLOW, alpha: 0.00 };
-			FlxSpriteUtil.drawCircle(canvas, player.getCenter().x, player.getCenter().y, player.getLRadius(), FlxColor.TRANSPARENT, lineStyle, fillStyle);
+			light.draw(player.getCenter().x, player.getCenter().y, player.getLRadius());
 		}
 		super.update();
 	}	

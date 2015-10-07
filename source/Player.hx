@@ -10,9 +10,9 @@ import lime.math.Vector2;
 
 class Player extends FlxSprite
 {
-	public static inline var RUN_SPEED:Int = 120;
+	public static inline var RUN_SPEED:Int = 160;
 	public static inline var PADDING:Int = 40;
-	public static inline var LIGHT_R:Int = 128 + 32;
+	public static inline var LIGHT_R:Int = 160;
 	var parent:PlayState;
 	var front = true;
 	public var lightOn = false;
@@ -30,7 +30,7 @@ class Player extends FlxSprite
 		//animation.add("idleLR", ..);
 		//animation.add("idleU", ..);
 		//animation.add("idleD", ..);
-		drag.set(RUN_SPEED * 8, RUN_SPEED * 8);
+		drag.set(RUN_SPEED * 6, RUN_SPEED * 6);
 		maxVelocity.set(RUN_SPEED*2, RUN_SPEED*2);
 		parent = Parent;
 		updateHitbox();
