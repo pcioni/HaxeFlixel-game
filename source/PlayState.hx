@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxTypedGroup;
 import flixel.text.FlxText;
+import flixel.ui.FlxBar;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import openfl.Assets;
@@ -17,7 +18,10 @@ class PlayState extends FlxState {
 	
 	var player:Player;
 	var testShelf:Shelf;
-	
+	var testShelf2:Shelf;
+	var lastHitShelf:Shelf;
+	var readBar:FlxBar;
+
 	
 	private var shelfGroup:FlxTypedGroup<Shelf>;
 	
@@ -25,14 +29,31 @@ class PlayState extends FlxState {
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void {
+		
+		/*
+		 * Function that creates the reading bar
+		*/
+		
+		
 		FlxG.debugger.visible;
 		shelfGroup = new FlxTypedGroup<Shelf>();
 		add(shelfGroup);
 		
-		add(player = new Player(100, 50, this));
-		add(testShelf = new Shelf(150, 100, this));
+		add(player = new Player(150, 50, this));
+		add(testShelf = new Shelf(250, 50, this));
+		add(testShelf2 = new Shelf(210, 200, this));
+		
+		//keep track of the last shelf we interacted with
+		lastHitShelf = testShelf;
+		
+		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
+		add( readBar = new FlxBar(50, 50, FlxBar.FILL_LEFT_TO_RIGHT, 150, 20, player, "testShelf.timer.progress", 0.0, 5.0, true) );
+		readBar.trackParent(-47, -30);
+		readBar.exists = false;
+		readBar.alive = false;
 		
 		shelfGroup.add(testShelf);
+		shelfGroup.add(testShelf2);
 		
 		super.create();
 	}
@@ -53,17 +74,23 @@ class PlayState extends FlxState {
 		
 		// check if we're colliding with any shelf in our shelf group.
 		// if we do, call playerTouchShelf.
-		if ( FlxG.collide(player, shelfGroup) ) {
+		if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) ) {
 			player.touchingShelf = true;
-			playerTouchShelf(player, testShelf);
-			
-			//FlxG.overlap(_player, _grpCoins, playerTouchCoin);
-			//future method for testing bounding box method of collision
-		}	
-		else { player.touchingShelf = false; }
+		}
+		else {
+			player.touchingShelf = false;
+			readBar.kill();
+			lastHitShelf.stopTimer();
+		}
+		
 	}	
 	
 	private function playerTouchShelf(P:Player, S:Shelf):Void {
-		trace("player colliding with bookshelf");
+		lastHitShelf = S;
+		readBar.currentValue = S.timer.elapsedTime;
+		S.startTimer();
+		readBar.alive = true;
+		readBar.exists = true;
 	}
+	
 }
