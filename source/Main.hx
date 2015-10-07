@@ -8,8 +8,7 @@ import flash.Lib;
 import flixel.FlxGame;
 import flixel.FlxState;
 
-class Main extends Sprite 
-{
+class Main extends Sprite {
 	var gameWidth:Int = 640; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var gameHeight:Int = 480; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var initialState:Class<FlxState> = MenuState; // The FlxState the game starts with.
@@ -20,27 +19,22 @@ class Main extends Sprite
 	
 	// You can pretty much ignore everything from here on - your code should go in your states.
 	
-	public static function main():Void
-	{	
+	public static function main():Void{	
 		Lib.current.addChild(new Main());
 	}
 	
-	public function new() 
-	{
+	public function new() {
 		super();
 		
-		if (stage != null) 
-		{
+		if (stage != null) {
 			init();
 		}
-		else 
-		{
+		else {
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 	}
 	
-	private function init(?E:Event):Void 
-	{
+	private function init(?E:Event):Void {
 		if (hasEventListener(Event.ADDED_TO_STAGE))
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
@@ -49,8 +43,7 @@ class Main extends Sprite
 		setupGame();
 	}
 	
-	private function setupGame():Void
-	{
+	private function setupGame():Void {
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
