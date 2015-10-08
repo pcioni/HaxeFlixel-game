@@ -5,22 +5,13 @@ import flixel.FlxG;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
-<<<<<<< HEAD
+import flixel.util.FlxSpriteUtil;
+import lime.math.Vector2;
+
 /**
  * Player class and all associated player functionality
  * 
  */
-
-class Player extends FlxSprite {
-	public static inline var RUN_SPEED:Int = 120;
-	var parent:PlayState;
-	var front:Bool = true;
-	var lightOn:Bool = false;
-	var lightTimer:Int = 5;
-	public var touchingShelf:Bool = false;
-=======
-import flixel.util.FlxSpriteUtil;
-import lime.math.Vector2;
 
 class Player extends FlxSprite
 {
@@ -32,7 +23,7 @@ class Player extends FlxSprite
 	public var lightOn = false;
 	var centerX:Int;
 	var centerY:Int; 
->>>>>>> develop
+	public var touchingShelf:Bool = false;
 	
 	public function new(X:Float=0, Y:Float=0, Parent:PlayState) {
 		super(X, Y);
@@ -92,15 +83,21 @@ class Player extends FlxSprite
 			else { y = FlxG.height - PADDING - height; }
 		}
 		//check for input to toggled light
-		if (FlxG.keys.anyPressed(["E", "SPACE"])) {
+		if (FlxG.keys.anyPressed(["E"])) {
 			if (touchingShelf == true) { 
 				trace("Touching shelf & interacting"); 
 			}
 			else {
 				trace("Not touching shelf & interacting");  
 			}
+		}
+		if (FlxG.keys.justPressed.SPACE) {
+			if (!lightOn) { lightOn = true; }
+			else { lightOn = false; }
+		}
+		if (FlxG.keys.justPressed.Q) {
 			if (lightOn) { lightOn = false; }
-			else { lightOn = true; } 
+			else { lightOn = true;}
 		}
 		//check velocities to play corresponding animations
 		if (velocity.x != 0) {

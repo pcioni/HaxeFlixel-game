@@ -64,7 +64,7 @@ class PlayState extends FlxState {
 		
 		shelfGroup.add(testShelf);
 		shelfGroup.add(testShelf2);
-		
+	}
 	
 	/**
 	 * Function that is called when this state is destroyed - you might want to 
@@ -106,7 +106,7 @@ class PlayState extends FlxState {
 	}	
 	
 	private function playerTouchShelf(P:Player, S:Shelf):Void {
-		if ( FlxG.keys.anyPressed(["E", "SPACE"]) ) {
+		if ( FlxG.keys.anyPressed(["E"]) ) {
 			lastHitShelf = S;
 			readBar.currentValue = S.timer.progress;
 			S.startTimer();
