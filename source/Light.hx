@@ -52,9 +52,9 @@ class Light
 	//draws each circle individually to create light effect
 	public function draw(X:Float=0, Y:Float=0):Void
 	{
-		circleIn.reset(X,Y);
-		circleMid.reset(X,Y);
-		circleOut.reset(X,Y);
+		circleIn.reset(X-CANVAS_SIZE/2,Y-CANVAS_SIZE/2);
+		circleMid.reset(X-CANVAS_SIZE/2,Y-CANVAS_SIZE/2);
+		circleOut.reset(X-CANVAS_SIZE/2,Y-CANVAS_SIZE/2);
 		
 	}
 	
