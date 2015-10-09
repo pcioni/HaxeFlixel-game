@@ -17,7 +17,6 @@ class Player extends FlxSprite
 {
 	public static inline var RUN_SPEED:Int = 160;
 	public static inline var PADDING:Int = 40;
-	public static inline var LIGHT_R:Int = 160;
 	var parent:PlayState;
 	var front = true;
 	public var lightOn = false;
@@ -36,7 +35,8 @@ class Player extends FlxSprite
 		//animation.add("idleU", ..);
 		//animation.add("idleD", ..);
 		drag.set(RUN_SPEED * 9, RUN_SPEED * 9);
-		maxVelocity.set(RUN_SPEED*2, RUN_SPEED*2);
+		maxVelocity.set(RUN_SPEED * 2, RUN_SPEED * 2);
+		health = 100;
 		parent = Parent;
 		updateHitbox();
 		touchingShelf = false;
@@ -44,10 +44,6 @@ class Player extends FlxSprite
 	
 	public function getCenter():Vector2 {
 		return new Vector2(centerX, centerY);
-	}
-	
-	public function getLRadius():Int {
-		return LIGHT_R;
 	}
 	
 	public override function update():Void {
