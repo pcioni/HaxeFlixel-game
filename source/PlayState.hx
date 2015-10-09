@@ -19,12 +19,16 @@ import flixel.tile.FlxTilemap;
 class PlayState extends FlxState {
 	
 	var player:Player;
+	var healthBar:FlxBar;
+	
 	var testShelf:Shelf;
 	var testShelf2:Shelf;
 	var lastHitShelf:Shelf;
 	var readBar:FlxBar;
-	var light:Light;
 	var useText:FlxText;
+	
+	var light:Light;
+	var overlay:FlxSprite;
 	
 	private var shelfGroup:FlxTypedGroup<Shelf>;
 	
@@ -38,23 +42,31 @@ class PlayState extends FlxState {
 		*/
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
+		overlay = new FlxSprite();
+		overlay.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK, false);
+		overlay.alpha = 0.7;
 		
 		FlxG.debugger.visible;
 		shelfGroup = new FlxTypedGroup<Shelf>();
 		
 		add(shelfGroup);
 	
-		add(player = new Player(150, 50, this));
-		light = new Light(this);
-		add(testShelf = new Shelf(250, 50, this, "left"));
+		add(testShelf = new Shelf(250, 400, this, "left"));
 		add(testShelf2 = new Shelf(210, 200, this, "left"));
+		
+		add(player = new Player(150, 50, this));
+		add(overlay);
+		light = new Light(this);
+		
+		healthBar = new FlxBar(0, 0, FlxBar.FILL_RIGHT_TO_LEFT, 150, 20, player, "health", 0.0, 100.0, true);
+		healthBar.createFilledBar(FlxColor.BLACK, FlxColor.CRIMSON, true, FlxColor.WHITE);
 		
 		//keep track of the last shelf we interacted with
 		lastHitShelf = testShelf;
 		
 		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
-		add( readBar = new FlxBar(50, 50, FlxBar.FILL_LEFT_TO_RIGHT, 150, 20, player, "testShelf.timer.progress", 0.0, 5.0, true) );
-		readBar.trackParent(-47, -30);
+		add( readBar = new FlxBar(50, 50, FlxBar.FILL_LEFT_TO_RIGHT, 150, 20, player, "testShelf.timer.elapsedTime", 0.0, 5.0, true) );
+		readBar.trackParent( -47, -30);
 		readBar.exists = false;
 		readBar.alive = false;
 		
@@ -62,8 +74,12 @@ class PlayState extends FlxState {
 		useText.exists = false;
 		useText.alive = false;
 		
+		add(healthBar);
+		healthBar.trackParent( -47, -40);
+		
 		shelfGroup.add(testShelf);
 		shelfGroup.add(testShelf2);
+		
 	}
 	
 	/**
@@ -83,12 +99,12 @@ class PlayState extends FlxState {
 		light.clear();
 		//Checks if the light is toggled on then draws the light
 		if (player.lightOn) {
-			light.draw(player.getCenter().x, player.getCenter().y, player.getLRadius());
+			light.draw(player.getCenter().x, player.getCenter().y);
 		}
 		
 		// move our useText to our players head
 		useText.x = player.x + 22;
-		useText.y = player.y - 120;
+		useText.y = player.y - 150;
 		
 		// check if we're colliding with any shelf in our shelf group.
 		// if we do, call playerTouchShelf.
@@ -101,19 +117,19 @@ class PlayState extends FlxState {
 			useText.kill();
 			lastHitShelf.stopTimer();
 		}
-		
 		super.update();
 	}	
 	
 	private function playerTouchShelf(P:Player, S:Shelf):Void {
-		if ( FlxG.keys.anyJustPressed(["E"]) ) {
+		if ( FlxG.keys.anyPressed(["E"]) ) {
 			lastHitShelf = S;
-			readBar.currentValue = S.timer.progress;
+			readBar.currentValue = S.timer.elapsedTime;
+			trace (S.timer.elapsedTime);
 			S.startTimer();
 			readBar.alive = true;
 			readBar.exists = true;
 		}
-		else if (FlxG.keys.anyJustReleased(["E"])) {
+		else {
 			player.touchingShelf = false;
 			lastHitShelf.stopTimer();
 			readBar.kill();

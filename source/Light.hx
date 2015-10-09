@@ -16,6 +16,7 @@ import flixel.tile.FlxTilemap;
  */
 class Light
 {
+	public static inline var LIGHT_R:Int = 160;
 	var circleIn:FlxSprite;
 	var circleMid:FlxSprite;
 	var circleOut:FlxSprite;
@@ -34,13 +35,13 @@ class Light
 	}
 	
 	//draws each circle individually to create light effect
-	public function draw(X:Float=0, Y:Float=0, R:Float=0):Void
+	public function draw(X:Float=0, Y:Float=0):Void
 	{
-		FlxSpriteUtil.drawCircle(circleIn, X, Y, R, FlxColor.WHITE);
+		FlxSpriteUtil.drawCircle(circleIn, X, Y, LIGHT_R, FlxColor.WHITE);
 		circleIn.alpha = 0.5;
-		FlxSpriteUtil.drawCircle(circleMid, X, Y, R * 2, FlxColor.WHITE);
+		FlxSpriteUtil.drawCircle(circleMid, X, Y, LIGHT_R * 2, FlxColor.WHITE);
 		circleMid.alpha = 0.25;
-		FlxSpriteUtil.drawCircle(circleOut, X, Y, R * 3, FlxColor.WHITE);
+		FlxSpriteUtil.drawCircle(circleOut, X, Y, LIGHT_R * 3, FlxColor.WHITE);
 		circleOut.alpha = 0.125;
 	}
 	
