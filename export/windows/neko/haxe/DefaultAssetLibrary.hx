@@ -66,6 +66,25 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		Font.registerFont (__ASSET__assets_fonts_nokiafc22_ttf);
 		Font.registerFont (__ASSET__assets_fonts_arial_ttf);
 		
@@ -73,6 +92,25 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -578,6 +616,25 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -591,12 +648,50 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/data/level.csv", AssetType.TEXT);
 		path.set ("assets/data/mapeditor.csv", "assets/data/mapeditor.csv");
 		type.set ("assets/data/mapeditor.csv", AssetType.TEXT);
+		path.set ("assets/images/bookshelf.png", "assets/images/bookshelf.png");
+		type.set ("assets/images/bookshelf.png", AssetType.IMAGE);
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 		type.set ("assets/images/images-go-here.txt", AssetType.TEXT);
 		path.set ("assets/images/linda.png", "assets/images/linda.png");
 		type.set ("assets/images/linda.png", AssetType.IMAGE);
 		path.set ("assets/images/shelf.png", "assets/images/shelf.png");
 		type.set ("assets/images/shelf.png", AssetType.IMAGE);
+		path.set ("assets/images/s_candle_12x33.png", "assets/images/s_candle_12x33.png");
+		type.set ("assets/images/s_candle_12x33.png", AssetType.IMAGE);
+		path.set ("assets/images/s_die_64x128.png", "assets/images/s_die_64x128.png");
+		type.set ("assets/images/s_die_64x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_p_blue_fade_1_128x128.png", "assets/images/s_p_blue_fade_1_128x128.png");
+		type.set ("assets/images/s_p_blue_fade_1_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_p_blue_fade_2_128x128.png", "assets/images/s_p_blue_fade_2_128x128.png");
+		type.set ("assets/images/s_p_blue_fade_2_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_p_orange_fade_1_128x128.png", "assets/images/s_p_orange_fade_1_128x128.png");
+		type.set ("assets/images/s_p_orange_fade_1_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_p_orange_fade_2_128x128.png", "assets/images/s_p_orange_fade_2_128x128.png");
+		type.set ("assets/images/s_p_orange_fade_2_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_p_purple_fade_1_128x128.png", "assets/images/s_p_purple_fade_1_128x128.png");
+		type.set ("assets/images/s_p_purple_fade_1_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_p_purple_fade_2_128x128.png", "assets/images/s_p_purple_fade_2_128x128.png");
+		type.set ("assets/images/s_p_purple_fade_2_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_p_red_fade_1_128x128.png", "assets/images/s_p_red_fade_1_128x128.png");
+		type.set ("assets/images/s_p_red_fade_1_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_p_red_fade_2_128x128.png", "assets/images/s_p_red_fade_2_128x128.png");
+		type.set ("assets/images/s_p_red_fade_2_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_read_64x128.png", "assets/images/s_read_64x128.png");
+		type.set ("assets/images/s_read_64x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_run_l_64x128.png", "assets/images/s_run_l_64x128.png");
+		type.set ("assets/images/s_run_l_64x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_run_l_c_64x128.png", "assets/images/s_run_l_c_64x128.png");
+		type.set ("assets/images/s_run_l_c_64x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_run_r_64x128.png", "assets/images/s_run_r_64x128.png");
+		type.set ("assets/images/s_run_r_64x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_run_r_c_64x128.png", "assets/images/s_run_r_c_64x128.png");
+		type.set ("assets/images/s_run_r_c_64x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_shelf_64x129.png", "assets/images/s_shelf_64x129.png");
+		type.set ("assets/images/s_shelf_64x129.png", AssetType.IMAGE);
+		path.set ("assets/images/s_stand_64x128.png", "assets/images/s_stand_64x128.png");
+		type.set ("assets/images/s_stand_64x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_wip_cultist_64x128.png", "assets/images/s_wip_cultist_64x128.png");
+		type.set ("assets/images/s_wip_cultist_64x128.png", AssetType.IMAGE);
 		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 		type.set ("assets/music/music-goes-here.txt", AssetType.TEXT);
 		path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
@@ -623,6 +718,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/data/mapeditor.csv";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
+		id = "assets/images/bookshelf.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
 		id = "assets/images/images-go-here.txt";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
@@ -630,6 +728,60 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/shelf.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_candle_12x33.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_die_64x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_p_blue_fade_1_128x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_p_blue_fade_2_128x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_p_orange_fade_1_128x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_p_orange_fade_2_128x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_p_purple_fade_1_128x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_p_purple_fade_2_128x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_p_red_fade_1_128x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_p_red_fade_2_128x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_read_64x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_run_l_64x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_run_l_c_64x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_run_r_64x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_run_r_c_64x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_shelf_64x129.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_stand_64x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_wip_cultist_64x128.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/music/music-goes-here.txt";
@@ -669,6 +821,25 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -1413,11 +1584,49 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @:keep @:bind #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_fonts_arial_ttf extends null { }
 
 
 #elseif html5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

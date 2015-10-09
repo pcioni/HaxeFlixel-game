@@ -65,7 +65,7 @@ class PlayState extends FlxState {
 		lastHitShelf = testShelf;
 		
 		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
-		add( readBar = new FlxBar(50, 50, FlxBar.FILL_LEFT_TO_RIGHT, 150, 20, player, "testShelf.timer.elapsedTime", 0.0, 5.0, true) );
+		add( readBar = new FlxBar(50, 50, FlxBar.FILL_LEFT_TO_RIGHT, 150, 20, player, "testShelf.timer.progress", 0.0, 1.0, true) );
 		readBar.trackParent( -47, -30);
 		readBar.exists = false;
 		readBar.alive = false;
@@ -80,6 +80,7 @@ class PlayState extends FlxState {
 		shelfGroup.add(testShelf);
 		shelfGroup.add(testShelf2);
 		
+		super.create();
 	}
 	
 	/**
@@ -95,6 +96,7 @@ class PlayState extends FlxState {
 	 */
 	override public function update():Void
 	{
+		super.update();
 		//Clears the light for next drawing
 		light.clear();
 		//Checks if the light is toggled on then draws the light
@@ -117,13 +119,12 @@ class PlayState extends FlxState {
 			useText.kill();
 			lastHitShelf.stopTimer();
 		}
-		super.update();
 	}	
 	
 	private function playerTouchShelf(P:Player, S:Shelf):Void {
 		if ( FlxG.keys.anyPressed(["E"]) ) {
 			lastHitShelf = S;
-			readBar.currentValue = S.timer.elapsedTime;
+			readBar.currentValue = S.timer.progress;
 			trace (S.timer.elapsedTime);
 			S.startTimer();
 			readBar.alive = true;
