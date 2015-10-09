@@ -110,7 +110,7 @@ class PlayState extends FlxState {
 		
 		// check if we're colliding with any shelf in our shelf group.
 		// if we do, call playerTouchShelf.
-		if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) ) {
+		if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) && player.lightOn ) {
 			player.touchingShelf = true;
 		}
 		else {
@@ -125,7 +125,6 @@ class PlayState extends FlxState {
 		if ( FlxG.keys.anyPressed(["E"]) ) {
 			lastHitShelf = S;
 			readBar.currentValue = S.timer.progress;
-			trace (S.timer.elapsedTime);
 			S.startTimer();
 			readBar.alive = true;
 			readBar.exists = true;
