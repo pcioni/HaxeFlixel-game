@@ -31,14 +31,56 @@ ApplicationMain.create = function() {
 	types.push("TEXT");
 	urls.push("assets/images/images-go-here.txt");
 	types.push("TEXT");
-	urls.push("assets/images/linda.png");
-	types.push("IMAGE");
 	urls.push("assets/images/shelf.png");
+	types.push("IMAGE");
+	urls.push("assets/images/spritesheet.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_bookshelf_64x129.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_heart_32x32.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_heart_64x64.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_pent_charged_128x128.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_pent_orange_128x128.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_pent_purple_128x128.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_pent_red_128x128.png");
 	types.push("IMAGE");
 	urls.push("assets/music/music-goes-here.txt");
 	types.push("TEXT");
+	urls.push("assets/sounds/book_multiple_pages.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/book_single_page.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/book_single_page_2.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/candle.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/magic.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/monster_attack.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/monster_roar_1.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/monster_roar_2.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/monster_roar_3.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/monster_roar_4.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/PC_death.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/quake.wav");
+	types.push("SOUND");
+	urls.push("assets/sounds/quake_bookshelf_crack.wav");
+	types.push("SOUND");
 	urls.push("assets/sounds/sounds-go-here.txt");
 	types.push("TEXT");
+	urls.push("assets/sounds/step.wav");
+	types.push("SOUND");
 	urls.push("assets/sounds/beep.mp3");
 	types.push("MUSIC");
 	urls.push("assets/sounds/flixel.mp3");
@@ -73,7 +115,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "76", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 640, x : null, y : null}]};
+	ApplicationMain.config = { build : "219", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -388,7 +430,7 @@ openfl_display_DisplayObject.prototype = $extend(openfl_events_EventDispatcher.p
 		}
 		return result;
 	}
-	,__enterFrame: function(deltaTime) {
+	,__enterFrame: function() {
 	}
 	,__getBounds: function(rect,matrix) {
 		if(this.__graphics != null) this.__graphics.__getBounds(rect,matrix);
@@ -933,6 +975,7 @@ openfl_display_DisplayObjectContainer.prototype = $extend(openfl_display_Interac
 		return -1;
 	}
 	,getObjectsUnderPoint: function(point) {
+		point = this.localToGlobal(point);
 		var stack = [];
 		this.__hitTest(point.x,point.y,false,stack,false);
 		stack.reverse();
@@ -1020,13 +1063,13 @@ openfl_display_DisplayObjectContainer.prototype = $extend(openfl_display_Interac
 		}
 		return result;
 	}
-	,__enterFrame: function(deltaTime) {
+	,__enterFrame: function() {
 		var _g = 0;
 		var _g1 = this.__children;
 		while(_g < _g1.length) {
 			var child = _g1[_g];
 			++_g;
-			child.__enterFrame(deltaTime);
+			child.__enterFrame();
 		}
 	}
 	,__getBounds: function(rect,matrix) {
@@ -1276,9 +1319,9 @@ var Main = function() {
 	this.skipSplash = true;
 	this.framerate = 60;
 	this.zoom = -1;
-	this.initialState = MenuState;
-	this.gameHeight = 480;
-	this.gameWidth = 640;
+	this.initialState = PlayState;
+	this.gameHeight = 1152;
+	this.gameWidth = 1920;
 	openfl_display_Sprite.call(this);
 	if(this.stage != null) this.init(); else this.addEventListener(openfl_events_Event.ADDED_TO_STAGE,$bind(this,this.init));
 };
@@ -1421,18 +1464,81 @@ var DefaultAssetLibrary = function() {
 	id = "assets/images/images-go-here.txt";
 	this.path.set(id,id);
 	this.type.set(id,"TEXT");
-	id = "assets/images/linda.png";
+	id = "assets/images/shelf.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
-	id = "assets/images/shelf.png";
+	id = "assets/images/spritesheet.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/s_bookshelf_64x129.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/s_heart_32x32.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/s_heart_64x64.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/s_pent_charged_128x128.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/s_pent_orange_128x128.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/s_pent_purple_128x128.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/s_pent_red_128x128.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/music/music-goes-here.txt";
 	this.path.set(id,id);
 	this.type.set(id,"TEXT");
+	id = "assets/sounds/book_multiple_pages.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/book_single_page.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/book_single_page_2.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/candle.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/magic.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/monster_attack.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/monster_roar_1.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/monster_roar_2.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/monster_roar_3.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/monster_roar_4.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/PC_death.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/quake.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/quake_bookshelf_crack.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
 	id = "assets/sounds/sounds-go-here.txt";
 	this.path.set(id,id);
 	this.type.set(id,"TEXT");
+	id = "assets/sounds/step.wav";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
 	id = "assets/sounds/beep.mp3";
 	this.path.set(id,id);
 	this.type.set(id,"MUSIC");
@@ -1879,6 +1985,48 @@ Lambda.count = function(it,pred) {
 	}
 	return n;
 };
+var Light = function(Parent) {
+	this.drawn = false;
+	this.circleIn = new flixel_FlxSprite();
+	this.circleMid = new flixel_FlxSprite();
+	this.circleOut = new flixel_FlxSprite();
+	this.circleIn.makeGraphic(960,960,0,true);
+	this.circleMid.makeGraphic(960,960,0,true);
+	this.circleOut.makeGraphic(960,960,0,true);
+	flixel_util_FlxSpriteUtil.drawCircle(this.circleIn,-1,-1,160,-1);
+	this.circleIn.set_alpha(0.5);
+	flixel_util_FlxSpriteUtil.drawCircle(this.circleMid,-1,-1,320,-1);
+	this.circleMid.set_alpha(0.25);
+	flixel_util_FlxSpriteUtil.drawCircle(this.circleOut,-1,-1,480,-1);
+	this.circleOut.set_alpha(0.125);
+	Parent.add(this.circleIn);
+	Parent.add(this.circleMid);
+	Parent.add(this.circleOut);
+	this.circleIn.kill();
+	this.circleMid.kill();
+	this.circleOut.kill();
+};
+$hxClasses["Light"] = Light;
+Light.__name__ = ["Light"];
+Light.prototype = {
+	circleIn: null
+	,circleMid: null
+	,circleOut: null
+	,drawn: null
+	,draw: function(X,Y) {
+		if(Y == null) Y = 0;
+		if(X == null) X = 0;
+		this.circleIn.reset(X - 480.,Y - 480.);
+		this.circleMid.reset(X - 480.,Y - 480.);
+		this.circleOut.reset(X - 480.,Y - 480.);
+	}
+	,clear: function() {
+		this.circleIn.kill();
+		this.circleMid.kill();
+		this.circleOut.kill();
+	}
+	,__class__: Light
+};
 var List = function() {
 	this.length = 0;
 };
@@ -1905,6 +2053,63 @@ List.prototype = {
 	,__class__: List
 };
 Math.__name__ = ["Math"];
+var NMEPreloader = function() {
+	openfl_display_Sprite.call(this);
+	var backgroundColor = this.getBackgroundColor();
+	var r = backgroundColor >> 16 & 255;
+	var g = backgroundColor >> 8 & 255;
+	var b = backgroundColor & 255;
+	var perceivedLuminosity = 0.299 * r + 0.587 * g + 0.114 * b;
+	var color = 0;
+	if(perceivedLuminosity < 70) color = 16777215;
+	var x = 30;
+	var height = 7;
+	var y = this.getHeight() / 2 - height / 2;
+	var width = this.getWidth() - x * 2;
+	var padding = 2;
+	this.outline = new openfl_display_Sprite();
+	this.outline.get_graphics().beginFill(color,0.07);
+	this.outline.get_graphics().drawRect(0,0,width,height);
+	this.outline.set_x(x);
+	this.outline.set_y(y);
+	this.addChild(this.outline);
+	this.progress = new openfl_display_Sprite();
+	this.progress.get_graphics().beginFill(color,0.35);
+	this.progress.get_graphics().drawRect(0,0,width - padding * 2,height - padding * 2);
+	this.progress.set_x(x + padding);
+	this.progress.set_y(y + padding);
+	this.progress.set_scaleX(0);
+	this.addChild(this.progress);
+};
+$hxClasses["NMEPreloader"] = NMEPreloader;
+NMEPreloader.__name__ = ["NMEPreloader"];
+NMEPreloader.__super__ = openfl_display_Sprite;
+NMEPreloader.prototype = $extend(openfl_display_Sprite.prototype,{
+	outline: null
+	,progress: null
+	,getBackgroundColor: function() {
+		return 0;
+	}
+	,getHeight: function() {
+		var height = 768;
+		if(height > 0) return height; else return openfl_Lib.current.stage.stageHeight;
+	}
+	,getWidth: function() {
+		var width = 1280;
+		if(width > 0) return width; else return openfl_Lib.current.stage.stageWidth;
+	}
+	,onInit: function() {
+	}
+	,onLoaded: function() {
+		this.dispatchEvent(new openfl_events_Event(openfl_events_Event.COMPLETE));
+	}
+	,onUpdate: function(bytesLoaded,bytesTotal) {
+		var percentLoaded = bytesLoaded / bytesTotal;
+		if(percentLoaded > 1) percentLoaded = 1;
+		this.progress.set_scaleX(percentLoaded);
+	}
+	,__class__: NMEPreloader
+});
 var flixel_interfaces_IFlxDestroyable = function() { };
 $hxClasses["flixel.interfaces.IFlxDestroyable"] = flixel_interfaces_IFlxDestroyable;
 flixel_interfaces_IFlxDestroyable.__name__ = ["flixel","interfaces","IFlxDestroyable"];
@@ -2359,119 +2564,6 @@ flixel_FlxState.prototype = $extend(flixel_group_FlxGroup.prototype,{
 	,__class__: flixel_FlxState
 	,__properties__: $extend(flixel_group_FlxGroup.prototype.__properties__,{set_bgColor:"set_bgColor",get_bgColor:"get_bgColor"})
 });
-var MenuState = function(MaxSize) {
-	this.option = 0;
-	flixel_FlxState.call(this,MaxSize);
-};
-$hxClasses["MenuState"] = MenuState;
-MenuState.__name__ = ["MenuState"];
-MenuState.__super__ = flixel_FlxState;
-MenuState.prototype = $extend(flixel_FlxState.prototype,{
-	opt0txt: null
-	,opt1txt: null
-	,pointer: null
-	,option: null
-	,create: function() {
-		flixel_FlxG.game._state.set_bgColor(-16776961);
-		this.opt0txt = new flixel_text_FlxText(flixel_FlxG.width * 2 / 3,flixel_FlxG.height * 2 / 3,150,"Play the Game");
-		this.opt1txt = new flixel_text_FlxText(flixel_FlxG.width * 2 / 3,flixel_FlxG.height * 2 / 3 + 30,150,"Cheat Sheet");
-		this.opt0txt.set_size(this.opt1txt.set_size(16));
-		this.add(this.opt0txt);
-		this.add(this.opt1txt);
-		this.pointer = new flixel_FlxSprite();
-		this.pointer.makeGraphic(10,10,-256);
-		this.pointer.set_x(this.opt0txt.x - this.pointer.get_width() - 10);
-		this.add(this.pointer);
-		flixel_FlxState.prototype.create.call(this);
-	}
-	,destroy: function() {
-		flixel_FlxState.prototype.destroy.call(this);
-	}
-	,update: function() {
-		var _g = this.option;
-		switch(_g) {
-		case 0:
-			this.pointer.set_y(this.opt0txt.y);
-			break;
-		case 1:
-			this.pointer.set_y(this.opt1txt.y);
-			break;
-		}
-		if(flixel_FlxG.keys.checkStatus(38,flixel_FlxG.keys.justPressed.checkStatus)) this.option = (this.option - 1 + 2) % 2;
-		if(flixel_FlxG.keys.checkStatus(40,flixel_FlxG.keys.justPressed.checkStatus)) this.option = (this.option + 1 + 2) % 2;
-		if(flixel_FlxG.keys.checkKeyStatus(["SPACE","ENTER"],2)) {
-			var _g1 = this.option;
-			switch(_g1) {
-			case 0:
-				flixel_FlxG.game._state.set_bgColor(-16777216);
-				flixel_FlxG.switchState(new PlayState());
-				break;
-			case 1:
-				flixel_FlxG.openURL("http://haxeflixel.com/documentation/cheat-sheet/",null);
-				break;
-			}
-		}
-		flixel_FlxState.prototype.update.call(this);
-	}
-	,__class__: MenuState
-});
-var NMEPreloader = function() {
-	openfl_display_Sprite.call(this);
-	var backgroundColor = this.getBackgroundColor();
-	var r = backgroundColor >> 16 & 255;
-	var g = backgroundColor >> 8 & 255;
-	var b = backgroundColor & 255;
-	var perceivedLuminosity = 0.299 * r + 0.587 * g + 0.114 * b;
-	var color = 0;
-	if(perceivedLuminosity < 70) color = 16777215;
-	var x = 30;
-	var height = 7;
-	var y = this.getHeight() / 2 - height / 2;
-	var width = this.getWidth() - x * 2;
-	var padding = 2;
-	this.outline = new openfl_display_Sprite();
-	this.outline.get_graphics().beginFill(color,0.07);
-	this.outline.get_graphics().drawRect(0,0,width,height);
-	this.outline.set_x(x);
-	this.outline.set_y(y);
-	this.addChild(this.outline);
-	this.progress = new openfl_display_Sprite();
-	this.progress.get_graphics().beginFill(color,0.35);
-	this.progress.get_graphics().drawRect(0,0,width - padding * 2,height - padding * 2);
-	this.progress.set_x(x + padding);
-	this.progress.set_y(y + padding);
-	this.progress.set_scaleX(0);
-	this.addChild(this.progress);
-};
-$hxClasses["NMEPreloader"] = NMEPreloader;
-NMEPreloader.__name__ = ["NMEPreloader"];
-NMEPreloader.__super__ = openfl_display_Sprite;
-NMEPreloader.prototype = $extend(openfl_display_Sprite.prototype,{
-	outline: null
-	,progress: null
-	,getBackgroundColor: function() {
-		return 0;
-	}
-	,getHeight: function() {
-		var height = 480;
-		if(height > 0) return height; else return openfl_Lib.current.stage.stageHeight;
-	}
-	,getWidth: function() {
-		var width = 640;
-		if(width > 0) return width; else return openfl_Lib.current.stage.stageWidth;
-	}
-	,onInit: function() {
-	}
-	,onLoaded: function() {
-		this.dispatchEvent(new openfl_events_Event(openfl_events_Event.COMPLETE));
-	}
-	,onUpdate: function(bytesLoaded,bytesTotal) {
-		var percentLoaded = bytesLoaded / bytesTotal;
-		if(percentLoaded > 1) percentLoaded = 1;
-		this.progress.set_scaleX(percentLoaded);
-	}
-	,__class__: NMEPreloader
-});
 var PlayState = function(MaxSize) {
 	flixel_FlxState.call(this,MaxSize);
 };
@@ -2480,15 +2572,42 @@ PlayState.__name__ = ["PlayState"];
 PlayState.__super__ = flixel_FlxState;
 PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	player: null
+	,healthBar: null
 	,testShelf: null
+	,testShelf2: null
+	,lastHitShelf: null
+	,readBar: null
+	,useText: null
+	,light: null
+	,overlay: null
 	,shelfGroup: null
 	,create: function() {
+		flixel_FlxG.game._state.set_bgColor(-12171706);
+		this.overlay = new flixel_FlxSprite();
+		this.overlay.makeGraphic(flixel_FlxG.width,flixel_FlxG.height,-16777216,false);
+		this.overlay.set_alpha(0.7);
 		flixel_FlxG["debugger"].visible;
 		this.shelfGroup = new flixel_group_FlxTypedGroup();
 		this.add(this.shelfGroup);
-		this.add(this.player = new Player(100,50,this));
-		this.add(this.testShelf = new Shelf(150,100,this));
+		this.add(this.testShelf = new Shelf(250,400,this,"left"));
+		this.add(this.testShelf2 = new Shelf(210,200,this,"left"));
+		this.add(this.player = new Player(150,50,this));
+		this.add(this.overlay);
+		this.light = new Light(this);
+		this.healthBar = new flixel_ui_FlxBar(0,0,2,150,20,this.player,"health",0.0,100.0,true);
+		this.healthBar.createFilledBar(-16777216,-2354116,true,-1);
+		this.lastHitShelf = this.testShelf;
+		this.add(this.readBar = new flixel_ui_FlxBar(50,50,1,150,20,this.player,"testShelf.timer.progress",0.0,1.0,true));
+		this.readBar.trackParent(-47,-30);
+		this.readBar.set_exists(false);
+		this.readBar.set_alive(false);
+		this.add(this.useText = new flixel_text_FlxText(this.player.x,this.player.y,20,"!",100,false));
+		this.useText.set_exists(false);
+		this.useText.set_alive(false);
+		this.add(this.healthBar);
+		this.healthBar.trackParent(-47,-40);
 		this.shelfGroup.add(this.testShelf);
+		this.shelfGroup.add(this.testShelf2);
 		flixel_FlxState.prototype.create.call(this);
 	}
 	,destroy: function() {
@@ -2496,13 +2615,31 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,update: function() {
 		flixel_FlxState.prototype.update.call(this);
-		if(flixel_FlxG.overlap(this.player,this.shelfGroup,null,flixel_FlxObject.separate)) {
-			this.player.touchingShelf = true;
-			this.playerTouchShelf(this.player,this.testShelf);
-		} else this.player.touchingShelf = false;
+		this.light.clear();
+		if(this.player.lightOn) this.light.draw(this.player.getCenter().x,this.player.getCenter().y);
+		this.useText.set_x(this.player.x + 22);
+		this.useText.set_y(this.player.y - 150);
+		if(flixel_FlxG.overlap(this.player,this.shelfGroup,$bind(this,this.playerTouchShelf)) && this.player.lightOn) this.player.touchingShelf = true; else {
+			this.player.touchingShelf = false;
+			this.readBar.kill();
+			this.useText.kill();
+			this.lastHitShelf.stopTimer();
+		}
 	}
 	,playerTouchShelf: function(P,S) {
-		haxe_Log.trace("player colliding with bookshelf",{ fileName : "PlayState.hx", lineNumber : 64, className : "PlayState", methodName : "playerTouchShelf"});
+		if(flixel_FlxG.keys.checkKeyStatus(["E"],1)) {
+			this.lastHitShelf = S;
+			this.readBar.set_currentValue(S.timer.get_progress());
+			S.startTimer();
+			this.readBar.set_alive(true);
+			this.readBar.set_exists(true);
+		} else {
+			this.player.touchingShelf = false;
+			this.lastHitShelf.stopTimer();
+			this.readBar.kill();
+			this.useText.set_alive(true);
+			this.useText.set_exists(true);
+		}
 	}
 	,__class__: PlayState
 });
@@ -3834,14 +3971,16 @@ flixel_FlxSprite.prototype = $extend(flixel_FlxObject.prototype,{
 var Player = function(X,Y,Parent) {
 	if(Y == null) Y = 0;
 	if(X == null) X = 0;
+	this.touchingShelf = false;
+	this.lightOn = false;
+	this.front = true;
 	flixel_FlxSprite.call(this,X,Y);
-	this.loadGraphic("assets/images/linda.png",true,16,16);
-	this.animation.add("walk",[4,5,6,7],12,true);
-	this.animation.add("idle",[5]);
-	this.drag.set(720,720);
-	this.maxVelocity.set(180,180);
+	this.loadGraphic("assets/images/spritesheet.png",true,64,128);
+	this.animation.add("walkLR",[0,1,2,3,4,5,6,7],8,true);
+	this.drag.set(1440,1440);
+	this.maxVelocity.set(320,320);
+	this.health = 100;
 	this.parent = Parent;
-	this.scale.set(2,2);
 	this.updateHitbox();
 	this.touchingShelf = false;
 };
@@ -3850,30 +3989,52 @@ Player.__name__ = ["Player"];
 Player.__super__ = flixel_FlxSprite;
 Player.prototype = $extend(flixel_FlxSprite.prototype,{
 	parent: null
+	,front: null
+	,lightOn: null
+	,centerX: null
+	,centerY: null
 	,touchingShelf: null
+	,getCenter: function() {
+		return new lime_math_Vector2(this.centerX,this.centerY);
+	}
 	,update: function() {
 		this.acceleration.set_x(0);
 		this.acceleration.set_y(0);
 		if(flixel_FlxG.keys.checkKeyStatus(["LEFT","A"],1)) {
-			this.acceleration.set_x(-this.drag.x);
-			this.set_flipX(true);
+			if(this.x > 40) {
+				this.acceleration.set_x(-this.drag.x);
+				this.set_flipX(true);
+			} else this.set_x(40);
 		}
 		if(flixel_FlxG.keys.checkKeyStatus(["RIGHT","D"],1)) {
-			this.acceleration.set_x(this.drag.x);
-			this.set_flipX(false);
-		}
-		if(flixel_FlxG.keys.checkKeyStatus(["DOWN","S"],1)) {
-			this.acceleration.set_y(this.drag.y);
-			this.set_flipX(false);
+			if(this.x + this.get_width() < flixel_FlxG.width - 40) {
+				this.acceleration.set_x(this.drag.x);
+				this.set_flipX(false);
+			} else this.set_x(flixel_FlxG.width - 40 - this.get_width());
 		}
 		if(flixel_FlxG.keys.checkKeyStatus(["UP","W"],1)) {
-			this.acceleration.set_y(-this.drag.y);
-			this.set_flipX(false);
+			if(this.y > 40) this.acceleration.set_y(-this.drag.y); else this.set_y(40);
 		}
-		if(flixel_FlxG.keys.checkKeyStatus(["E","SPACE"],1)) {
-			if(this.touchingShelf == true) haxe_Log.trace("Touching shelf & interacting",{ fileName : "Player.hx", lineNumber : 51, className : "Player", methodName : "update"}); else haxe_Log.trace("Not touching shelf & interacting",{ fileName : "Player.hx", lineNumber : 52, className : "Player", methodName : "update"});
+		if(flixel_FlxG.keys.checkKeyStatus(["DOWN","S"],1)) {
+			if(this.y + this.get_height() < flixel_FlxG.height - 40) this.acceleration.set_y(this.drag.y); else this.set_y(flixel_FlxG.height - 40 - this.get_height());
 		}
-		if(this.velocity.x > 0 || this.velocity.x < 0) this.animation.play("walk"); else this.animation.play("idle");
+		if(flixel_FlxG.keys.checkKeyStatus(["E"],1)) {
+			if(this.touchingShelf == true) haxe_Log.trace("Touching shelf & interacting",{ fileName : "Player.hx", lineNumber : 84, className : "Player", methodName : "update"}); else haxe_Log.trace("Not touching shelf & interacting",{ fileName : "Player.hx", lineNumber : 87, className : "Player", methodName : "update"});
+		}
+		if(flixel_FlxG.keys.checkStatus(32,flixel_FlxG.keys.justPressed.checkStatus)) {
+			if(!this.lightOn) this.lightOn = true; else this.lightOn = false;
+		}
+		if(flixel_FlxG.keys.checkStatus(81,flixel_FlxG.keys.justPressed.checkStatus)) {
+			if(this.lightOn) this.lightOn = false; else this.lightOn = true;
+		}
+		if(this.velocity.x != 0) {
+			if(this.velocity.y > 0) this.front = true; else if(this.velocity.y < 0) this.front = false;
+			this.animation.play("walkLR");
+		} else if(this.velocity.y > 0) this.front = true; else if(this.velocity.y < 0) this.front = false; else if(this.front) {
+		} else {
+		}
+		this.centerX = Std["int"](this.x + this.get_width() / 2);
+		this.centerY = Std["int"](this.y + this.get_height() / 2);
 		flixel_FlxSprite.prototype.update.call(this);
 	}
 	,__class__: Player
@@ -3941,22 +4102,41 @@ Reflect.makeVarArgs = function(f) {
 		return f(a);
 	};
 };
-var Shelf = function(X,Y,Parent) {
+var Shelf = function(X,Y,Parent,position) {
 	if(Y == null) Y = 0;
 	if(X == null) X = 0;
 	flixel_FlxSprite.call(this,X,Y);
-	this.loadGraphic("assets/images/shelf.png",true,64,128);
-	this.parent = Parent;
 	this.updateHitbox();
+	this.parent = Parent;
+	if(position == "left") {
+		this.loadGraphic("assets/images/shelf.png",true,90,128);
+		var _g = this;
+		_g.set_height(_g.get_height() - 127);
+		this.offset.set_y(60);
+	} else if(position == "top") {
+	} else if(position == "bottom") {
+	}
 	this.set_immovable(true);
+	this.timer = new flixel_util_FlxTimer(5.0,$bind(this,this.readBook),1);
+	this.timer.active = false;
 };
 $hxClasses["Shelf"] = Shelf;
 Shelf.__name__ = ["Shelf"];
 Shelf.__super__ = flixel_FlxSprite;
 Shelf.prototype = $extend(flixel_FlxSprite.prototype,{
 	parent: null
+	,timer: null
 	,update: function() {
 		flixel_FlxSprite.prototype.update.call(this);
+	}
+	,readBook: function(Timer) {
+		haxe_Log.trace("read book",{ fileName : "Shelf.hx", lineNumber : 57, className : "Shelf", methodName : "readBook"});
+	}
+	,startTimer: function() {
+		this.timer.active = true;
+	}
+	,stopTimer: function() {
+		this.timer.active = false;
 	}
 	,__class__: Shelf
 });
@@ -24703,13 +24883,6 @@ lime_app_IModule.prototype = {
 	,onGamepadButtonUp: null
 	,onGamepadConnect: null
 	,onGamepadDisconnect: null
-	,onJoystickAxisMove: null
-	,onJoystickButtonDown: null
-	,onJoystickButtonUp: null
-	,onJoystickConnect: null
-	,onJoystickDisconnect: null
-	,onJoystickHatMove: null
-	,onJoystickTrackballMove: null
 	,onKeyDown: null
 	,onKeyUp: null
 	,onModuleExit: null
@@ -24761,20 +24934,6 @@ lime_app_Module.prototype = {
 	,onGamepadConnect: function(gamepad) {
 	}
 	,onGamepadDisconnect: function(gamepad) {
-	}
-	,onJoystickAxisMove: function(joystick,axis,value) {
-	}
-	,onJoystickButtonDown: function(joystick,button) {
-	}
-	,onJoystickButtonUp: function(joystick,button) {
-	}
-	,onJoystickConnect: function(joystick) {
-	}
-	,onJoystickDisconnect: function(joystick) {
-	}
-	,onJoystickHatMove: function(joystick,hat,position) {
-	}
-	,onJoystickTrackballMove: function(joystick,trackball,value) {
 	}
 	,onKeyDown: function(window,keyCode,modifier) {
 	}
@@ -24854,7 +25013,6 @@ var lime_app_Application = function() {
 	this.onExit.add($bind(this,this.onModuleExit));
 	this.onUpdate.add($bind(this,this.update));
 	lime_ui_Gamepad.onConnect.add($bind(this,this.onGamepadConnect));
-	lime_ui_Joystick.onConnect.add($bind(this,this.onJoystickConnect));
 	lime_ui_Touch.onStart.add($bind(this,this.onTouchStart));
 	lime_ui_Touch.onMove.add($bind(this,this.onTouchMove));
 	lime_ui_Touch.onEnd.add($bind(this,this.onTouchEnd));
@@ -25111,99 +25269,6 @@ lime_app_Application.prototype = $extend(lime_app_Module.prototype,{
 			var module = _g1[_g];
 			++_g;
 			module.onGamepadDisconnect(gamepad);
-		}
-	}
-	,onJoystickAxisMove: function(joystick,axis,value) {
-		var _g = 0;
-		var _g1 = this.modules;
-		while(_g < _g1.length) {
-			var module = _g1[_g];
-			++_g;
-			module.onJoystickAxisMove(joystick,axis,value);
-		}
-	}
-	,onJoystickButtonDown: function(joystick,button) {
-		var _g = 0;
-		var _g1 = this.modules;
-		while(_g < _g1.length) {
-			var module = _g1[_g];
-			++_g;
-			module.onJoystickButtonDown(joystick,button);
-		}
-	}
-	,onJoystickButtonUp: function(joystick,button) {
-		var _g = 0;
-		var _g1 = this.modules;
-		while(_g < _g1.length) {
-			var module = _g1[_g];
-			++_g;
-			module.onJoystickButtonUp(joystick,button);
-		}
-	}
-	,onJoystickConnect: function(joystick) {
-		var _g = 0;
-		var _g1 = this.modules;
-		while(_g < _g1.length) {
-			var module = _g1[_g];
-			++_g;
-			module.onJoystickConnect(joystick);
-		}
-		joystick.onAxisMove.add((function(f,a1) {
-			return function(a2,a3) {
-				f(a1,a2,a3);
-			};
-		})($bind(this,this.onJoystickAxisMove),joystick));
-		joystick.onButtonDown.add((function(f1,a11) {
-			return function(a21) {
-				f1(a11,a21);
-			};
-		})($bind(this,this.onJoystickButtonDown),joystick));
-		joystick.onButtonUp.add((function(f2,a12) {
-			return function(a22) {
-				f2(a12,a22);
-			};
-		})($bind(this,this.onJoystickButtonUp),joystick));
-		joystick.onDisconnect.add((function(f3,a13) {
-			return function() {
-				f3(a13);
-			};
-		})($bind(this,this.onJoystickDisconnect),joystick));
-		joystick.onHatMove.add((function(f4,a14) {
-			return function(a23,a31) {
-				f4(a14,a23,a31);
-			};
-		})($bind(this,this.onJoystickHatMove),joystick));
-		joystick.onTrackballMove.add((function(f5,a15) {
-			return function(a24,a32) {
-				f5(a15,a24,a32);
-			};
-		})($bind(this,this.onJoystickTrackballMove),joystick));
-	}
-	,onJoystickDisconnect: function(joystick) {
-		var _g = 0;
-		var _g1 = this.modules;
-		while(_g < _g1.length) {
-			var module = _g1[_g];
-			++_g;
-			module.onJoystickDisconnect(joystick);
-		}
-	}
-	,onJoystickHatMove: function(joystick,hat,position) {
-		var _g = 0;
-		var _g1 = this.modules;
-		while(_g < _g1.length) {
-			var module = _g1[_g];
-			++_g;
-			module.onJoystickHatMove(joystick,hat,position);
-		}
-	}
-	,onJoystickTrackballMove: function(joystick,trackball,value) {
-		var _g = 0;
-		var _g1 = this.modules;
-		while(_g < _g1.length) {
-			var module = _g1[_g];
-			++_g;
-			module.onJoystickTrackballMove(joystick,trackball,value);
 		}
 	}
 	,onKeyDown: function(window,keyCode,modifier) {
@@ -25763,64 +25828,6 @@ lime_app_Event_$Float_$Float_$Void.prototype = {
 	}
 	,__class__: lime_app_Event_$Float_$Float_$Void
 };
-var lime_app_Event_$Int_$Float_$Void = function() {
-	this.listeners = [];
-	this.priorities = [];
-	this.repeat = [];
-};
-$hxClasses["lime.app.Event_Int_Float_Void"] = lime_app_Event_$Int_$Float_$Void;
-lime_app_Event_$Int_$Float_$Void.__name__ = ["lime","app","Event_Int_Float_Void"];
-lime_app_Event_$Int_$Float_$Void.prototype = {
-	repeat: null
-	,priorities: null
-	,add: function(listener,once,priority) {
-		if(priority == null) priority = 0;
-		if(once == null) once = false;
-		var _g1 = 0;
-		var _g = this.priorities.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			if(priority > this.priorities[i]) {
-				this.listeners.splice(i,0,listener);
-				this.priorities.splice(i,0,priority);
-				this.repeat.splice(i,0,!once);
-				return;
-			}
-		}
-		this.listeners.push(listener);
-		this.priorities.push(priority);
-		this.repeat.push(!once);
-	}
-	,has: function(listener) {
-		var _g = 0;
-		var _g1 = this.listeners;
-		while(_g < _g1.length) {
-			var l = _g1[_g];
-			++_g;
-			if(Reflect.compareMethods(l,listener)) return true;
-		}
-		return false;
-	}
-	,remove: function(listener) {
-		var i = this.listeners.length;
-		while(--i >= 0) if(Reflect.compareMethods(this.listeners[i],listener)) {
-			this.listeners.splice(i,1);
-			this.priorities.splice(i,1);
-			this.repeat.splice(i,1);
-		}
-	}
-	,listeners: null
-	,dispatch: function(a,a1) {
-		var listeners = this.listeners;
-		var repeat = this.repeat;
-		var i = 0;
-		while(i < listeners.length) {
-			listeners[i](a,a1);
-			if(!repeat[i]) this.remove(listeners[i]); else i++;
-		}
-	}
-	,__class__: lime_app_Event_$Int_$Float_$Void
-};
 var lime_app_Event_$Int_$Int_$Void = function() {
 	this.listeners = [];
 	this.priorities = [];
@@ -25936,64 +25943,6 @@ lime_app_Event_$Int_$Void.prototype = {
 		}
 	}
 	,__class__: lime_app_Event_$Int_$Void
-};
-var lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void = function() {
-	this.listeners = [];
-	this.priorities = [];
-	this.repeat = [];
-};
-$hxClasses["lime.app.Event_Int_lime_ui_JoystickHatPosition_Void"] = lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void;
-lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void.__name__ = ["lime","app","Event_Int_lime_ui_JoystickHatPosition_Void"];
-lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void.prototype = {
-	repeat: null
-	,priorities: null
-	,add: function(listener,once,priority) {
-		if(priority == null) priority = 0;
-		if(once == null) once = false;
-		var _g1 = 0;
-		var _g = this.priorities.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			if(priority > this.priorities[i]) {
-				this.listeners.splice(i,0,listener);
-				this.priorities.splice(i,0,priority);
-				this.repeat.splice(i,0,!once);
-				return;
-			}
-		}
-		this.listeners.push(listener);
-		this.priorities.push(priority);
-		this.repeat.push(!once);
-	}
-	,has: function(listener) {
-		var _g = 0;
-		var _g1 = this.listeners;
-		while(_g < _g1.length) {
-			var l = _g1[_g];
-			++_g;
-			if(Reflect.compareMethods(l,listener)) return true;
-		}
-		return false;
-	}
-	,remove: function(listener) {
-		var i = this.listeners.length;
-		while(--i >= 0) if(Reflect.compareMethods(this.listeners[i],listener)) {
-			this.listeners.splice(i,1);
-			this.priorities.splice(i,1);
-			this.repeat.splice(i,1);
-		}
-	}
-	,listeners: null
-	,dispatch: function(a,a1) {
-		var listeners = this.listeners;
-		var repeat = this.repeat;
-		var i = 0;
-		while(i < listeners.length) {
-			listeners[i](a,a1);
-			if(!repeat[i]) this.remove(listeners[i]); else i++;
-		}
-	}
-	,__class__: lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void
 };
 var lime_app_Event_$String_$Int_$Int_$Void = function() {
 	this.listeners = [];
@@ -26574,64 +26523,6 @@ lime_app_Event_$lime_$ui_$Gamepad_$Void.prototype = {
 		}
 	}
 	,__class__: lime_app_Event_$lime_$ui_$Gamepad_$Void
-};
-var lime_app_Event_$lime_$ui_$Joystick_$Void = function() {
-	this.listeners = [];
-	this.priorities = [];
-	this.repeat = [];
-};
-$hxClasses["lime.app.Event_lime_ui_Joystick_Void"] = lime_app_Event_$lime_$ui_$Joystick_$Void;
-lime_app_Event_$lime_$ui_$Joystick_$Void.__name__ = ["lime","app","Event_lime_ui_Joystick_Void"];
-lime_app_Event_$lime_$ui_$Joystick_$Void.prototype = {
-	repeat: null
-	,priorities: null
-	,add: function(listener,once,priority) {
-		if(priority == null) priority = 0;
-		if(once == null) once = false;
-		var _g1 = 0;
-		var _g = this.priorities.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			if(priority > this.priorities[i]) {
-				this.listeners.splice(i,0,listener);
-				this.priorities.splice(i,0,priority);
-				this.repeat.splice(i,0,!once);
-				return;
-			}
-		}
-		this.listeners.push(listener);
-		this.priorities.push(priority);
-		this.repeat.push(!once);
-	}
-	,has: function(listener) {
-		var _g = 0;
-		var _g1 = this.listeners;
-		while(_g < _g1.length) {
-			var l = _g1[_g];
-			++_g;
-			if(Reflect.compareMethods(l,listener)) return true;
-		}
-		return false;
-	}
-	,remove: function(listener) {
-		var i = this.listeners.length;
-		while(--i >= 0) if(Reflect.compareMethods(this.listeners[i],listener)) {
-			this.listeners.splice(i,1);
-			this.priorities.splice(i,1);
-			this.repeat.splice(i,1);
-		}
-	}
-	,listeners: null
-	,dispatch: function(a) {
-		var listeners = this.listeners;
-		var repeat = this.repeat;
-		var i = 0;
-		while(i < listeners.length) {
-			listeners[i](a);
-			if(!repeat[i]) this.remove(listeners[i]); else i++;
-		}
-	}
-	,__class__: lime_app_Event_$lime_$ui_$Joystick_$Void
 };
 var lime_app_Event_$lime_$ui_$KeyCode_$lime_$ui_$KeyModifier_$Void = function() {
 	this.listeners = [];
@@ -28662,15 +28553,6 @@ lime_graphics_Image.prototype = {
 	,encode: function(format,quality) {
 		if(quality == null) quality = 90;
 		if(format == null) format = "png";
-		switch(format) {
-		case "png":
-			return lime_graphics_format_PNG.encode(this);
-		case "jpg":case "jpeg":
-			return lime_graphics_format_JPEG.encode(this,quality);
-		case "bmp":
-			return lime_graphics_format_BMP.encode(this);
-		default:
-		}
 		return null;
 	}
 	,fillRect: function(rect,color,format) {
@@ -30052,19 +29934,6 @@ lime_graphics_format_JPEG.encode = function(image,quality) {
 		image = image.clone();
 		image.set_premultiplied(false);
 		image.set_format(0);
-	}
-	lime_graphics_utils_ImageCanvasUtil.sync(image,false);
-	if(image.buffer.__srcCanvas != null) {
-		var data = image.buffer.__srcCanvas.toDataURL("image/jpeg",quality / 100);
-		var buffer = window.atob(data.split(";base64,")[1]);
-		var byteArray = new lime_utils_ByteArray(buffer.length);
-		var _g1 = 0;
-		var _g = buffer.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			byteArray.byteView[i] = HxOverrides.cca(buffer,i);
-		}
-		return byteArray;
 	}
 	return null;
 };
@@ -35086,90 +34955,6 @@ lime_ui__$GamepadButton_GamepadButton_$Impl_$.toString = function(this1) {
 		return "UNKNOWN (" + this1 + ")";
 	}
 };
-var lime_ui_Joystick = function(id) {
-	this.onTrackballMove = new lime_app_Event_$Int_$Float_$Void();
-	this.onHatMove = new lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void();
-	this.onDisconnect = new lime_app_Event_$Void_$Void();
-	this.onButtonUp = new lime_app_Event_$Int_$Void();
-	this.onButtonDown = new lime_app_Event_$Int_$Void();
-	this.onAxisMove = new lime_app_Event_$Int_$Float_$Void();
-	this.id = id;
-	this.connected = true;
-};
-$hxClasses["lime.ui.Joystick"] = lime_ui_Joystick;
-lime_ui_Joystick.__name__ = ["lime","ui","Joystick"];
-lime_ui_Joystick.prototype = {
-	connected: null
-	,id: null
-	,onAxisMove: null
-	,onButtonDown: null
-	,onButtonUp: null
-	,onDisconnect: null
-	,onHatMove: null
-	,onTrackballMove: null
-	,get_guid: function() {
-		return null;
-	}
-	,get_name: function() {
-		return null;
-	}
-	,get_numAxes: function() {
-		return 0;
-	}
-	,get_numButtons: function() {
-		return 0;
-	}
-	,get_numHats: function() {
-		return 0;
-	}
-	,get_numTrackballs: function() {
-		return 0;
-	}
-	,__class__: lime_ui_Joystick
-	,__properties__: {get_numTrackballs:"get_numTrackballs",get_numHats:"get_numHats",get_numButtons:"get_numButtons",get_numAxes:"get_numAxes",get_name:"get_name",get_guid:"get_guid"}
-};
-var lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$ = {};
-$hxClasses["lime.ui._JoystickHatPosition.JoystickHatPosition_Impl_"] = lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$;
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.__name__ = ["lime","ui","_JoystickHatPosition","JoystickHatPosition_Impl_"];
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.__properties__ = {set_up:"set_up",get_up:"get_up",set_right:"set_right",get_right:"get_right",set_left:"set_left",get_left:"get_left",set_down:"set_down",get_down:"get_down",set_center:"set_center",get_center:"get_center"}
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$._new = function(value) {
-	return value;
-};
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.get_center = function(this1) {
-	return this1 == 0;
-};
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.set_center = function(this1,value) {
-	if(value) this1 = 0;
-	return value;
-};
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.get_down = function(this1) {
-	return (this1 & 4) > 0;
-};
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.set_down = function(this1,value) {
-	if(value) this1 |= 4; else this1 &= 268435455 - 4;
-	return value;
-};
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.get_left = function(this1) {
-	return (this1 & 8) > 0;
-};
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.set_left = function(this1,value) {
-	if(value) this1 |= 8; else this1 &= 268435455 - 8;
-	return value;
-};
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.get_right = function(this1) {
-	return (this1 & 2) > 0;
-};
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.set_right = function(this1,value) {
-	if(value) this1 |= 2; else this1 &= 268435455 - 2;
-	return value;
-};
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.get_up = function(this1) {
-	return (this1 & 1) > 0;
-};
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.set_up = function(this1,value) {
-	if(value) this1 |= 1; else this1 &= 268435455 - 1;
-	return value;
-};
 var lime_ui__$KeyCode_KeyCode_$Impl_$ = {};
 $hxClasses["lime.ui._KeyCode.KeyCode_Impl_"] = lime_ui__$KeyCode_KeyCode_$Impl_$;
 lime_ui__$KeyCode_KeyCode_$Impl_$.__name__ = ["lime","ui","_KeyCode","KeyCode_Impl_"];
@@ -35347,7 +35132,6 @@ var lime_ui_Window = function(config) {
 	this.__width = 0;
 	this.__height = 0;
 	this.__fullscreen = false;
-	this.__scale = 1;
 	this.__x = 0;
 	this.__y = 0;
 	this.__title = "";
@@ -35392,13 +35176,11 @@ lime_ui_Window.prototype = {
 	,onTextEdit: null
 	,onTextInput: null
 	,renderer: null
-	,scale: null
 	,stage: null
 	,backend: null
 	,__fullscreen: null
 	,__height: null
 	,__minimized: null
-	,__scale: null
 	,__title: null
 	,__width: null
 	,__x: null
@@ -35462,9 +35244,6 @@ lime_ui_Window.prototype = {
 	,set_minimized: function(value) {
 		return this.__minimized = this.backend.setMinimized(value);
 	}
-	,get_scale: function() {
-		return this.__scale;
-	}
 	,get_title: function() {
 		return this.__title;
 	}
@@ -35493,7 +35272,7 @@ lime_ui_Window.prototype = {
 		return this.__y;
 	}
 	,__class__: lime_ui_Window
-	,__properties__: {set_y:"set_y",get_y:"get_y",set_x:"set_x",get_x:"get_x",set_width:"set_width",get_width:"get_width",set_title:"set_title",get_title:"get_title",get_scale:"get_scale",set_minimized:"set_minimized",get_minimized:"get_minimized",set_height:"set_height",get_height:"get_height",set_fullscreen:"set_fullscreen",get_fullscreen:"get_fullscreen",set_enableTextEvents:"set_enableTextEvents",get_enableTextEvents:"get_enableTextEvents",get_display:"get_display"}
+	,__properties__: {set_y:"set_y",get_y:"get_y",set_x:"set_x",get_x:"get_x",set_width:"set_width",get_width:"get_width",set_title:"set_title",get_title:"get_title",set_minimized:"set_minimized",get_minimized:"get_minimized",set_height:"set_height",get_height:"get_height",set_fullscreen:"set_fullscreen",get_fullscreen:"get_fullscreen",set_enableTextEvents:"set_enableTextEvents",get_enableTextEvents:"get_enableTextEvents",get_display:"get_display"}
 };
 var lime_utils_TAError = $hxClasses["lime.utils.TAError"] = { __ename__ : ["lime","utils","TAError"], __constructs__ : ["RangeError"] };
 lime_utils_TAError.RangeError = ["RangeError",0];
@@ -36420,15 +36199,7 @@ openfl_display_MovieClip.prototype = $extend(openfl_display_Sprite.prototype,{
 	,__currentFrameLabel: null
 	,__currentLabel: null
 	,__currentLabels: null
-	,__frameScripts: null
 	,__totalFrames: null
-	,addFrameScript: function(index,method) {
-		if(method != null) {
-			if(this.__frameScripts == null) this.__frameScripts = new haxe_ds_IntMap();
-			this.__frameScripts.h[index] = method;
-			haxe_Log.trace("added script index " + index,{ fileName : "MovieClip.hx", lineNumber : 149, className : "openfl.display.MovieClip", methodName : "addFrameScript"});
-		} else if(this.__frameScripts != null) this.__frameScripts.remove(index);
-	}
 	,gotoAndPlay: function(frame,scene) {
 	}
 	,gotoAndStop: function(frame,scene) {
@@ -46278,7 +46049,6 @@ var openfl_display_Stage = function(window,color) {
 		this.set_color(0);
 	} else this.set_color(color);
 	this.set_name(null);
-	this.__deltaTime = 0;
 	this.__displayState = openfl_display_StageDisplayState.NORMAL;
 	this.__mouseX = 0;
 	this.__mouseY = 0;
@@ -46341,7 +46111,6 @@ openfl_display_Stage.prototype = $extend(openfl_display_DisplayObjectContainer.p
 	,__color: null
 	,__colorSplit: null
 	,__colorString: null
-	,__deltaTime: null
 	,__dirty: null
 	,__displayState: null
 	,__dragBounds: null
@@ -46386,20 +46155,6 @@ openfl_display_Stage.prototype = $extend(openfl_display_DisplayObjectContainer.p
 	}
 	,onGamepadDisconnect: function(gamepad) {
 		openfl_ui_GameInput.__onGamepadDisconnect(gamepad);
-	}
-	,onJoystickAxisMove: function(joystick,axis,value) {
-	}
-	,onJoystickButtonDown: function(joystick,button) {
-	}
-	,onJoystickButtonUp: function(joystick,button) {
-	}
-	,onJoystickConnect: function(joystick) {
-	}
-	,onJoystickDisconnect: function(joystick) {
-	}
-	,onJoystickHatMove: function(joystick,hat,position) {
-	}
-	,onJoystickTrackballMove: function(joystick,trackball,value) {
 	}
 	,onKeyDown: function(window,keyCode,modifier) {
 		if(this.window == null || this.window != window) return;
@@ -46578,8 +46333,7 @@ openfl_display_Stage.prototype = $extend(openfl_display_DisplayObjectContainer.p
 			this.__broadcast(new openfl_events_Event(openfl_events_Event.RENDER),true);
 		}
 		this.__renderable = true;
-		this.__enterFrame(this.__deltaTime);
-		this.__deltaTime = 0;
+		this.__enterFrame();
 		this.__update(false,true);
 		if(this.__renderer != null) {
 			{
@@ -46598,7 +46352,6 @@ openfl_display_Stage.prototype = $extend(openfl_display_DisplayObjectContainer.p
 		this.__rendering = false;
 	}
 	,update: function(deltaTime) {
-		this.__deltaTime = deltaTime;
 	}
 	,__drag: function(mouse) {
 		var parent = this.__dragObject.parent;
@@ -54916,9 +54669,10 @@ openfl_display_DisplayObject.__instanceCount = 0;
 openfl_display_DisplayObject.__worldRenderDirty = 0;
 openfl_display_DisplayObject.__worldTransformDirty = 0;
 openfl_text_Font.__registeredFonts = [];
+Light.LIGHT_R = 160;
+Light.CANVAS_SIZE = 960;
 flixel_FlxBasic._ACTIVECOUNT = 0;
 flixel_FlxBasic._VISIBLECOUNT = 0;
-MenuState.OPTIONS = 2;
 flixel_util_FlxRect._pool = new flixel_util_FlxPool(flixel_util_FlxRect);
 flixel_FlxObject.SEPARATE_BIAS = 4;
 flixel_FlxObject.LEFT = 1;
@@ -54932,7 +54686,8 @@ flixel_FlxObject.WALL = 17;
 flixel_FlxObject.ANY = 4369;
 flixel_FlxObject._firstSeparateFlxRect = flixel_util_FlxRect.get(null,null,null,null);
 flixel_FlxObject._secondSeparateFlxRect = flixel_util_FlxRect.get(null,null,null,null);
-Player.RUN_SPEED = 90;
+Player.RUN_SPEED = 160;
+Player.PADDING = 40;
 Shelf.RUN_SPEED = 90;
 Xml.Element = 0;
 Xml.Document = 6;
@@ -55919,17 +55674,6 @@ lime_ui__$GamepadButton_GamepadButton_$Impl_$.DPAD_UP = 11;
 lime_ui__$GamepadButton_GamepadButton_$Impl_$.DPAD_DOWN = 12;
 lime_ui__$GamepadButton_GamepadButton_$Impl_$.DPAD_LEFT = 13;
 lime_ui__$GamepadButton_GamepadButton_$Impl_$.DPAD_RIGHT = 14;
-lime_ui_Joystick.devices = new haxe_ds_IntMap();
-lime_ui_Joystick.onConnect = new lime_app_Event_$lime_$ui_$Joystick_$Void();
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.CENTER = 0;
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.DOWN = 4;
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.LEFT = 8;
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.RIGHT = 2;
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.UP = 1;
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.DOWN_LEFT = 12;
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.DOWN_RIGHT = 6;
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.UP_LEFT = 9;
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.UP_RIGHT = 3;
 lime_ui__$KeyCode_KeyCode_$Impl_$.UNKNOWN = 0;
 lime_ui__$KeyCode_KeyCode_$Impl_$.BACKSPACE = 8;
 lime_ui__$KeyCode_KeyCode_$Impl_$.TAB = 9;

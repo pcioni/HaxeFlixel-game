@@ -46,23 +46,104 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
-		urls.push ("assets/images/linda.png");
-		types.push (lime.Assets.AssetType.IMAGE);
-		
-		
-<<<<<<< HEAD
 		urls.push ("assets/images/shelf.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-=======
->>>>>>> dc33b73e57306614eaddea3f7b8d84a49b8b8e1e
+		urls.push ("assets/images/spritesheet.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/s_bookshelf_64x129.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/s_heart_32x32.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/s_heart_64x64.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/s_pent_charged_128x128.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/s_pent_orange_128x128.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/s_pent_purple_128x128.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/s_pent_red_128x128.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/music/music-goes-here.txt");
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
+		urls.push ("assets/sounds/book_multiple_pages.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/book_single_page.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/book_single_page_2.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/candle.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/magic.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/monster_attack.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/monster_roar_1.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/monster_roar_2.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/monster_roar_3.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/monster_roar_4.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/PC_death.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/quake.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sounds/quake_bookshelf_crack.wav");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
 		urls.push ("assets/sounds/sounds-go-here.txt");
 		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("assets/sounds/step.wav");
+		types.push (lime.Assets.AssetType.SOUND);
 		
 		
 		urls.push ("assets/sounds/beep.mp3");
@@ -149,11 +230,7 @@ class ApplicationMain {
 		
 		config = {
 			
-<<<<<<< HEAD
-			build: "76",
-=======
-			build: "1",
->>>>>>> dc33b73e57306614eaddea3f7b8d84a49b8b8e1e
+			build: "219",
 			company: "HaxeFlixel",
 			file: "Haxegame",
 			fps: 60,
@@ -171,13 +248,13 @@ class ApplicationMain {
 					display: 0,
 					fullscreen: false,
 					hardware: true,
-					height: 480,
+					height: 768,
 					parameters: "{}",
 					resizable: true,
 					stencilBuffer: true,
 					title: "Haxegame",
 					vsync: true,
-					width: 640,
+					width: 1280,
 					x: null,
 					y: null
 				},
@@ -195,7 +272,7 @@ class ApplicationMain {
 		
 		#if (js && html5)
 		#if (munit || utest)
-		openfl.Lib.embed (null, 640, 480, "000000");
+		openfl.Lib.embed (null, 1280, 768, "000000");
 		#end
 		#else
 		create ();
@@ -238,7 +315,6 @@ class ApplicationMain {
 			
 		}
 		
-<<<<<<< HEAD
 		#if !flash
 		if (openfl.Lib.current.stage.window.fullscreen) {
 			
@@ -248,9 +324,6 @@ class ApplicationMain {
 		
 		openfl.Lib.current.stage.dispatchEvent (new openfl.events.Event (openfl.events.Event.RESIZE, false, false));
 		#end
-=======
-		openfl.Lib.current.stage.dispatchEvent (new openfl.events.Event (openfl.events.Event.RESIZE, false, false));
->>>>>>> dc33b73e57306614eaddea3f7b8d84a49b8b8e1e
 		
 	}
 	

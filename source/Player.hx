@@ -26,9 +26,9 @@ class Player extends FlxSprite
 	
 	public function new(X:Float=0, Y:Float=0, Parent:PlayState) {
 		super(X, Y);
-		makeGraphic(64, 128);
-		//loadGraphic("assets/images/...", true, 64, 128);
-		//animation.add("walkLR", .., .., true);
+		//makeGraphic(64, 128);
+		loadGraphic("assets/images/spritesheet.png", true, 64, 128);
+		animation.add("walkLR", [0,1,2,3,4,5,6,7], 8, true);
 		//animation.add("walkU", .., .., true);
 		//animation.add("walkD", .., .., true);
 		//animation.add("idleLR", ..);
@@ -105,7 +105,7 @@ class Player extends FlxSprite
 				//animation.play("walkLR_U");
 				front = false;
 			}
-			//animation.play("walkLR");
+			animation.play("walkLR");
 		}
 		else {
 			if (velocity.y > 0) {
