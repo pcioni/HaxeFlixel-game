@@ -19,7 +19,6 @@ class Player extends FlxSprite
 {
 	public static inline var RUN_SPEED:Int = 160;
 	public static inline var PADDING:Int = 40;
-	public var hp:Int = 3;
 	var parent:PlayState;
 	var front = true;
 	public var lightOn = false;
@@ -32,8 +31,7 @@ class Player extends FlxSprite
 	
 	public function new(X:Float=0, Y:Float=0, Parent:PlayState) {
 		super(X, Y);
-		//makeGraphic(64, 128);
-		loadGraphic("assets/images/spritesheet.png", true, 64, 128);
+		loadGraphic("assets/images/s_run_r_64x128.png", true, 64, 128);
 		animation.add("walkLR", [0,1,2,3,4,5,6,7], 30, false);
 		//animation.add("walkU", .., .., true);
 		//animation.add("walkD", .., .., true);
@@ -70,7 +68,7 @@ class Player extends FlxSprite
 		//check inputs and assign corresponding acceleration
 		if (FlxG.keys.anyPressed(["LEFT", "A"])) {
 			if (x > PADDING) {
-				stepSnd.play();
+				stepSnd.play(true);
 				acceleration.x = -drag.x;
 				flipX = true;
 			}
@@ -78,7 +76,7 @@ class Player extends FlxSprite
 		}
 		if (FlxG.keys.anyPressed(["RIGHT", "D"])) {
 			if (x + width < FlxG.width - PADDING) {
-				stepSnd.play();
+				stepSnd.play(true);
 				acceleration.x = drag.x;
 				flipX = false;
 			}
@@ -86,18 +84,19 @@ class Player extends FlxSprite
 		}
 		if (FlxG.keys.anyPressed(["UP", "W"])) {
 			if (y > PADDING) {
-				stepSnd.play();
+				stepSnd.play(true);
 				acceleration.y = -drag.y;
 			}
 			else { y = PADDING; }
 		}
 		if (FlxG.keys.anyPressed(["DOWN", "S"])) {
 			if (y + height < FlxG.height - PADDING) {
-				stepSnd.play();
+				stepSnd.play(true);
 				acceleration.y = drag.y;
 			}
 			else { y = FlxG.height - PADDING - height; }
 		}
+		
 		//check for input to toggled light
 		if (FlxG.keys.anyPressed(["E"])) {
 			if (touchingShelf == true) { 
@@ -112,14 +111,15 @@ class Player extends FlxSprite
 			if (!lightOn) { lightOn = true; }
 			else { lightOn = false; }
 		}
+		
 		//check velocities to play corresponding animations
 		if (velocity.x != 0) {
 			if (velocity.y > 0) {
-				//animation.play("walkLR_D");
+				animation.play("walkLR");
 				front = true;
 			}
 			else if (velocity.y < 0) {
-				//animation.play("walkLR_U");
+				animation.play("walkLR");
 				front = false;
 			}
 			animation.play("walkLR");

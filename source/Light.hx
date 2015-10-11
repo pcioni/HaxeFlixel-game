@@ -16,7 +16,7 @@ import flixel.tile.FlxTilemap;
  */
 class Light
 {
-	public static inline var LIGHT_R:Int = 160;
+	public static inline var LIGHT_R:Int = 140;
 	public static inline var CANVAS_SIZE:Int = LIGHT_R * 6;
 	var circleIn:FlxSprite;
 	var circleMid:FlxSprite;

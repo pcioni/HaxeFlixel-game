@@ -2,18 +2,19 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.system.FlxSound;
-import flixel.util.FlxSpriteUtil;
 import flixel.FlxState;
 import flixel.group.FlxTypedGroup;
-import flixel.util.FlxColor;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
+import flixel.tile.FlxTilemap;
 import flixel.ui.FlxBar;
 import flixel.ui.FlxButton;
-import flixel.util.FlxMath;
-import openfl.Assets;
-import flixel.tile.FlxTilemap;
+import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
+import flixel.util.FlxMath;
+import flixel.util.FlxSpriteUtil;
+import openfl.Assets;
+
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -51,25 +52,31 @@ class PlayState extends FlxState {
 		*/
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
-		overlay = new FlxSprite();
-		overlay.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK, false);
-		overlay.alpha = 0.7;
-		
+	
 		FlxG.debugger.visible;
+		
+		//groups
 		shelfGroup = new FlxTypedGroup<Shelf>();
 		enemyGroup = new FlxTypedGroup<Monster>();
 		add(shelfGroup);
 		add(enemyGroup);
 	
+		//shelves
 		add(testShelf = new Shelf(250, 400, this, "left"));
 		add(testShelf2 = new Shelf(210, 200, this, "left"));
+		
+		//monster
 		add(monster = new Monster(600, 600, this, 0));
+		
+		//player
 		add(player = new Player(150, 50, this));
+		
+		//light
+		overlay = new FlxSprite();
+		overlay.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK, false);
+		overlay.alpha = 0.7;
 		add(overlay);
 		light = new Light(this);
-		
-		healthBar = new FlxBar(0, 0, FlxBar.FILL_RIGHT_TO_LEFT, 150, 20, player, "health", 0.0, 100.0, true);
-		healthBar.createFilledBar(FlxColor.BLACK, FlxColor.CRIMSON, true, FlxColor.WHITE);
 		
 		//keep track of the last shelf we interacted with
 		lastHitShelf = testShelf;
@@ -80,10 +87,14 @@ class PlayState extends FlxState {
 		readBar.exists = false;
 		readBar.alive = false;
 		
+		//indicator for detecting shelves
 		add( useText = new FlxText(player.x , player.y, 20, "!", 100, false) );
 		useText.exists = false;
 		useText.alive = false;
 		
+		//health bar 
+		healthBar = new FlxBar(0, 0, FlxBar.FILL_RIGHT_TO_LEFT, 150, 20, player, "health", 0.0, 100.0, true);
+		healthBar.createFilledBar(FlxColor.BLACK, FlxColor.CRIMSON, true, FlxColor.WHITE);
 		add(healthBar);
 		healthBar.trackParent( -47, -40);
 		
@@ -92,6 +103,7 @@ class PlayState extends FlxState {
 		
 		enemyGroup.add(monster);
 		
+		//sounds
 		bookSnd = FlxG.sound.load(AssetPaths.book_multiple_pages__wav);
 		deathSnd = FlxG.sound.load(AssetPaths.PC_death__wav);
 		monsterRoarSnd = FlxG.sound.load(AssetPaths.monster_roar_1__wav);
@@ -105,9 +117,9 @@ class PlayState extends FlxState {
 	 */
 	override public function destroy():Void {
 
-		//bookSnd = FlxDestroyUtil.destroy(bookSnd);
-		//deathSnd = FlxDestroyUtil.destroy(deathSnd);
-		//emonsterRoarSnd = FlxDestroyUtil.destroy(monsterRoarSnd);
+		bookSnd = FlxDestroyUtil.destroy(bookSnd);
+		deathSnd = FlxDestroyUtil.destroy(deathSnd);
+		monsterRoarSnd = FlxDestroyUtil.destroy(monsterRoarSnd);
 		
 		super.destroy();
 	}
@@ -122,19 +134,22 @@ class PlayState extends FlxState {
 		{
 			return;
 		}
-		//Clears the light for next drawing
+		
+		//Clears the light
 		light.clear();
 		//Checks if the light is toggled on then draws the light
 		if (player.lightOn) {
 			light.draw(player.getCenter().x, player.getCenter().y);
-
+			player.stamp(player);
 		}
+		
 		enemyGroup.forEachAlive(checkEnemyVision);
 		FlxG.overlap(player, enemyGroup, playerTouchEnemy);
 
 		// move our useText to our players head
 		useText.x = player.x + 22;
 		useText.y = player.y - 150;
+		
 		//ai
 		// check if we're colliding with any shelf in our shelf group.
 		// if we do, call playerTouchShelf.
@@ -167,8 +182,8 @@ class PlayState extends FlxState {
 	}
 	private function playerTouchEnemy(P:Player, M:Monster):Void
 	{
-		P.hp -= 1;
-		if (P.hp == 0) {
+		P.hurt(20);
+		if (P.health == 0) {
 			FlxG.camera.fade(FlxColor.BLACK, .33, false, doneFadeout);
 		}
 	}

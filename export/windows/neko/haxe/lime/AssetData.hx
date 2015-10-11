@@ -26,10 +26,10 @@ class AssetData {
 			type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 			path.set ("assets/images/shelf.png", "assets/images/shelf.png");
 			type.set ("assets/images/shelf.png", Reflect.field (AssetType, "image".toUpperCase ()));
-			path.set ("assets/images/spritesheet.png", "assets/images/spritesheet.png");
-			type.set ("assets/images/spritesheet.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_bookshelf_64x129.png", "assets/images/s_bookshelf_64x129.png");
 			type.set ("assets/images/s_bookshelf_64x129.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_die_stand_64x128.png", "assets/images/s_die_stand_64x128.png");
+			type.set ("assets/images/s_die_stand_64x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_heart_32x32.png", "assets/images/s_heart_32x32.png");
 			type.set ("assets/images/s_heart_32x32.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_heart_64x64.png", "assets/images/s_heart_64x64.png");
@@ -42,6 +42,14 @@ class AssetData {
 			type.set ("assets/images/s_pent_purple_128x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_pent_red_128x128.png", "assets/images/s_pent_red_128x128.png");
 			type.set ("assets/images/s_pent_red_128x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_read_64x128.png", "assets/images/s_read_64x128.png");
+			type.set ("assets/images/s_read_64x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_run_r_64x128.png", "assets/images/s_run_r_64x128.png");
+			type.set ("assets/images/s_run_r_64x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_run_r_c_64x128.png", "assets/images/s_run_r_c_64x128.png");
+			type.set ("assets/images/s_run_r_c_64x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_run_up_64x128.png", "assets/images/s_run_up_64x128.png");
+			type.set ("assets/images/s_run_up_64x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 			type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 			path.set ("assets/sounds/book_multiple_pages.wav", "assets/sounds/book_multiple_pages.wav");
