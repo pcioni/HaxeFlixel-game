@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.system.FlxSound;
 import flixel.util.FlxSpriteUtil;
 import flixel.FlxState;
 import flixel.group.FlxTypedGroup;
@@ -12,6 +13,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import openfl.Assets;
 import flixel.tile.FlxTilemap;
+import flixel.util.FlxDestroyUtil;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -34,6 +36,10 @@ class PlayState extends FlxState {
 	var ending:Bool;
 	private var enemyGroup:FlxTypedGroup<Monster>;
 	private var shelfGroup:FlxTypedGroup<Shelf>;
+
+	private var bookSnd:FlxSound;
+	private var deathSnd:FlxSound;
+	private var monsterRoarSnd:FlxSound;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -86,6 +92,10 @@ class PlayState extends FlxState {
 		
 		enemyGroup.add(monster);
 		
+		bookSnd = FlxG.sound.load(AssetPaths.book_multiple_pages__wav);
+		deathSnd = FlxG.sound.load(AssetPaths.PC_death__wav);
+		monsterRoarSnd = FlxG.sound.load(AssetPaths.monster_roar_1__wav);
+		
 		super.create();
 	}
 	
@@ -94,6 +104,11 @@ class PlayState extends FlxState {
 	 * consider setting all objects this state uses to null to help garbage collection.
 	 */
 	override public function destroy():Void {
+
+		//bookSnd = FlxDestroyUtil.destroy(bookSnd);
+		//deathSnd = FlxDestroyUtil.destroy(deathSnd);
+		//emonsterRoarSnd = FlxDestroyUtil.destroy(monsterRoarSnd);
+		
 		super.destroy();
 	}
 

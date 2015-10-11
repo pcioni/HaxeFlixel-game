@@ -7,6 +7,8 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxSpriteUtil;
 import lime.math.Vector2;
+import flixel.system.FlxSound;
+import flixel.util.FlxDestroyUtil;
 
 /**
  * Player class and all associated player functionality
@@ -24,6 +26,9 @@ class Player extends FlxSprite
 	var centerX:Int;
 	var centerY:Int; 
 	public var touchingShelf:Bool = false;
+		
+	private var candleSnd:FlxSound;
+	private var stepSnd:FlxSound;
 	
 	public function new(X:Float=0, Y:Float=0, Parent:PlayState) {
 		super(X, Y);
@@ -41,10 +46,20 @@ class Player extends FlxSprite
 		parent = Parent;
 		updateHitbox();
 		touchingShelf = false;
+		
+		candleSnd = FlxG.sound.load(AssetPaths.candle__wav);
+		stepSnd = FlxG.sound.load(AssetPaths.step__wav);
 	}
 	
 	public function getCenter():Vector2 {
 		return new Vector2(centerX, centerY);
+	}
+	
+	override public function destroy():Void {
+		
+		candleSnd = FlxDestroyUtil.destroy(candleSnd);	
+		stepSnd = FlxDestroyUtil.destroy(stepSnd);
+		super.destroy();
 	}
 	
 	public override function update():Void {
@@ -55,6 +70,7 @@ class Player extends FlxSprite
 		//check inputs and assign corresponding acceleration
 		if (FlxG.keys.anyPressed(["LEFT", "A"])) {
 			if (x > PADDING) {
+				stepSnd.play();
 				acceleration.x = -drag.x;
 				flipX = true;
 			}
@@ -62,6 +78,7 @@ class Player extends FlxSprite
 		}
 		if (FlxG.keys.anyPressed(["RIGHT", "D"])) {
 			if (x + width < FlxG.width - PADDING) {
+				stepSnd.play();
 				acceleration.x = drag.x;
 				flipX = false;
 			}
@@ -69,12 +86,14 @@ class Player extends FlxSprite
 		}
 		if (FlxG.keys.anyPressed(["UP", "W"])) {
 			if (y > PADDING) {
+				stepSnd.play();
 				acceleration.y = -drag.y;
 			}
 			else { y = PADDING; }
 		}
 		if (FlxG.keys.anyPressed(["DOWN", "S"])) {
 			if (y + height < FlxG.height - PADDING) {
+				stepSnd.play();
 				acceleration.y = drag.y;
 			}
 			else { y = FlxG.height - PADDING - height; }
@@ -89,12 +108,9 @@ class Player extends FlxSprite
 			}
 		}
 		if (FlxG.keys.justPressed.SPACE) {
+			candleSnd.play(true);
 			if (!lightOn) { lightOn = true; }
 			else { lightOn = false; }
-		}
-		if (FlxG.keys.justPressed.Q) {
-			if (lightOn) { lightOn = false; }
-			else { lightOn = true;}
 		}
 		//check velocities to play corresponding animations
 		if (velocity.x != 0) {

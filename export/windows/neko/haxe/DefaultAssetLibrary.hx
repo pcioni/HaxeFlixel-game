@@ -85,6 +85,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
 		Font.registerFont (__ASSET__assets_fonts_nokiafc22_ttf);
 		Font.registerFont (__ASSET__assets_fonts_arial_ttf);
 		
@@ -92,6 +94,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -635,6 +639,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -648,54 +654,58 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/data/level.csv", AssetType.TEXT);
 		path.set ("assets/data/mapeditor.csv", "assets/data/mapeditor.csv");
 		type.set ("assets/data/mapeditor.csv", AssetType.TEXT);
-		path.set ("assets/images/bookshelf.png", "assets/images/bookshelf.png");
-		type.set ("assets/images/bookshelf.png", AssetType.IMAGE);
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 		type.set ("assets/images/images-go-here.txt", AssetType.TEXT);
-		path.set ("assets/images/linda.png", "assets/images/linda.png");
-		type.set ("assets/images/linda.png", AssetType.IMAGE);
 		path.set ("assets/images/shelf.png", "assets/images/shelf.png");
 		type.set ("assets/images/shelf.png", AssetType.IMAGE);
-		path.set ("assets/images/s_candle_12x33.png", "assets/images/s_candle_12x33.png");
-		type.set ("assets/images/s_candle_12x33.png", AssetType.IMAGE);
-		path.set ("assets/images/s_die_64x128.png", "assets/images/s_die_64x128.png");
-		type.set ("assets/images/s_die_64x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_p_blue_fade_1_128x128.png", "assets/images/s_p_blue_fade_1_128x128.png");
-		type.set ("assets/images/s_p_blue_fade_1_128x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_p_blue_fade_2_128x128.png", "assets/images/s_p_blue_fade_2_128x128.png");
-		type.set ("assets/images/s_p_blue_fade_2_128x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_p_orange_fade_1_128x128.png", "assets/images/s_p_orange_fade_1_128x128.png");
-		type.set ("assets/images/s_p_orange_fade_1_128x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_p_orange_fade_2_128x128.png", "assets/images/s_p_orange_fade_2_128x128.png");
-		type.set ("assets/images/s_p_orange_fade_2_128x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_p_purple_fade_1_128x128.png", "assets/images/s_p_purple_fade_1_128x128.png");
-		type.set ("assets/images/s_p_purple_fade_1_128x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_p_purple_fade_2_128x128.png", "assets/images/s_p_purple_fade_2_128x128.png");
-		type.set ("assets/images/s_p_purple_fade_2_128x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_p_red_fade_1_128x128.png", "assets/images/s_p_red_fade_1_128x128.png");
-		type.set ("assets/images/s_p_red_fade_1_128x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_p_red_fade_2_128x128.png", "assets/images/s_p_red_fade_2_128x128.png");
-		type.set ("assets/images/s_p_red_fade_2_128x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_read_64x128.png", "assets/images/s_read_64x128.png");
-		type.set ("assets/images/s_read_64x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_run_l_64x128.png", "assets/images/s_run_l_64x128.png");
-		type.set ("assets/images/s_run_l_64x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_run_l_c_64x128.png", "assets/images/s_run_l_c_64x128.png");
-		type.set ("assets/images/s_run_l_c_64x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_run_r_64x128.png", "assets/images/s_run_r_64x128.png");
-		type.set ("assets/images/s_run_r_64x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_run_r_c_64x128.png", "assets/images/s_run_r_c_64x128.png");
-		type.set ("assets/images/s_run_r_c_64x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_shelf_64x129.png", "assets/images/s_shelf_64x129.png");
-		type.set ("assets/images/s_shelf_64x129.png", AssetType.IMAGE);
-		path.set ("assets/images/s_stand_64x128.png", "assets/images/s_stand_64x128.png");
-		type.set ("assets/images/s_stand_64x128.png", AssetType.IMAGE);
-		path.set ("assets/images/s_wip_cultist_64x128.png", "assets/images/s_wip_cultist_64x128.png");
-		type.set ("assets/images/s_wip_cultist_64x128.png", AssetType.IMAGE);
+		path.set ("assets/images/spritesheet.png", "assets/images/spritesheet.png");
+		type.set ("assets/images/spritesheet.png", AssetType.IMAGE);
+		path.set ("assets/images/s_bookshelf_64x129.png", "assets/images/s_bookshelf_64x129.png");
+		type.set ("assets/images/s_bookshelf_64x129.png", AssetType.IMAGE);
+		path.set ("assets/images/s_heart_32x32.png", "assets/images/s_heart_32x32.png");
+		type.set ("assets/images/s_heart_32x32.png", AssetType.IMAGE);
+		path.set ("assets/images/s_heart_64x64.png", "assets/images/s_heart_64x64.png");
+		type.set ("assets/images/s_heart_64x64.png", AssetType.IMAGE);
+		path.set ("assets/images/s_pent_charged_128x128.png", "assets/images/s_pent_charged_128x128.png");
+		type.set ("assets/images/s_pent_charged_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_pent_orange_128x128.png", "assets/images/s_pent_orange_128x128.png");
+		type.set ("assets/images/s_pent_orange_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_pent_purple_128x128.png", "assets/images/s_pent_purple_128x128.png");
+		type.set ("assets/images/s_pent_purple_128x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_pent_red_128x128.png", "assets/images/s_pent_red_128x128.png");
+		type.set ("assets/images/s_pent_red_128x128.png", AssetType.IMAGE);
 		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 		type.set ("assets/music/music-goes-here.txt", AssetType.TEXT);
+		path.set ("assets/sounds/book_multiple_pages.wav", "assets/sounds/book_multiple_pages.wav");
+		type.set ("assets/sounds/book_multiple_pages.wav", AssetType.SOUND);
+		path.set ("assets/sounds/book_single_page.wav", "assets/sounds/book_single_page.wav");
+		type.set ("assets/sounds/book_single_page.wav", AssetType.SOUND);
+		path.set ("assets/sounds/book_single_page_2.wav", "assets/sounds/book_single_page_2.wav");
+		type.set ("assets/sounds/book_single_page_2.wav", AssetType.SOUND);
+		path.set ("assets/sounds/candle.wav", "assets/sounds/candle.wav");
+		type.set ("assets/sounds/candle.wav", AssetType.SOUND);
+		path.set ("assets/sounds/magic.wav", "assets/sounds/magic.wav");
+		type.set ("assets/sounds/magic.wav", AssetType.SOUND);
+		path.set ("assets/sounds/monster_attack.wav", "assets/sounds/monster_attack.wav");
+		type.set ("assets/sounds/monster_attack.wav", AssetType.SOUND);
+		path.set ("assets/sounds/monster_roar_1.wav", "assets/sounds/monster_roar_1.wav");
+		type.set ("assets/sounds/monster_roar_1.wav", AssetType.SOUND);
+		path.set ("assets/sounds/monster_roar_2.wav", "assets/sounds/monster_roar_2.wav");
+		type.set ("assets/sounds/monster_roar_2.wav", AssetType.SOUND);
+		path.set ("assets/sounds/monster_roar_3.wav", "assets/sounds/monster_roar_3.wav");
+		type.set ("assets/sounds/monster_roar_3.wav", AssetType.SOUND);
+		path.set ("assets/sounds/monster_roar_4.wav", "assets/sounds/monster_roar_4.wav");
+		type.set ("assets/sounds/monster_roar_4.wav", AssetType.SOUND);
+		path.set ("assets/sounds/PC_death.wav", "assets/sounds/PC_death.wav");
+		type.set ("assets/sounds/PC_death.wav", AssetType.SOUND);
+		path.set ("assets/sounds/quake.wav", "assets/sounds/quake.wav");
+		type.set ("assets/sounds/quake.wav", AssetType.SOUND);
+		path.set ("assets/sounds/quake_bookshelf_crack.wav", "assets/sounds/quake_bookshelf_crack.wav");
+		type.set ("assets/sounds/quake_bookshelf_crack.wav", AssetType.SOUND);
 		path.set ("assets/sounds/sounds-go-here.txt", "assets/sounds/sounds-go-here.txt");
 		type.set ("assets/sounds/sounds-go-here.txt", AssetType.TEXT);
+		path.set ("assets/sounds/step.wav", "assets/sounds/step.wav");
+		type.set ("assets/sounds/step.wav", AssetType.SOUND);
 		path.set ("assets/sounds/beep.ogg", "assets/sounds/beep.ogg");
 		type.set ("assets/sounds/beep.ogg", AssetType.SOUND);
 		path.set ("assets/sounds/flixel.ogg", "assets/sounds/flixel.ogg");
@@ -718,78 +728,84 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/data/mapeditor.csv";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
-		id = "assets/images/bookshelf.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
 		id = "assets/images/images-go-here.txt";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
-		id = "assets/images/linda.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
 		id = "assets/images/shelf.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_candle_12x33.png";
+		id = "assets/images/spritesheet.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_die_64x128.png";
+		id = "assets/images/s_bookshelf_64x129.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_p_blue_fade_1_128x128.png";
+		id = "assets/images/s_heart_32x32.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_p_blue_fade_2_128x128.png";
+		id = "assets/images/s_heart_64x64.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_p_orange_fade_1_128x128.png";
+		id = "assets/images/s_pent_charged_128x128.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_p_orange_fade_2_128x128.png";
+		id = "assets/images/s_pent_orange_128x128.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_p_purple_fade_1_128x128.png";
+		id = "assets/images/s_pent_purple_128x128.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_p_purple_fade_2_128x128.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_p_red_fade_1_128x128.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_p_red_fade_2_128x128.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_read_64x128.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_run_l_64x128.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_run_l_c_64x128.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_run_r_64x128.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_run_r_c_64x128.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_shelf_64x129.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_stand_64x128.png";
-		path.set (id, id);
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_wip_cultist_64x128.png";
+		id = "assets/images/s_pent_red_128x128.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/music/music-goes-here.txt";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
+		id = "assets/sounds/book_multiple_pages.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/book_single_page.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/book_single_page_2.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/candle.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/magic.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/monster_attack.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/monster_roar_1.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/monster_roar_2.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/monster_roar_3.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/monster_roar_4.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/PC_death.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/quake.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/quake_bookshelf_crack.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
 		id = "assets/sounds/sounds-go-here.txt";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
+		id = "assets/sounds/step.wav";
+		path.set (id, id);
+		type.set (id, AssetType.SOUND);
 		id = "assets/sounds/beep.ogg";
 		path.set (id, id);
 		type.set (id, AssetType.SOUND);
@@ -821,6 +837,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -1603,11 +1621,15 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
 @:keep @:bind #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_fonts_arial_ttf extends null { }
 
 
 #elseif html5
+
+
 
 
 
