@@ -32,8 +32,8 @@ class Player extends FlxSprite
 	
 	public function new(X:Float=0, Y:Float=0, Parent:PlayState) {
 		super(X, Y);
-		//makeGraphic(64, 128);
-		loadGraphic("assets/images/spritesheet.png", true, 64, 128);
+		makeGraphic(64, 128);
+		//loadGraphic("assets/images/spritesheet.png", true, 64, 128);
 		animation.add("walkLR", [0,1,2,3,4,5,6,7], 30, false);
 		//animation.add("walkU", .., .., true);
 		//animation.add("walkD", .., .., true);
