@@ -18,7 +18,7 @@ import FSM;
  */
 class Monster extends FlxSprite
 {
-	public var speed:Float = 100;
+	public var speed:Float = 75;
 	public var etype(default, null):Int;
 	private var _brain: FSM;
 	private var _idleTmr:Float;

@@ -57,7 +57,7 @@ class PlayState extends FlxState {
 	
 		add(testShelf = new Shelf(250, 400, this, "left"));
 		add(testShelf2 = new Shelf(210, 200, this, "left"));
-		add(monster = new Monster(0, 0, this, 0));
+		add(monster = new Monster(600, 600, this, 0));
 		add(player = new Player(150, 50, this));
 		add(overlay);
 		light = new Light(this);
@@ -112,14 +112,15 @@ class PlayState extends FlxState {
 		//Checks if the light is toggled on then draws the light
 		if (player.lightOn) {
 			light.draw(player.getCenter().x, player.getCenter().y);
+
 		}
-		
+		enemyGroup.forEachAlive(checkEnemyVision);
+		FlxG.overlap(player, enemyGroup, playerTouchEnemy);
+
 		// move our useText to our players head
 		useText.x = player.x + 22;
 		useText.y = player.y - 150;
 		//ai
-		enemyGroup.forEachAlive(checkEnemyVision);
-		FlxG.overlap(player, enemyGroup, playerTouchEnemy);
 		// check if we're colliding with any shelf in our shelf group.
 		// if we do, call playerTouchShelf.
 		if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) && player.lightOn ) {
@@ -163,7 +164,7 @@ class PlayState extends FlxState {
 		var m_pos = M.getMidpoint();
 		var p_pos = player.getMidpoint();
 		var dist = m_pos.distanceTo(p_pos);
-		if (dist < 400) {
+		if (dist < 100 || player.lightOn) {
 			M.seesPlayer = true;
 			M.playerPos.copyFrom(player.getMidpoint());
 		}

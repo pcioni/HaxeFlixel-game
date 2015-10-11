@@ -115,7 +115,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "226", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "232", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -2376,6 +2376,7 @@ GameOver.prototype = $extend(flixel_FlxState.prototype,{
 		flixel_FlxG.mouse.set_visible(true);
 		this.txt_title = new flixel_text_FlxText(0,20,0,this._win?"You win!":"Game Over!",22);
 		this.txt_title.set_alignment("center");
+		this.txt_title.set_color(-1);
 		flixel_util_FlxSpriteUtil.screenCenter(this.txt_title,true,false);
 		this.add(this.txt_title);
 		this.btn_mainMenu = new flixel_ui_FlxButton(0,flixel_FlxG.height - 32,"Play again",$bind(this,this.switchStates));
@@ -3888,7 +3889,7 @@ var Monster = function(X,Y,Parent,EType) {
 	this.banished = false;
 	this.wandering = false;
 	this.seesPlayer = false;
-	this.speed = 100;
+	this.speed = 75;
 	this.etype = EType;
 	flixel_FlxSprite.call(this,X,Y);
 	this.makeGraphic(16,16);
@@ -4050,7 +4051,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.enemyGroup);
 		this.add(this.testShelf = new Shelf(250,400,this,"left"));
 		this.add(this.testShelf2 = new Shelf(210,200,this,"left"));
-		this.add(this.monster = new Monster(0,0,this,0));
+		this.add(this.monster = new Monster(600,600,this,0));
 		this.add(this.player = new Player(150,50,this));
 		this.add(this.overlay);
 		this.light = new Light(this);
@@ -4079,10 +4080,10 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		if(this.ending) return;
 		this.light.clear();
 		if(this.player.lightOn) this.light.draw(this.player.getCenter().x,this.player.getCenter().y);
-		this.useText.set_x(this.player.x + 22);
-		this.useText.set_y(this.player.y - 150);
 		this.enemyGroup.forEachAlive($bind(this,this.checkEnemyVision));
 		flixel_FlxG.overlap(this.player,this.enemyGroup,$bind(this,this.playerTouchEnemy));
+		this.useText.set_x(this.player.x + 22);
+		this.useText.set_y(this.player.y - 150);
 		if(flixel_FlxG.overlap(this.player,this.shelfGroup,$bind(this,this.playerTouchShelf)) && this.player.lightOn) this.player.touchingShelf = true; else {
 			this.player.touchingShelf = false;
 			this.readBar.kill();
@@ -4116,7 +4117,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		var m_pos = M.getMidpoint();
 		var p_pos = this.player.getMidpoint();
 		var dist = flixel_util_FlxMath.getDistance(m_pos,p_pos);
-		if(dist < 400) {
+		if(dist < 100 || this.player.lightOn) {
 			M.seesPlayer = true;
 			M.playerPos.copyFrom(this.player.getMidpoint());
 		} else M.seesPlayer = false;
