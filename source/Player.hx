@@ -17,6 +17,7 @@ class Player extends FlxSprite
 {
 	public static inline var RUN_SPEED:Int = 160;
 	public static inline var PADDING:Int = 40;
+	public var hp:Int = 3;
 	var parent:PlayState;
 	var front = true;
 	public var lightOn = false;
@@ -28,7 +29,7 @@ class Player extends FlxSprite
 		super(X, Y);
 		//makeGraphic(64, 128);
 		loadGraphic("assets/images/spritesheet.png", true, 64, 128);
-		animation.add("walkLR", [0,1,2,3,4,5,6,7], 8, true);
+		animation.add("walkLR", [0,1,2,3,4,5,6,7], 30, false);
 		//animation.add("walkU", .., .., true);
 		//animation.add("walkD", .., .., true);
 		//animation.add("idleLR", ..);

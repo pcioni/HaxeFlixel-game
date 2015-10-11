@@ -19,6 +19,7 @@ import flixel.tile.FlxTilemap;
 class PlayState extends FlxState {
 	
 	var player:Player;
+	var monster:Monster;
 	var healthBar:FlxBar;
 	
 	var testShelf:Shelf;
@@ -29,7 +30,9 @@ class PlayState extends FlxState {
 	
 	var light:Light;
 	var overlay:FlxSprite;
-	
+	var won:Bool;
+	var ending:Bool;
+	private var enemyGroup:FlxTypedGroup<Monster>;
 	private var shelfGroup:FlxTypedGroup<Shelf>;
 	
 	/**
@@ -48,12 +51,13 @@ class PlayState extends FlxState {
 		
 		FlxG.debugger.visible;
 		shelfGroup = new FlxTypedGroup<Shelf>();
-		
+		enemyGroup = new FlxTypedGroup<Monster>();
 		add(shelfGroup);
+		add(enemyGroup);
 	
 		add(testShelf = new Shelf(250, 400, this, "left"));
 		add(testShelf2 = new Shelf(210, 200, this, "left"));
-		
+		add(monster = new Monster(0, 0, this, 0));
 		add(player = new Player(150, 50, this));
 		add(overlay);
 		light = new Light(this);
@@ -80,6 +84,8 @@ class PlayState extends FlxState {
 		shelfGroup.add(testShelf);
 		shelfGroup.add(testShelf2);
 		
+		enemyGroup.add(monster);
+		
 		super.create();
 	}
 	
@@ -97,6 +103,10 @@ class PlayState extends FlxState {
 	override public function update():Void
 	{
 		super.update();
+		if (ending)
+		{
+			return;
+		}
 		//Clears the light for next drawing
 		light.clear();
 		//Checks if the light is toggled on then draws the light
@@ -107,7 +117,9 @@ class PlayState extends FlxState {
 		// move our useText to our players head
 		useText.x = player.x + 22;
 		useText.y = player.y - 150;
-		
+		//ai
+		enemyGroup.forEachAlive(checkEnemyVision);
+		FlxG.overlap(player, enemyGroup, playerTouchEnemy);
 		// check if we're colliding with any shelf in our shelf group.
 		// if we do, call playerTouchShelf.
 		if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) && player.lightOn ) {
@@ -135,6 +147,28 @@ class PlayState extends FlxState {
 			readBar.kill();
 			useText.alive = true;
 			useText.exists = true;
+		}
+	}
+	private function playerTouchEnemy(P:Player, M:Monster):Void
+	{
+		P.hp -= 1;
+		if (P.hp == 0) {
+			FlxG.camera.fade(FlxColor.BLACK, .33, false, doneFadeout);
+		}
+	}
+	private function doneFadeout():Void {
+	FlxG.switchState(new GameOver(won, 0));	
+	}
+	private function checkEnemyVision(M:Monster):Void {
+		var m_pos = M.getMidpoint();
+		var p_pos = player.getMidpoint();
+		var dist = m_pos.distanceTo(p_pos);
+		if (dist < 400) {
+			M.seesPlayer = true;
+			M.playerPos.copyFrom(player.getMidpoint());
+		}
+		else {
+			M.seesPlayer = false;
 		}
 	}
 	
