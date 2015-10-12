@@ -178,7 +178,9 @@ class PlayState extends FlxState {
 	
 	//redraw the darkness
 	override public function draw():Void {
-		FlxSpriteUtil.fill(darkness, FlxColor.BLACK);
+		if (player.lightOn) {
+			FlxSpriteUtil.fill(darkness, FlxColor.BLACK);
+		}
 		super.draw();
 	}
 	

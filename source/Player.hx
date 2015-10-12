@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxSprite;
+import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
@@ -20,7 +21,6 @@ class Player extends FlxSprite
 	public static inline var RUN_SPEED:Int = 160;
 	public static inline var PADDING:Int = 40;
 	var parent:PlayState;
-	var front = true;
 	public var lightOn = false;
 	var centerX:Int;
 	var centerY:Int; 
@@ -38,12 +38,13 @@ class Player extends FlxSprite
 		animation.add("walkLR", [32,33,34,35,36,37,38,39], 15, false);
 		animation.add("walkU", [48, 49, 50, 51, 52, 53, 54], 15, false);
 		animation.add("walkD", [16, 17,18, 19, 20 ,21, 22, 23], 15, false);
-		//animation.add("idleLR", ..);
-		animation.add("idleU", [54], 1, false);
-		animation.add("idleD", [22], 1, false);
+		animation.add("idleLR", [5], 1, false);
+		animation.add("idleU", [4], 1, false);
+		animation.add("idleD", [3], 1, false);
 		drag.set(RUN_SPEED * 9, RUN_SPEED * 9);
 		maxVelocity.set(RUN_SPEED * 2, RUN_SPEED * 2);
 		health = 100;
+		facing = FlxObject.RIGHT;
 		parent = Parent;
 		updateHitbox();
 		touchingShelf = false;
@@ -74,6 +75,7 @@ class Player extends FlxSprite
 				stepSnd.play(true);
 				acceleration.x = -drag.x;
 				flipX = true;
+				facing = FlxObject.LEFT;
 			}
 			else { x = PADDING; }
 		}
@@ -82,6 +84,7 @@ class Player extends FlxSprite
 				stepSnd.play(true);
 				acceleration.x = drag.x;
 				flipX = false;
+				facing = FlxObject.RIGHT;
 			}
 			else { x = FlxG.width - PADDING - width; }
 		}
@@ -89,6 +92,7 @@ class Player extends FlxSprite
 			if (y > PADDING) {
 				stepSnd.play(true);
 				acceleration.y = -drag.y;
+				facing = FlxObject.UP;
 			}
 			else { y = PADDING; }
 		}
@@ -96,6 +100,7 @@ class Player extends FlxSprite
 			if (y + height < FlxG.height - PADDING) {
 				stepSnd.play(true);
 				acceleration.y = drag.y;
+				facing = FlxObject.DOWN;
 			}
 			else { y = FlxG.height - PADDING - height; }
 		}
@@ -118,30 +123,30 @@ class Player extends FlxSprite
 		//check velocities to play corresponding animations
 		if (velocity.x != 0) {
 			if (velocity.y > 0) {
-				animation.play("walkLR");
-				front = true;
+				animation.play("walkD");
 			}
 			else if (velocity.y < 0) {
-				animation.play("walkLR");
-				front = false;
+				animation.play("walkU");
 			}
-			animation.play("walkLR");
+			else { 
+				animation.play("walkLR");
+			}
 		}
 		else {
 			if (velocity.y > 0) {
 				animation.play("walkD");
-				front = true;
 			}
 			else if (velocity.y < 0) {
 				animation.play("walkU");
-				front = false;
 			}
 			else {
-				if (front) {
-					//animation.play("idleD");
-				}
-				else {
-					//animation.play("idleU");
+				switch(facing) {
+					case FlxObject.DOWN:
+						animation.play("idleD");
+					case FlxObject.UP:
+						animation.play("idleU");
+					default:
+						animation.play("idleLR");
 				}
 			}
 		}
