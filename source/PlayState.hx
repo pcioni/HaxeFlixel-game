@@ -15,6 +15,8 @@ import flixel.util.FlxMath;
 import flixel.util.FlxSpriteUtil;
 import openfl.Assets;
 import openfl.display.BlendMode;
+import flixel.util.FlxRandom;
+
 
 
 /**
@@ -26,9 +28,7 @@ class PlayState extends FlxState {
 	var monster:Monster;
 	var healthBar:FlxBar;
 	
-	var testShelf:Shelf;
-	var testShelf2:Shelf;
-	var testShelf3:Shelf;
+	var tmp:Shelf;
 	var lastHitShelf:Shelf;
 	
 	var readBar:FlxBar;
@@ -59,7 +59,6 @@ class PlayState extends FlxState {
 		//add(level);
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
-	
 		FlxG.debugger.visible;
 		
 		//groups
@@ -67,17 +66,49 @@ class PlayState extends FlxState {
 		enemyGroup = new FlxTypedGroup<Monster>();
 		add(shelfGroup);
 		add(enemyGroup);
-	
-		//shelves
-		add(testShelf = new Shelf(250, 400, this, "left", "red"));
-		add(testShelf2 = new Shelf(210, 200, this, "bottom", "purple"));
-		add(testShelf3 = new Shelf(280, 600, this, "top", "brown"));
+		
+		
+		/*
+		 * Randomly generate our map.
+		 * 	Run from the top right corner to the bottom right corner in a 'U' shape, adding bookshelves 
+		 * 	along the way at a set increment. Pick random colors from the list of colors.
+		 */
+		var x:Int = 1535;
+		var y:Int = 0;
+		var init, init2 :Bool = true;
+		var shelfColors:Array<String> = ["red", "purple", "brown", "orange"];
+		
+		while ( x + y < 2450) {
+			if (x > 60 && y < 300) {
+				add( tmp = new Shelf(x, y, this, "top", FlxRandom.getObject(shelfColors, 0) ) );
+				x -= 100;
+			}
+			else if (x < 60 && y < 800) {
+				if (init) { 
+					y += 200; 
+					init = false;
+				}
+				x = 0;
+				add( tmp = new Shelf(x, y, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+				y += 145;
+			}
+			else {
+				if (init2) {
+					x = 150;
+					init2 = false;
+				}
+				y = 805;
+				add( tmp = new Shelf(x, y, this, "bottom", FlxRandom.getObject(shelfColors, 0) ) );
+				x += 100;
+			}
+			shelfGroup.add(tmp);
+		}
 		
 		//monster
 		add(monster = new Monster(600, 600, this, 0));
 		
 		//player
-		add(player = new Player(150, 50, this));
+		add(player = new Player(800, 450, this));
 		
 		//light
 		darkness = new FlxSprite();
@@ -91,7 +122,7 @@ class PlayState extends FlxState {
 		add(darkness);
 		
 		//keep track of the last shelf we interacted with
-		lastHitShelf = testShelf;
+		lastHitShelf = tmp;
 		
 		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
 		add( readBar = new FlxBar(50, 50, FlxBar.FILL_LEFT_TO_RIGHT, 150, 20, player, "testShelf.timer.progress", 0.0, 1.0, true) );
@@ -111,8 +142,6 @@ class PlayState extends FlxState {
 		healthBar.trackParent( -47, -40);
 		
 		//adding elements to groups
-		shelfGroup.add(testShelf);
-		shelfGroup.add(testShelf2);
 		
 		enemyGroup.add(monster);
 		

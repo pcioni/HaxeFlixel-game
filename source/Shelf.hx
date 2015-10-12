@@ -17,12 +17,16 @@ class Shelf extends FlxSprite {
 	public static inline var RUN_SPEED:Int = 90;
 	var parent:PlayState;
 	public var timer:FlxTimer;
+	public var myColor:String;
+	public var mySequenceNum:Int;
 	
 	
 	public function new(X:Float = 0, Y:Float = 0, Parent:PlayState, position:String, color:String) {
 		super(X, Y);
 		updateHitbox();
 		parent = Parent;
+		myColor = color;
+		
 		
 		// Initialize our shelves with proper orientation and hitboxes.
 		// Modify our collision box to be a thin pixel line extending from the middle. 

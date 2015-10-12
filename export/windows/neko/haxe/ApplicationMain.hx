@@ -499,7 +499,11 @@ class ApplicationMain {
 		
 		config = {
 			
+<<<<<<< HEAD
+			build: "404",
+=======
 			build: "373",
+>>>>>>> f9152da52048058be87b66cca08d614f4a42a8fb
 			company: "HaxeFlixel",
 			file: "Haxegame",
 			fps: 60,
