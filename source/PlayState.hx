@@ -56,7 +56,9 @@ class PlayState extends FlxState {
 		/*
 		 * Function that creates the reading bar
 		*/
-		level = new FlxTilemap();
+		//level = new FlxTilemap();
+		//level.loadMap(Assets.getText("assets/data/map.csv"), "assets/data/tile_sheet.png", 64, 64);
+		//add(level);
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
 	
@@ -88,10 +90,6 @@ class PlayState extends FlxState {
 		light = new Light(0, 0, darkness, this);
 		add(light);
 		add(darkness);
-		
-		
-		//level.loadMap(Assets.getText("assets/data/map.txt"), "assets/data/tile_sheet.png", 64, 64,FlxTilemap.AUTO);
-		//add(level);
 		
 		//keep track of the last shelf we interacted with
 		lastHitShelf = testShelf;

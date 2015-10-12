@@ -661,8 +661,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/data/data-goes-here.txt", AssetType.TEXT);
 		path.set ("assets/data/level.csv", "assets/data/level.csv");
 		type.set ("assets/data/level.csv", AssetType.TEXT);
-		path.set ("assets/data/map.txt", "assets/data/map.txt");
-		type.set ("assets/data/map.txt", AssetType.TEXT);
+		path.set ("assets/data/map.csv", "assets/data/map.csv");
+		type.set ("assets/data/map.csv", AssetType.TEXT);
 		path.set ("assets/data/mapeditor.csv", "assets/data/mapeditor.csv");
 		type.set ("assets/data/mapeditor.csv", AssetType.TEXT);
 		path.set ("assets/data/tile_sheet.png", "assets/data/tile_sheet.png");
@@ -740,7 +740,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/data/level.csv";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
-		id = "assets/data/map.txt";
+		id = "assets/data/map.csv";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
 		id = "assets/data/mapeditor.csv";
