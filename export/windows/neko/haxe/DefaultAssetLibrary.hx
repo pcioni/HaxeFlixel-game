@@ -90,6 +90,18 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		Font.registerFont (__ASSET__assets_fonts_nokiafc22_ttf);
 		Font.registerFont (__ASSET__assets_fonts_arial_ttf);
 		
@@ -97,6 +109,18 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -650,6 +674,18 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -667,10 +703,34 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/data/mapeditor.csv", AssetType.TEXT);
 		path.set ("assets/data/tile_sheet.png", "assets/data/tile_sheet.png");
 		type.set ("assets/data/tile_sheet.png", AssetType.IMAGE);
+		path.set ("assets/images/brownShelfBottom.png", "assets/images/brownShelfBottom.png");
+		type.set ("assets/images/brownShelfBottom.png", AssetType.IMAGE);
+		path.set ("assets/images/brownShelfLeft.png", "assets/images/brownShelfLeft.png");
+		type.set ("assets/images/brownShelfLeft.png", AssetType.IMAGE);
+		path.set ("assets/images/brownShelfTop.png", "assets/images/brownShelfTop.png");
+		type.set ("assets/images/brownShelfTop.png", AssetType.IMAGE);
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 		type.set ("assets/images/images-go-here.txt", AssetType.TEXT);
 		path.set ("assets/images/light.png", "assets/images/light.png");
 		type.set ("assets/images/light.png", AssetType.IMAGE);
+		path.set ("assets/images/orangeShelfBottom.png", "assets/images/orangeShelfBottom.png");
+		type.set ("assets/images/orangeShelfBottom.png", AssetType.IMAGE);
+		path.set ("assets/images/orangeShelfLeft.png", "assets/images/orangeShelfLeft.png");
+		type.set ("assets/images/orangeShelfLeft.png", AssetType.IMAGE);
+		path.set ("assets/images/orangeShelfTop.png", "assets/images/orangeShelfTop.png");
+		type.set ("assets/images/orangeShelfTop.png", AssetType.IMAGE);
+		path.set ("assets/images/purpleShelfBottom.png", "assets/images/purpleShelfBottom.png");
+		type.set ("assets/images/purpleShelfBottom.png", AssetType.IMAGE);
+		path.set ("assets/images/purpleShelfLeft.png", "assets/images/purpleShelfLeft.png");
+		type.set ("assets/images/purpleShelfLeft.png", AssetType.IMAGE);
+		path.set ("assets/images/purpleShelfTop.png", "assets/images/purpleShelfTop.png");
+		type.set ("assets/images/purpleShelfTop.png", AssetType.IMAGE);
+		path.set ("assets/images/redShelfBottom.png", "assets/images/redShelfBottom.png");
+		type.set ("assets/images/redShelfBottom.png", AssetType.IMAGE);
+		path.set ("assets/images/redShelfLeft.png", "assets/images/redShelfLeft.png");
+		type.set ("assets/images/redShelfLeft.png", AssetType.IMAGE);
+		path.set ("assets/images/redShelfTop.png", "assets/images/redShelfTop.png");
+		type.set ("assets/images/redShelfTop.png", AssetType.IMAGE);
 		path.set ("assets/images/shelf.png", "assets/images/shelf.png");
 		type.set ("assets/images/shelf.png", AssetType.IMAGE);
 		path.set ("assets/images/s_bookshelf_64x129.png", "assets/images/s_bookshelf_64x129.png");
@@ -749,10 +809,46 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/data/tile_sheet.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
+		id = "assets/images/brownShelfBottom.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/brownShelfLeft.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/brownShelfTop.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
 		id = "assets/images/images-go-here.txt";
 		path.set (id, id);
 		type.set (id, AssetType.TEXT);
 		id = "assets/images/light.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/orangeShelfBottom.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/orangeShelfLeft.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/orangeShelfTop.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/purpleShelfBottom.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/purpleShelfLeft.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/purpleShelfTop.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/redShelfBottom.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/redShelfLeft.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/redShelfTop.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/shelf.png";
@@ -861,6 +957,18 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -1653,11 +1761,35 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 @:keep @:bind #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_fonts_arial_ttf extends null { }
 
 
 #elseif html5
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

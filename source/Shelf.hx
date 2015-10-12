@@ -19,7 +19,7 @@ class Shelf extends FlxSprite {
 	public var timer:FlxTimer;
 	
 	
-	public function new(X:Float = 0, Y:Float = 0, Parent:PlayState, position:String) {
+	public function new(X:Float = 0, Y:Float = 0, Parent:PlayState, position:String, color:String) {
 		super(X, Y);
 		updateHitbox();
 		parent = Parent;
@@ -27,15 +27,19 @@ class Shelf extends FlxSprite {
 		// Initialize our shelves with proper orientation and hitboxes.
 		// Modify our collision box to be a thin pixel line extending from the middle. 
 		if (position == "left") {
-			loadGraphic("assets/images/shelf.png", true, 90, 128);
+			loadGraphic("assets/images/" + color + "ShelfLeft.png", true, 90, 128);
 			height -= 127;
 			offset.y = 60;
 		}
 		else if (position == "top") {
-			
+			loadGraphic("assets/images/" + color + "ShelfTop.png", true, 65, 154);
+			width -= 62;
+			offset.x = 30;
 		}
 		else if (position == "bottom") {
-		
+			loadGraphic("assets/images/" + color + "ShelfBottom.png", true, 65, 154);
+			width -= 62;
+			offset.x = 30;	
 		}
 
 		// don't move the shelves when we hit them.

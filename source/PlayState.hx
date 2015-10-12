@@ -28,6 +28,7 @@ class PlayState extends FlxState {
 	
 	var testShelf:Shelf;
 	var testShelf2:Shelf;
+	var testShelf3:Shelf;
 	var lastHitShelf:Shelf;
 	
 	var readBar:FlxBar;
@@ -53,9 +54,6 @@ class PlayState extends FlxState {
 	 */
 	override public function create():Void {
 		
-		/*
-		 * Function that creates the reading bar
-		*/
 		//level = new FlxTilemap();
 		//level.loadMap(Assets.getText("assets/data/map.txt"), "assets/data/tile_sheet.png", 64, 64);
 		//add(level);
@@ -71,8 +69,9 @@ class PlayState extends FlxState {
 		add(enemyGroup);
 	
 		//shelves
-		add(testShelf = new Shelf(250, 400, this, "left"));
-		add(testShelf2 = new Shelf(210, 200, this, "left"));
+		add(testShelf = new Shelf(250, 400, this, "left", "red"));
+		add(testShelf2 = new Shelf(210, 200, this, "bottom", "purple"));
+		add(testShelf3 = new Shelf(280, 600, this, "top", "brown"));
 		
 		//monster
 		add(monster = new Monster(600, 600, this, 0));
