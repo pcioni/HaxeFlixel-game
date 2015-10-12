@@ -75,7 +75,8 @@ class PlayState extends FlxState {
 		 */
 		var x:Int = 1535;
 		var y:Int = 0;
-		var init, init2 :Bool = true;
+		var init:Bool = true;
+		var init2:Bool = true;
 		var shelfColors:Array<String> = ["red", "purple", "brown", "orange"];
 		
 		while ( x + y < 2450) {
