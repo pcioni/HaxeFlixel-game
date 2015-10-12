@@ -21,26 +21,28 @@ class Light extends FlxSprite
 	public static inline var LIGHT_R:Int = 160;
 	public static inline var CANVAS_SIZE:Int = LIGHT_R * 6;
 	
-	private var darkness:FlxSprite;
+	private var light:FlxSprite;
 	
-	public function new(X:Int, Y:Int, Darkness:FlxSprite, Parent:PlayState) 
+	public function new(X:Int, Y:Int, Parent:PlayState) 
 	{
 		super(X, Y);
+		makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK, false);
+		updateHitbox();
+		scrollFactor.x = scrollFactor.y = 0;
+		blend = BlendMode.MULTIPLY;
+		alpha = 0.9;
 		
-		loadGraphic("assets/images/light.png", false, 400, 400);
-		scale.set(2.0,2.0);
+		light = new FlxSprite();
+		light.loadGraphic("assets/images/light.png", false, 400, 400);
+		light.updateHitbox();
+		light.scale.set(2.0,2.0);
+		light.blend = BlendMode.SCREEN;
 		
-		this.darkness = Darkness;
-		this.blend = BlendMode.SCREEN;
+		this.stamp(light, Std.int(width / 2 - light.width / 2), Std.int(height / 2 - light.height / 2));
+		kill();
 		
 		
-		this.kill();
-	}
-	
-	override public function draw():Void {
-		var screenXY:FlxPoint = getScreenXY();
 		
-		darkness.stamp(this, Std.int(screenXY.x - this.width / 2), Std.int(screenXY.y - this.height / 2));
 	}
 	
 }

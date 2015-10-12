@@ -86,7 +86,7 @@ class PlayState extends FlxState {
 		darkness.blend = BlendMode.MULTIPLY;
 		darkness.alpha = 0.9;
 		
-		light = new Light(0, 0, darkness, this);
+		light = new Light(0, 0, this);
 		add(light);
 		add(darkness);
 		
@@ -150,9 +150,13 @@ class PlayState extends FlxState {
 		
 		//Checks if the light is toggled on then draws the light
 		if (player.lightOn) {
-			light.reset(player.getCenter().x, player.getCenter().y);
+			light.reset(player.getCenter().x-light.width/2, player.getCenter().y-light.height/2);
+			darkness.kill();
 		}
-		else { light.kill(); }
+		else { 
+			light.kill();
+			darkness.reset(0, 0);
+		}
 		
 		enemyGroup.forEachAlive(checkEnemyVision);
 		FlxG.overlap(player, enemyGroup, playerTouchEnemy);
@@ -174,14 +178,6 @@ class PlayState extends FlxState {
 			lastHitShelf.stopTimer();
 		}
 	}	
-	
-	//redraw the darkness
-	override public function draw():Void {
-		if (player.lightOn) {
-			FlxSpriteUtil.fill(darkness, FlxColor.BLACK);
-		}
-		super.draw();
-	}
 	
 	private function playerTouchShelf(P:Player, S:Shelf):Void {
 		if ( FlxG.keys.anyPressed(["E"]) ) {
