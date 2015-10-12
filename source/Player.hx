@@ -36,11 +36,11 @@ class Player extends FlxSprite
 		loadGraphic("assets/images/s_player_64x128.png", true, 64, 128);
 
 		animation.add("walkLR", [32,33,34,35,36,37,38,39], 15, false);
-		//animation.add("walkU", .., .., true);
-		//animation.add("walkD", .., .., true);
+		animation.add("walkU", [48, 49, 50, 51, 52, 53, 54], 15, false);
+		animation.add("walkD", [16, 17,18, 19, 20 ,21, 22, 23], 15, false);
 		//animation.add("idleLR", ..);
-		//animation.add("idleU", ..);
-		//animation.add("idleD", ..);
+		animation.add("idleU", [54], 1, false);
+		animation.add("idleD", [22], 1, false);
 		drag.set(RUN_SPEED * 9, RUN_SPEED * 9);
 		maxVelocity.set(RUN_SPEED * 2, RUN_SPEED * 2);
 		health = 100;
@@ -129,11 +129,11 @@ class Player extends FlxSprite
 		}
 		else {
 			if (velocity.y > 0) {
-				//animation.play("walkD");
+				animation.play("walkD");
 				front = true;
 			}
 			else if (velocity.y < 0) {
-				//animation.play("walkU");
+				animation.play("walkU");
 				front = false;
 			}
 			else {

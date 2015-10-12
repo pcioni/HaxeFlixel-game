@@ -22,10 +22,6 @@ class Light extends FlxSprite
 	public static inline var CANVAS_SIZE:Int = LIGHT_R * 6;
 	
 	private var darkness:FlxSprite;
-	private var circleIn:FlxSprite;
-	private var circleMid:FlxSprite;
-	private var circleOut:FlxSprite;
-	private var drawn:Bool = false;
 	
 	public function new(X:Int, Y:Int, Darkness:FlxSprite, Parent:PlayState) 
 	{
@@ -36,6 +32,7 @@ class Light extends FlxSprite
 		
 		this.darkness = Darkness;
 		this.blend = BlendMode.SCREEN;
+		
 		
 		this.kill();
 	}
