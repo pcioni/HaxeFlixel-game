@@ -41,6 +41,7 @@ class PlayState extends FlxState {
 	private var bookSnd:FlxSound;
 	private var deathSnd:FlxSound;
 	private var monsterRoarSnd:FlxSound;
+	private var level:FlxTilemap;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -50,6 +51,7 @@ class PlayState extends FlxState {
 		/*
 		 * Function that creates the reading bar
 		*/
+		level = new FlxTilemap();
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
 	
@@ -77,6 +79,9 @@ class PlayState extends FlxState {
 		overlay.alpha = 0.7;
 		add(overlay);
 		light = new Light(this);
+		
+		level.loadMap(Assets.getText("assets/data/map.txt"), "assets/data/tile_sheet.png", 64, 64,FlxTilemap.AUTO);
+		add(level);
 		
 		//keep track of the last shelf we interacted with
 		lastHitShelf = testShelf;
