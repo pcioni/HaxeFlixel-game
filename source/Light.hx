@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxPoint;
 import flixel.util.FlxSpriteUtil;
 import flixel.FlxState;
 import flixel.util.FlxColor;
@@ -10,60 +11,39 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import openfl.Assets;
 import flixel.tile.FlxTilemap;
+import openfl.display.BlendMode;
 
 /**
  * Light class that contains and draws the 3 circles of the light.
  */
-class Light
+class Light extends FlxSprite
 {
-	public static inline var LIGHT_R:Int = 140;
+	public static inline var LIGHT_R:Int = 160;
 	public static inline var CANVAS_SIZE:Int = LIGHT_R * 6;
-	var circleIn:FlxSprite;
-	var circleMid:FlxSprite;
-	var circleOut:FlxSprite;
+	
+	private var darkness:FlxSprite;
+	private var circleIn:FlxSprite;
+	private var circleMid:FlxSprite;
+	private var circleOut:FlxSprite;
 	private var drawn:Bool = false;
 	
-	public function new(Parent:PlayState) 
+	public function new(X:Int, Y:Int, Darkness:FlxSprite, Parent:PlayState) 
 	{
-		circleIn = new FlxSprite();
-		circleMid = new FlxSprite();
-		circleOut = new FlxSprite();
+		super(X, Y);
 		
-		circleIn.makeGraphic(CANVAS_SIZE, CANVAS_SIZE, FlxColor.TRANSPARENT, true);
-		circleMid.makeGraphic(CANVAS_SIZE, CANVAS_SIZE, FlxColor.TRANSPARENT, true);
-		circleOut.makeGraphic(CANVAS_SIZE, CANVAS_SIZE, FlxColor.TRANSPARENT, true);
+		loadGraphic("assets/images/light.png", false, 400, 400);
+		scale.set(2.0,2.0);
 		
-		FlxSpriteUtil.drawCircle(circleIn, -1, -1, LIGHT_R, FlxColor.WHITE);
-		circleIn.alpha = 0.5;
-		FlxSpriteUtil.drawCircle(circleMid, -1, -1, LIGHT_R * 2, FlxColor.WHITE);
-		circleMid.alpha = 0.25;
-		FlxSpriteUtil.drawCircle(circleOut, -1, -1, LIGHT_R * 3, FlxColor.WHITE);
-		circleOut.alpha = 0.125;
+		this.darkness = Darkness;
+		this.blend = BlendMode.SCREEN;
 		
-		Parent.add(circleIn);
-		Parent.add(circleMid);
-		Parent.add(circleOut);
-		
-		circleIn.kill();
-		circleMid.kill();
-		circleOut.kill();
+		this.kill();
 	}
 	
-	//draws each circle individually to create light effect
-	public function draw(X:Float=0, Y:Float=0):Void
-	{
-		circleIn.reset(X-CANVAS_SIZE/2,Y-CANVAS_SIZE/2);
-		circleMid.reset(X-CANVAS_SIZE/2,Y-CANVAS_SIZE/2);
-		circleOut.reset(X-CANVAS_SIZE/2,Y-CANVAS_SIZE/2);
+	override public function draw():Void {
+		var screenXY:FlxPoint = getScreenXY();
 		
-	}
-	
-	//clears all three circle sprites for new drawing
-	public function clear():Void 
-	{
-		circleIn.kill();
-		circleMid.kill();
-		circleOut.kill();
+		darkness.stamp(this, Std.int(screenXY.x - this.width / 2), Std.int(screenXY.y - this.height / 2));
 	}
 	
 }

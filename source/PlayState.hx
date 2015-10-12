@@ -14,6 +14,7 @@ import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxMath;
 import flixel.util.FlxSpriteUtil;
 import openfl.Assets;
+import openfl.display.BlendMode;
 
 
 /**
@@ -28,19 +29,23 @@ class PlayState extends FlxState {
 	var testShelf:Shelf;
 	var testShelf2:Shelf;
 	var lastHitShelf:Shelf;
+	
 	var readBar:FlxBar;
 	var useText:FlxText;
 	
 	var light:Light;
-	var overlay:FlxSprite;
+	var darkness:FlxSprite;
+	
 	var won:Bool;
 	var ending:Bool;
+	
 	private var enemyGroup:FlxTypedGroup<Monster>;
 	private var shelfGroup:FlxTypedGroup<Shelf>;
 
 	private var bookSnd:FlxSound;
 	private var deathSnd:FlxSound;
 	private var monsterRoarSnd:FlxSound;
+	
 	private var level:FlxTilemap;
 	
 	/**
@@ -74,14 +79,19 @@ class PlayState extends FlxState {
 		add(player = new Player(150, 50, this));
 		
 		//light
-		overlay = new FlxSprite();
-		overlay.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK, false);
-		overlay.alpha = 0.7;
-		add(overlay);
-		light = new Light(this);
+		darkness = new FlxSprite();
+		darkness.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK, false);
+		darkness.scrollFactor.x = darkness.scrollFactor.y = 0;
+		darkness.blend = BlendMode.MULTIPLY;
+		darkness.alpha = 0.9;
 		
-		level.loadMap(Assets.getText("assets/data/map.txt"), "assets/data/tile_sheet.png", 64, 64,FlxTilemap.AUTO);
-		add(level);
+		light = new Light(0, 0, darkness, this);
+		add(light);
+		add(darkness);
+		
+		
+		//level.loadMap(Assets.getText("assets/data/map.txt"), "assets/data/tile_sheet.png", 64, 64,FlxTilemap.AUTO);
+		//add(level);
 		
 		//keep track of the last shelf we interacted with
 		lastHitShelf = testShelf;
@@ -103,6 +113,7 @@ class PlayState extends FlxState {
 		add(healthBar);
 		healthBar.trackParent( -47, -40);
 		
+		//adding elements to groups
 		shelfGroup.add(testShelf);
 		shelfGroup.add(testShelf2);
 		
@@ -140,13 +151,11 @@ class PlayState extends FlxState {
 			return;
 		}
 		
-		//Clears the light
-		light.clear();
 		//Checks if the light is toggled on then draws the light
 		if (player.lightOn) {
-			light.draw(player.getCenter().x, player.getCenter().y);
-			player.stamp(player);
+			light.reset(player.getCenter().x, player.getCenter().y);
 		}
+		else { light.kill(); }
 		
 		enemyGroup.forEachAlive(checkEnemyVision);
 		FlxG.overlap(player, enemyGroup, playerTouchEnemy);
@@ -168,6 +177,12 @@ class PlayState extends FlxState {
 			lastHitShelf.stopTimer();
 		}
 	}	
+	
+	//redraw the darkness
+	override public function draw():Void {
+		FlxSpriteUtil.fill(darkness, FlxColor.BLACK);
+		super.draw();
+	}
 	
 	private function playerTouchShelf(P:Player, S:Shelf):Void {
 		if ( FlxG.keys.anyPressed(["E"]) ) {
