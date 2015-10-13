@@ -35,11 +35,11 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/images/boulder.png");
 	types.push("IMAGE");
-	urls.push("assets/images/brownShelfBottom.png");
+	urls.push("assets/images/greenShelfBottom.png");
 	types.push("IMAGE");
-	urls.push("assets/images/brownShelfLeft.png");
+	urls.push("assets/images/greenShelfLeft.png");
 	types.push("IMAGE");
-	urls.push("assets/images/brownShelfTop.png");
+	urls.push("assets/images/greenShelfTop.png");
 	types.push("IMAGE");
 	urls.push("assets/images/images-go-here.txt");
 	types.push("TEXT");
@@ -165,7 +165,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "4", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "17", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -3351,13 +3351,13 @@ var DefaultAssetLibrary = function() {
 	id = "assets/images/boulder.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
-	id = "assets/images/brownShelfBottom.png";
+	id = "assets/images/greenShelfBottom.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
-	id = "assets/images/brownShelfLeft.png";
+	id = "assets/images/greenShelfLeft.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
-	id = "assets/images/brownShelfTop.png";
+	id = "assets/images/greenShelfTop.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/images/images-go-here.txt";
@@ -4086,6 +4086,9 @@ MenuState.prototype = $extend(flixel_FlxState.prototype,{
 				flixel_FlxG.game._state.set_bgColor(-16777216);
 				flixel_FlxG.switchState(new CutSceneState());
 				break;
+			case 1:
+				flixel_FlxG.openURL("http://haxeflixel.com/documentation/cheat-sheet/",null);
+				break;
 			}
 		}
 		flixel_FlxState.prototype.update.call(this);
@@ -4107,7 +4110,7 @@ var Monster = function(X,Y,Parent,EType) {
 	this.animation.add("walkLR",[48,49,50],1,true);
 	this.animation.add("walkU",[32,33,34],1,true);
 	this.animation.add("walkD",[40,41,42],1,true);
-	this.animation.add("death",[0,1],1,true);
+	this.animation.add("death",[0,1,2,3,4,8,9,10,11,12,16,17,18,19,20,21,24],6,false);
 	this.animation.add("idle",[40]);
 	this.scale.set(2,2);
 	this._brain = new FSM($bind(this,this.idle));
@@ -4186,23 +4189,25 @@ Monster.prototype = $extend(flixel_FlxSprite.prototype,{
 	,monsterPatrol: function() {
 	}
 	,draw: function() {
-		if(this.velocity.x != 0) {
-			if(this.velocity.x > 0) {
-				this.set_facing(16);
-				this.set_flipX(true);
-				this.animation.play("walkLR");
-			} else if(this.velocity.x < 0) {
-				this.set_facing(1);
-				this.set_flipX(false);
-				this.animation.play("walkLR");
-			}
-		} else if(this.velocity.y > 0) {
-			this.set_facing(4096);
-			this.animation.play("walkD");
-		} else if(this.velocity.y < 0) {
-			this.set_facing(256);
-			this.animation.play("walkU");
-		} else this.animation.play("idle");
+		if(this.alive) {
+			if(this.velocity.x != 0) {
+				if(this.velocity.x > 0) {
+					this.set_facing(16);
+					this.set_flipX(true);
+					this.animation.play("walkLR");
+				} else if(this.velocity.x < 0) {
+					this.set_facing(1);
+					this.set_flipX(false);
+					this.animation.play("walkLR");
+				}
+			} else if(this.velocity.y > 0) {
+				this.set_facing(4096);
+				this.animation.play("walkD");
+			} else if(this.velocity.y < 0) {
+				this.set_facing(256);
+				this.animation.play("walkU");
+			} else this.animation.play("idle");
+		}
 		flixel_FlxSprite.prototype.draw.call(this);
 	}
 	,update: function() {
@@ -4211,8 +4216,16 @@ Monster.prototype = $extend(flixel_FlxSprite.prototype,{
 		flixel_FlxSprite.prototype.update.call(this);
 	}
 	,kill: function() {
-		if(!this.alive || !this.exists) return;
 		this.set_alive(false);
+		var timer = new flixel_util_FlxTimer(2,$bind(this,this.winGame),1);
+		if(!this.alive || !this.exists) {
+			this.speed = 0;
+			this.animation.play("death");
+			return;
+		}
+	}
+	,winGame: function(Timer) {
+		flixel_FlxG.switchState(new CutSceneState());
 	}
 	,__class__: Monster
 });
@@ -4277,11 +4290,18 @@ var Pentagram = function(X,Y,color) {
 	if(Y == null) Y = 0;
 	if(X == null) X = 0;
 	flixel_FlxSprite.call(this,X,Y);
+	this.updateHitbox();
 	this.charged = false;
 	this.set_immovable(true);
 	this.loadGraphic("assets/images/pent" + color + ".png",true,128,128);
-	this.animation.add("pulse",[0,1,2,3,4,5,4,3,2,1,0],5,true);
+	this.animation.add("pulse",[0,1,2,3,4,5,4,3,2,1,0],15,true);
 	this.animation.play("pulse");
+	var _g = this;
+	_g.set_width(_g.get_width() - 100);
+	var _g1 = this;
+	_g1.set_height(_g1.get_height() - 100);
+	this.offset.set_x(50);
+	this.offset.set_y(50);
 };
 $hxClasses["Pentagram"] = Pentagram;
 Pentagram.__name__ = ["Pentagram"];
@@ -4289,14 +4309,12 @@ Pentagram.__super__ = flixel_FlxSprite;
 Pentagram.prototype = $extend(flixel_FlxSprite.prototype,{
 	charged: null
 	,changeColor: function(color) {
-		if(color != "charged") {
-			this.loadGraphic("assets/images/pent" + color + ".png",true,128,128);
-			this.animation.play("pulse");
-		} else {
+		if(color != "charged") this.loadGraphic("assets/images/pent" + color + ".png",true,128,128); else {
 			this.charged = true;
 			this.loadGraphic("assets/images/pentCharged.png",true,128,128);
-			this.animation.play("pulse");
 		}
+		this.animation.add("pulse",[0,1,2,3,4,5,4,3,2,1,0],15,true);
+		this.animation.play("pulse");
 	}
 	,__class__: Pentagram
 });
@@ -4308,6 +4326,7 @@ var PlayState = function(MaxSize) {
 $hxClasses["PlayState"] = PlayState;
 PlayState.__name__ = ["PlayState"];
 PlayState.pentagram = null;
+PlayState.goalShelves = null;
 PlayState.currentSequence = null;
 PlayState.__super__ = flixel_FlxState;
 PlayState.prototype = $extend(flixel_FlxState.prototype,{
@@ -4323,6 +4342,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,readBar: null
 	,useText: null
 	,light: null
+	,pentaLight: null
 	,darkness: null
 	,won: null
 	,ending: null
@@ -4339,6 +4359,9 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,monsterRoarSnd: null
 	,level: null
 	,create: function() {
+		this.level = new flixel_tile_FlxTilemap();
+		this.level.loadMap(openfl_Assets.getText("assets/data/map.csv"),"assets/data/tile_sheet.png",64,64);
+		this.add(this.level);
 		flixel_FlxG.game._state.set_bgColor(-12171706);
 		flixel_FlxG.sound.playMusic("assets/music/bgm.ogg");
 		flixel_FlxG["debugger"].visible;
@@ -4368,7 +4391,8 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.shelfGroup.add(this.t3);
 		this.shelfGroup.add(this.t4);
 		this.shelfGroup.add(this.t5);
-		this.add(PlayState.pentagram = new Pentagram(678,322,this.tmp.myColor));
+		PlayState.goalShelves = [this.tmp,this.t2,this.t3,this.t4,this.t5];
+		this.add(PlayState.pentagram = new Pentagram(730,390,this.tmp.myColor));
 		PlayState.currentSequence = 1;
 		this.lastHitShelf = this.tmp;
 		this.add(this.monster = new Monster(600,600,this,0));
@@ -4380,6 +4404,10 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.darkness.set_alpha(0.8);
 		this.light = new Light(0,0,this.darkness,this);
 		this.add(this.light);
+		this.pentaLight = new flixel_FlxSprite();
+		this.pentaLight.loadGraphic("assets/images/light.png",false,400,400);
+		this.pentaLight.set_blend(openfl_display_BlendMode.SCREEN);
+		this.darkness.stamp(this.pentaLight,Std["int"](PlayState.pentagram.x - this.pentaLight.get_width() / 2),Std["int"](PlayState.pentagram.y - this.pentaLight.get_height() / 2));
 		this.add(this.darkness);
 		this.add(this.readBar = new flixel_ui_FlxBar(50,50,1,150,20,this.player,"testShelf.timer.progress",0.0,1.0,true));
 		this.readBar.trackParent(-47,-30);
@@ -4439,6 +4467,12 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 				this.lastHitShelf.stopTimer();
 			}
 		} else if(this.player.animation.get_finished()) flixel_FlxG.camera.fade(-16777216,.33,false,$bind(this,this.doneFadeout));
+		if(PlayState.pentagram.charged) {
+			if(flixel_FlxG.overlap(PlayState.pentagram,this.monster)) {
+				this.monster.kill();
+				this.monster.set_solid(false);
+			}
+		}
 		if(this.player.lightOn) {
 			this.light.reset(this.player.getCenter().x - this.light.get_width() / 2,this.player.getCenter().y - this.light.get_height() / 2);
 			this.darkness.kill();
@@ -4483,6 +4517,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,playerTouchShelf: function(P,S) {
 		if(flixel_FlxG.keys.checkKeyStatus(["E"],1)) {
+			this.bookSnd.play(true);
 			this.lastHitShelf = S;
 			this.readBar.set_currentValue(S.timer.get_progress());
 			S.startTimer();
@@ -4539,6 +4574,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			var dist = flixel_util_FlxMath.getDistance(m_pos,p_pos);
 			var radius = this.light.getRadius();
 			if(this.player.lightOn) {
+				this.monsterRoarSnd.play();
 				M.seesPlayer = true;
 				M.speed = 60;
 				M.playerPos.copyFrom(this.player.getMidpoint());
@@ -4580,7 +4616,7 @@ var Player = function(X,Y,Parent) {
 	this.animation.add("death",[0,1,2],1,false);
 	this.drag.set(1440,1440);
 	this.maxVelocity.set(320,320);
-	this.health = 100000;
+	this.health = 100;
 	this.set_facing(16);
 	this.parent = Parent;
 	this.updateHitbox();
@@ -4757,6 +4793,7 @@ var Shelf = function(X,Y,Parent,position,color) {
 	this.parent = Parent;
 	this.myColor = color;
 	this.resetTimer = false;
+	this.mySequenceNum = -1;
 	if(position == "left") {
 		this.loadGraphic("assets/images/" + color + "ShelfLeft.png",true,90,128);
 		var _g = this;
@@ -4795,16 +4832,16 @@ Shelf.prototype = $extend(flixel_FlxSprite.prototype,{
 		}
 	}
 	,readBook: function(Timer) {
-		haxe_Log.trace("reading mySeq = " + this.mySequenceNum + " || currSeq = " + PlayState.currentSequence,{ fileName : "Shelf.hx", lineNumber : 72, className : "Shelf", methodName : "readBook"});
+		haxe_Log.trace("reading mySeq = " + this.mySequenceNum + " || currSeq = " + PlayState.currentSequence,{ fileName : "Shelf.hx", lineNumber : 73, className : "Shelf", methodName : "readBook"});
 		if(this.mySequenceNum == PlayState.currentSequence) {
-			haxe_Log.trace("changing playstate from " + PlayState.currentSequence + " to " + (PlayState.currentSequence + 1),{ fileName : "Shelf.hx", lineNumber : 75, className : "Shelf", methodName : "readBook"});
+			haxe_Log.trace("changing playstate from " + PlayState.currentSequence + " to " + (PlayState.currentSequence + 1),{ fileName : "Shelf.hx", lineNumber : 76, className : "Shelf", methodName : "readBook"});
 			if(PlayState.currentSequence == 5) {
-				haxe_Log.trace("kill state triggered",{ fileName : "Shelf.hx", lineNumber : 78, className : "Shelf", methodName : "readBook"});
+				haxe_Log.trace("kill state triggered",{ fileName : "Shelf.hx", lineNumber : 79, className : "Shelf", methodName : "readBook"});
 				PlayState.pentagram.changeColor("charged");
 				PlayState.currentSequence += 1;
 			} else {
 				PlayState.currentSequence += 1;
-				PlayState.pentagram.changeColor(this.myColor);
+				PlayState.pentagram.changeColor(PlayState.goalShelves[PlayState.currentSequence - 1].myColor);
 			}
 		}
 		this.resetTimer = true;
@@ -55319,9 +55356,9 @@ AssetPaths.map__csv = "assets/data/map.csv";
 AssetPaths.mapeditor__csv = "assets/data/mapeditor.csv";
 AssetPaths.tile_sheet__png = "assets/data/tile_sheet.png";
 AssetPaths.boulder__png = "assets/images/boulder.png";
-AssetPaths.brownShelfBottom__png = "assets/images/brownShelfBottom.png";
-AssetPaths.brownShelfLeft__png = "assets/images/brownShelfLeft.png";
-AssetPaths.brownShelfTop__png = "assets/images/brownShelfTop.png";
+AssetPaths.greenShelfBottom__png = "assets/images/greenShelfBottom.png";
+AssetPaths.greenShelfLeft__png = "assets/images/greenShelfLeft.png";
+AssetPaths.greenShelfTop__png = "assets/images/greenShelfTop.png";
 AssetPaths.images_go_here__txt = "assets/images/images-go-here.txt";
 AssetPaths.light__png = "assets/images/light.png";
 AssetPaths.orangeShelfBottom__png = "assets/images/orangeShelfBottom.png";

@@ -129,12 +129,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/data/tile_sheet.png", AssetType.IMAGE);
 		className.set ("assets/images/boulder.png", __ASSET__assets_images_boulder_png);
 		type.set ("assets/images/boulder.png", AssetType.IMAGE);
-		className.set ("assets/images/brownShelfBottom.png", __ASSET__assets_images_brownshelfbottom_png);
-		type.set ("assets/images/brownShelfBottom.png", AssetType.IMAGE);
-		className.set ("assets/images/brownShelfLeft.png", __ASSET__assets_images_brownshelfleft_png);
-		type.set ("assets/images/brownShelfLeft.png", AssetType.IMAGE);
-		className.set ("assets/images/brownShelfTop.png", __ASSET__assets_images_brownshelftop_png);
-		type.set ("assets/images/brownShelfTop.png", AssetType.IMAGE);
+		className.set ("assets/images/greenShelfBottom.png", __ASSET__assets_images_greenshelfbottom_png);
+		type.set ("assets/images/greenShelfBottom.png", AssetType.IMAGE);
+		className.set ("assets/images/greenShelfLeft.png", __ASSET__assets_images_greenshelfleft_png);
+		type.set ("assets/images/greenShelfLeft.png", AssetType.IMAGE);
+		className.set ("assets/images/greenShelfTop.png", __ASSET__assets_images_greenshelftop_png);
+		type.set ("assets/images/greenShelfTop.png", AssetType.IMAGE);
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
 		type.set ("assets/images/images-go-here.txt", AssetType.TEXT);
 		className.set ("assets/images/light.png", __ASSET__assets_images_light_png);
@@ -266,15 +266,15 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/brownShelfBottom.png";
+		id = "assets/images/greenShelfBottom.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/brownShelfLeft.png";
+		id = "assets/images/greenShelfLeft.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/brownShelfTop.png";
+		id = "assets/images/greenShelfTop.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -518,14 +518,14 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/images/boulder.png", __ASSET__assets_images_boulder_png);
 		type.set ("assets/images/boulder.png", AssetType.IMAGE);
 		
-		className.set ("assets/images/brownShelfBottom.png", __ASSET__assets_images_brownshelfbottom_png);
-		type.set ("assets/images/brownShelfBottom.png", AssetType.IMAGE);
+		className.set ("assets/images/greenShelfBottom.png", __ASSET__assets_images_greenshelfbottom_png);
+		type.set ("assets/images/greenShelfBottom.png", AssetType.IMAGE);
 		
-		className.set ("assets/images/brownShelfLeft.png", __ASSET__assets_images_brownshelfleft_png);
-		type.set ("assets/images/brownShelfLeft.png", AssetType.IMAGE);
+		className.set ("assets/images/greenShelfLeft.png", __ASSET__assets_images_greenshelfleft_png);
+		type.set ("assets/images/greenShelfLeft.png", AssetType.IMAGE);
 		
-		className.set ("assets/images/brownShelfTop.png", __ASSET__assets_images_brownshelftop_png);
-		type.set ("assets/images/brownShelfTop.png", AssetType.IMAGE);
+		className.set ("assets/images/greenShelfTop.png", __ASSET__assets_images_greenshelftop_png);
+		type.set ("assets/images/greenShelfTop.png", AssetType.IMAGE);
 		
 		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
 		type.set ("assets/images/images-go-here.txt", AssetType.TEXT);
@@ -1403,9 +1403,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_data_mapeditor_csv extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_data_tile_sheet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_boulder_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_images_brownshelfbottom_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_images_brownshelfleft_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_images_brownshelftop_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_greenshelfbottom_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_greenshelfleft_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_greenshelftop_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_images_go_here_txt extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_images_light_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_orangeshelfbottom_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1536,9 +1536,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:file("assets/data/mapeditor.csv") #if display private #end class __ASSET__assets_data_mapeditor_csv extends lime.utils.ByteArray {}
 @:image("assets/data/tile_sheet.png") #if display private #end class __ASSET__assets_data_tile_sheet_png extends lime.graphics.Image {}
 @:image("assets/images/boulder.png") #if display private #end class __ASSET__assets_images_boulder_png extends lime.graphics.Image {}
-@:image("assets/images/brownShelfBottom.png") #if display private #end class __ASSET__assets_images_brownshelfbottom_png extends lime.graphics.Image {}
-@:image("assets/images/brownShelfLeft.png") #if display private #end class __ASSET__assets_images_brownshelfleft_png extends lime.graphics.Image {}
-@:image("assets/images/brownShelfTop.png") #if display private #end class __ASSET__assets_images_brownshelftop_png extends lime.graphics.Image {}
+@:image("assets/images/greenShelfBottom.png") #if display private #end class __ASSET__assets_images_greenshelfbottom_png extends lime.graphics.Image {}
+@:image("assets/images/greenShelfLeft.png") #if display private #end class __ASSET__assets_images_greenshelfleft_png extends lime.graphics.Image {}
+@:image("assets/images/greenShelfTop.png") #if display private #end class __ASSET__assets_images_greenshelftop_png extends lime.graphics.Image {}
 @:file("assets/images/images-go-here.txt") #if display private #end class __ASSET__assets_images_images_go_here_txt extends lime.utils.ByteArray {}
 @:image("assets/images/light.png") #if display private #end class __ASSET__assets_images_light_png extends lime.graphics.Image {}
 @:image("assets/images/orangeShelfBottom.png") #if display private #end class __ASSET__assets_images_orangeshelfbottom_png extends lime.graphics.Image {}

@@ -54,15 +54,15 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/brownShelfBottom.png");
+		urls.push ("assets/images/greenShelfBottom.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/brownShelfLeft.png");
+		urls.push ("assets/images/greenShelfLeft.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/brownShelfTop.png");
+		urls.push ("assets/images/greenShelfTop.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -330,7 +330,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "4",
+			build: "17",
 			company: "HaxeFlixel",
 			file: "Haxegame",
 			fps: 60,

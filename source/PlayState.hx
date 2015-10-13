@@ -345,8 +345,6 @@ class PlayState extends FlxState {
 	private function spawnBoulders(x, y) {
 			var randomFloat = FlxRandom.floatRanged(0.3, .7);
 			var newBoulder = new Boulder(x, y, randomFloat, randomFloat, this, 1);
-			newBoulder.updateHitbox();
-			newBoulder.offset.set( -1, -10);
 			add(newBoulder);
 			boulderGroup.add(newBoulder);
 	}
