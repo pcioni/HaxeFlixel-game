@@ -27,7 +27,8 @@ class PlayState extends FlxState {
 	var player:Player;
 	var monster:Monster;
 	var healthBar:FlxBar;
-	
+	var recoveryTime: Int = 100;
+
 	var tmp:Shelf;
 	var lastHitShelf:Shelf;
 	
@@ -78,7 +79,7 @@ class PlayState extends FlxState {
 		var init:Bool = true;
 		var init2:Bool = true;
 		var shelfColors:Array<String> = ["red", "purple", "brown", "orange"];
-		
+
 		while ( x + y < 2450) {
 			if (x > 60 && y < 300) {
 				add( tmp = new Shelf(x, y, this, "top", FlxRandom.getObject(shelfColors, 0) ) );
@@ -177,7 +178,32 @@ class PlayState extends FlxState {
 		{
 			return;
 		}
-		
+		if (player.alive) {
+			if (player.invulnerable == true) {
+				recoveryTime -= 1;
+				if (recoveryTime == 0) {
+					player.invulnerable = false;
+					recoveryTime = 100;
+				}
+			}
+			enemyGroup.forEachAlive(checkEnemyVision);
+			FlxG.overlap(player, enemyGroup, playerTouchEnemy);
+			
+			if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) && player.lightOn ) {
+			player.touchingShelf = true;
+		}
+		else {
+			player.touchingShelf = false;
+			readBar.kill();
+			useText.kill();
+			lastHitShelf.stopTimer();
+		}
+		}
+		else {
+			if (player.animation.finished) {
+				FlxG.camera.fade(FlxColor.BLACK, .33, false, doneFadeout);
+			}
+		}
 		//Checks if the light is toggled on then draws the light
 		if (player.lightOn) {
 			light.reset(player.getCenter().x-light.width/2, player.getCenter().y-light.height/2);
@@ -187,10 +213,7 @@ class PlayState extends FlxState {
 			light.kill();
 			darkness.reset(0, 0);
 		}
-		
-		enemyGroup.forEachAlive(checkEnemyVision);
-		FlxG.overlap(player, enemyGroup, playerTouchEnemy);
-
+	
 		// move our useText to our players head
 		useText.x = player.x + 22;
 		useText.y = player.y - 150;
@@ -198,17 +221,14 @@ class PlayState extends FlxState {
 		//ai
 		// check if we're colliding with any shelf in our shelf group.
 		// if we do, call playerTouchShelf.
-		if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) && player.lightOn ) {
-			player.touchingShelf = true;
-		}
-		else {
-			player.touchingShelf = false;
-			readBar.kill();
-			useText.kill();
-			lastHitShelf.stopTimer();
-		}
 	}	
-	
+	private function spawnMonster() {
+			var randomX = FlxRandom.intRanged(0, 1200);
+			var randomY = FlxRandom.intRanged(0, 600);
+			var newMonster = new Monster(FlxG.width/2, FlxG.height/2, this, 0);
+			add(newMonster);
+			enemyGroup.add(newMonster);
+	}
 	private function playerTouchShelf(P:Player, S:Shelf):Void {
 		if ( FlxG.keys.anyPressed(["E"]) ) {
 			lastHitShelf = S;
@@ -227,21 +247,54 @@ class PlayState extends FlxState {
 	}
 	private function playerTouchEnemy(P:Player, M:Monster):Void
 	{
-		P.hurt(20);
-		if (P.health == 0) {
-			FlxG.camera.fade(FlxColor.BLACK, .33, false, doneFadeout);
+				if (P.invulnerable == false) {
+			P.hurt(34);
+			M.x = 0;
+			M.y = 0;
+			P.invulnerable = true;
 		}
+		if (P.health <= 0 ) {
+			//if we havent died yet
+			if (P.alive) {
+				//play the death animation
+				P.kill();
+			
+			}
+	
+			//on completion, switch to end state/cut scene
+				
+			}
 	}
 	private function doneFadeout():Void {
 	FlxG.switchState(new GameOver(won, 0));	
 	}
 	private function checkEnemyVision(M:Monster):Void {
+		
 		var m_pos = M.getMidpoint();
 		var p_pos = player.getMidpoint();
 		var dist = m_pos.distanceTo(p_pos);
-		if (dist < 100 || player.lightOn) {
+
+		//Light radius
+		var radius = 160;
+		
+		// Each if statement represents the radius of the rings inside the light
+		// The outermost loop is the outermost ring
+		// The monster constantly checks its position and increases speed as he gets closer to the enemy
+		if (dist < radius*3 || player.lightOn) {
 			M.seesPlayer = true;
+			M.speed = 60;
+		
 			M.playerPos.copyFrom(player.getMidpoint());
+			if (dist < radius * 2 || player.lightOn) {
+				M.speed = 70;
+				M.playerPos.copyFrom(player.getMidpoint());
+				if (dist < radius || player.lightOn) {
+					M.speed = 80;			
+					M.playerPos.copyFrom(player.getMidpoint());
+
+				}
+			}
+
 		}
 		else {
 			M.seesPlayer = false;

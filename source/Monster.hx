@@ -9,6 +9,8 @@ import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRandom;
 import flixel.util.FlxVelocity;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
 using flixel.util.FlxSpriteUtil;
 import FSM;
 
@@ -18,7 +20,7 @@ import FSM;
  */
 class Monster extends FlxSprite
 {
-	public var speed:Float = 75;
+	public var speed:Float = 60;
 	public var etype(default, null):Int;
 	private var _brain: FSM;
 	private var _idleTmr:Float;
@@ -95,6 +97,8 @@ class Monster extends FlxSprite
 		else
 		{
 			FlxVelocity.moveTowardsPoint(this, playerPos, Std.int(speed));
+			//FlxTween.tween(this, { x:100, y:200 }, 3.0, { ease: FlxEase.quadInOut, complete: myCallback });
+
 			
 		}
 	}
@@ -110,13 +114,17 @@ class Monster extends FlxSprite
 			//trace(randomPos);
 			//FlxVelocity.moveTowardsPoint(this, randomPos, Std.int(speed));
 			generateRandomPoint();
-
+			//FlxTween.tween(this, { x:randomX, y:randomY }, 3.0, { ease: FlxEase.quadInOut } );
+			//FlxTween.cubicMotion(this, 0, 0, 500, 100, 400, 200, 100, 100, 2, { ease: FlxEase.quadInOut, type: FlxTween.LOOPING });
 		}
 	}
+	//generate a random point while wandering
+	
 	private function generateRandomPoint():Void {
+		var randomX = FlxRandom.intRanged(0, 1200);
+		var randomY = FlxRandom.intRanged(0, 600);
+
 		if (!wandering) {
-			var randomX = FlxRandom.intRanged(0, 1000);
-			var randomY = FlxRandom.intRanged(0, 400);
 			randomPos = new FlxPoint(randomX, randomY);
 			wandering = true;
 		}
@@ -128,7 +136,17 @@ class Monster extends FlxSprite
 				wandering = false;
 			}
 		}
+		//FlxTween.tween(this, { x:200, y:600 }, 3.0, { ease: FlxEase.quadInOut, type: FlxTween.PINGPONG});
+
 		FlxVelocity.moveTowardsPoint(this, randomPos, Std.int(speed));
+	}
+	private function tweenMonster():Void {
+		FlxTween.tween(this, { x:300, y:400 }, 3.0, { ease: FlxEase.quadInOut});
+		//return a tween for each monster.
+	}
+	//
+	private function monsterPatrol():Void {
+		//patrol state
 	}
 	public override function draw():Void
 	{

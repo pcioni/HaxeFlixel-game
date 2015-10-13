@@ -25,6 +25,8 @@ class Player extends FlxSprite
 	var centerX:Int;
 	var centerY:Int; 
 	public var touchingShelf:Bool = false;
+	public var invulnerable:Bool = true;
+
 		
 	private var candleSnd:FlxSound;
 	private var stepSnd:FlxSound;
@@ -41,6 +43,8 @@ class Player extends FlxSprite
 		animation.add("idleLR", [5], 1, false);
 		animation.add("idleU", [4], 1, false);
 		animation.add("idleD", [3], 1, false);
+		animation.add("death", [0, 1, 2], 1, false);
+
 		drag.set(RUN_SPEED * 9, RUN_SPEED * 9);
 		maxVelocity.set(RUN_SPEED * 2, RUN_SPEED * 2);
 		health = 100;
@@ -70,6 +74,7 @@ class Player extends FlxSprite
 		acceleration.y = 0;
 		
 		//check inputs and assign corresponding acceleration
+		if (alive){
 		if (FlxG.keys.anyPressed(["LEFT", "A"])) {
 			if (x > PADDING) {
 				stepSnd.play(true);
@@ -150,11 +155,23 @@ class Player extends FlxSprite
 				}
 			}
 		}
+		}
 		//set center of sprite
 		centerX = Std.int(x + width/2);
 		centerY = Std.int(y + height/2);
 		super.update();
 		
+	}
+	override public function kill():Void
+	{
+		  if (!alive || !exists)
+		  {
+			return;
+		  }
+		  alive = false;
+		  animation.play("death", true);
+		  
+		 
 	}
 	
 }
