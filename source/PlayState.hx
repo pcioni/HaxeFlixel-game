@@ -46,6 +46,12 @@ class PlayState extends FlxState {
 	var won:Bool;
 	var ending:Bool;
 	
+	var t1:Shelf;
+	var t2:Shelf;
+	var t3:Shelf;
+	var t4:Shelf;
+	var t5:Shelf;
+	
 	private var enemyGroup:FlxTypedGroup<Monster>;
 	private var shelfGroup:FlxTypedGroup<Shelf>;
 	private var boulderGroup:FlxTypedGroup<Boulder>;
@@ -55,6 +61,8 @@ class PlayState extends FlxState {
 	private var monsterRoarSnd:FlxSound;
 	
 	private var level:FlxTilemap;
+	
+	public static var currentSequence:Int;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -87,7 +95,9 @@ class PlayState extends FlxState {
 		var init:Bool = true;
 		var init2:Bool = true;
 		var shelfColors:Array<String> = ["red", "purple", "brown", "orange"];
-
+		
+		
+		/*
 		while ( x + y < 2450) {
 			if (x > 60 && y < 300) {
 				add( tmp = new Shelf(x, y, this, "top", FlxRandom.getObject(shelfColors, 0) ) );
@@ -113,6 +123,30 @@ class PlayState extends FlxState {
 			}
 			shelfGroup.add(tmp);
 		}
+		*/
+		
+		add( t1 = new Shelf(300, 150, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		add( t2 = new Shelf(300, 300, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		add( t3 = new Shelf(300, 450, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		add( t4 = new Shelf(300, 600, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		add( t5 = new Shelf(300, 750, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		
+		t1.mySequenceNum = 1;
+		t2.mySequenceNum = 2;
+		t3.mySequenceNum = 3;
+		t4.mySequenceNum = 4;
+		t5.mySequenceNum = 5;
+		
+		shelfGroup.add(t1);
+		shelfGroup.add(t2);
+		shelfGroup.add(t3);
+		shelfGroup.add(t4);
+		shelfGroup.add(t5);
+		
+		currentSequence = 1;
+		
+		//keep track of the last shelf we interacted with
+		lastHitShelf = t1;
 
 		//monster
 		add(monster = new Monster(600, 600, this, 0));
@@ -130,9 +164,7 @@ class PlayState extends FlxState {
 		light = new Light(0, 0, this);
 		add(light);
 		add(darkness);
-		
-		//keep track of the last shelf we interacted with
-		lastHitShelf = tmp;
+	
 		
 		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
 		add( readBar = new FlxBar(50, 50, FlxBar.FILL_LEFT_TO_RIGHT, 150, 20, player, "testShelf.timer.progress", 0.0, 1.0, true) );

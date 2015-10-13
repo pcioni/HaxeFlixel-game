@@ -32,6 +32,8 @@ class Player extends FlxSprite
 	private var candleSnd:FlxSound;
 	private var stepSnd:FlxSound;
 	
+	public var currentSequenceNumber:Int;
+	
 	public function new(X:Float=0, Y:Float=0, Parent:PlayState) {
 		super(X, Y);
 
@@ -58,6 +60,8 @@ class Player extends FlxSprite
 		
 		candleSnd = FlxG.sound.load(AssetPaths.candle__wav);
 		stepSnd = FlxG.sound.load(AssetPaths.step__wav);
+		
+		currentSequenceNumber = 1;
 	}
 	
 	override public function destroy():Void {
@@ -113,11 +117,9 @@ class Player extends FlxSprite
 			if (FlxG.keys.anyPressed(["E"])) {
 				if (touchingShelf) { 
 					reading = true;
-					trace("Touching shelf & interacting"); 
 				}
 				else {
 					reading = false;
-					trace("Not touching shelf & interacting");  
 				}
 			}
 			else { reading = false; }
