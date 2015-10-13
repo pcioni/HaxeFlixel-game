@@ -51,6 +51,16 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/images/orangeShelfTop.png");
 	types.push("IMAGE");
+	urls.push("assets/images/pentCharged.png");
+	types.push("IMAGE");
+	urls.push("assets/images/pentgreen.png");
+	types.push("IMAGE");
+	urls.push("assets/images/pentorange.png");
+	types.push("IMAGE");
+	urls.push("assets/images/pentpurple.png");
+	types.push("IMAGE");
+	urls.push("assets/images/pentred.png");
+	types.push("IMAGE");
 	urls.push("assets/images/purpleShelfBottom.png");
 	types.push("IMAGE");
 	urls.push("assets/images/purpleShelfLeft.png");
@@ -69,24 +79,26 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/images/s_book_512x216.png");
 	types.push("IMAGE");
+	urls.push("assets/images/s_boulder_160x128.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_cutscene_1.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_cutscene_2.png");
+	types.push("IMAGE");
 	urls.push("assets/images/s_heart_32x32.png");
 	types.push("IMAGE");
 	urls.push("assets/images/s_heart_64x64.png");
 	types.push("IMAGE");
 	urls.push("assets/images/s_monster_128x128.png");
 	types.push("IMAGE");
-	urls.push("assets/images/s_pent_charged_128x128.png");
-	types.push("IMAGE");
-	urls.push("assets/images/s_pent_orange_128x128.png");
-	types.push("IMAGE");
-	urls.push("assets/images/s_pent_purple_128x128.png");
-	types.push("IMAGE");
-	urls.push("assets/images/s_pent_red_128x128.png");
-	types.push("IMAGE");
 	urls.push("assets/images/s_player_64x128.png");
 	types.push("IMAGE");
 	urls.push("assets/images/s_title_1600x900.png");
 	types.push("IMAGE");
+	urls.push("assets/images/s_wip_cultist.png");
+	types.push("IMAGE");
+	urls.push("assets/music/bgm.ogg");
+	types.push("MUSIC");
 	urls.push("assets/music/music-goes-here.txt");
 	types.push("TEXT");
 	urls.push("assets/sounds/book_multiple_pages.wav");
@@ -153,7 +165,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "90", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "4", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -172,7 +184,6 @@ ApplicationMain.start = function() {
 	if(hasMain) Reflect.callMethod(entryPoint,Reflect.field(entryPoint,"main"),[]); else {
 		var instance = Type.createInstance(DocumentClass,[]);
 	}
-	if(openfl_Lib.current.stage.window.__fullscreen) openfl_Lib.current.stage.dispatchEvent(new openfl_events_FullScreenEvent(openfl_events_FullScreenEvent.FULL_SCREEN,false,false,true,true));
 	openfl_Lib.current.stage.dispatchEvent(new openfl_events_Event(openfl_events_Event.RESIZE,false,false));
 };
 var openfl_events_IEventDispatcher = function() { };
@@ -375,7 +386,6 @@ openfl_display_DisplayObject.prototype = $extend(openfl_events_EventDispatcher.p
 	,__worldTransform: null
 	,__alpha: null
 	,__blendMode: null
-	,__children: null
 	,__filters: null
 	,__graphics: null
 	,__interactive: null
@@ -707,18 +717,12 @@ openfl_display_DisplayObject.prototype = $extend(openfl_events_EventDispatcher.p
 		return this.__mask = value;
 	}
 	,get_mouseX: function() {
-		var mouseX;
-		if(this.stage != null) mouseX = this.stage.__mouseX; else mouseX = openfl_Lib.current.stage.__mouseX;
-		var mouseY;
-		if(this.stage != null) mouseY = this.stage.__mouseY; else mouseY = openfl_Lib.current.stage.__mouseY;
-		return this.__getWorldTransform().__transformInverseX(mouseX,mouseY);
+		if(this.stage != null) return this.__getWorldTransform().__transformInverseX(this.stage.__mouseX,this.stage.__mouseY);
+		return 0;
 	}
 	,get_mouseY: function() {
-		var mouseX;
-		if(this.stage != null) mouseX = this.stage.__mouseX; else mouseX = openfl_Lib.current.stage.__mouseX;
-		var mouseY;
-		if(this.stage != null) mouseY = this.stage.__mouseY; else mouseY = openfl_Lib.current.stage.__mouseY;
-		return this.__getWorldTransform().__transformInverseY(mouseX,mouseY);
+		if(this.stage != null) return this.__getWorldTransform().__transformInverseY(this.stage.__mouseX,this.stage.__mouseY);
+		return 0;
 	}
 	,get_name: function() {
 		return this.__name;
@@ -940,6 +944,7 @@ openfl_display_DisplayObjectContainer.prototype = $extend(openfl_display_Interac
 	mouseChildren: null
 	,numChildren: null
 	,tabChildren: null
+	,__children: null
 	,__removedChildren: null
 	,addChild: function(child) {
 		if(child != null) {
@@ -1054,17 +1059,6 @@ openfl_display_DisplayObjectContainer.prototype = $extend(openfl_display_Interac
 			this.removeChildAt(beginIndex);
 			numRemovals--;
 		}
-	}
-	,resolve: function(fieldName) {
-		if(this.__children == null) return null;
-		var _g = 0;
-		var _g1 = this.__children;
-		while(_g < _g1.length) {
-			var child = _g1[_g];
-			++_g;
-			if(child.get_name() == fieldName) return child;
-		}
-		return null;
 	}
 	,setChildIndex: function(child,index) {
 		if(index >= 0 && index <= this.__children.length && child.parent == this) {
@@ -2801,7 +2795,7 @@ var Boulder = function(X,Y,scaleX,scaleY,Parent,EType) {
 	if(X == null) X = 0;
 	this.speed = 60;
 	flixel_FlxSprite.call(this,X,Y);
-	this.loadGraphic("assets/images/boulder.png",true,160,128);
+	this.loadGraphic("assets/images/s_boulder_160x128.png",true,160,128);
 	this.scale.set(scaleX,scaleY);
 	this.updateHitbox();
 	this.parent = Parent;
@@ -2815,13 +2809,445 @@ Boulder.prototype = $extend(flixel_FlxSprite.prototype,{
 	,randomPos: null
 	,parent: null
 	,generateRandomPoint: function() {
-		var randomX = flixel_util_FlxRandom.intRanged(0,1200);
-		var randomY = flixel_util_FlxRandom.intRanged(0,600);
+		var randomX = flixel_util_FlxRandom.intRanged(100,1500);
+		var randomY = flixel_util_FlxRandom.intRanged(180,660);
 	}
 	,update: function() {
 		flixel_FlxSprite.prototype.update.call(this);
 	}
 	,__class__: Boulder
+});
+var flixel_group_FlxTypedGroup = function(MaxSize) {
+	if(MaxSize == null) MaxSize = 0;
+	this._marker = 0;
+	this.length = 0;
+	flixel_FlxBasic.call(this);
+	this.members = [];
+	this.set_maxSize(Std["int"](Math.abs(MaxSize)));
+	this.collisionType = 2;
+};
+$hxClasses["flixel.group.FlxTypedGroup"] = flixel_group_FlxTypedGroup;
+flixel_group_FlxTypedGroup.__name__ = ["flixel","group","FlxTypedGroup"];
+flixel_group_FlxTypedGroup.__super__ = flixel_FlxBasic;
+flixel_group_FlxTypedGroup.prototype = $extend(flixel_FlxBasic.prototype,{
+	members: null
+	,maxSize: null
+	,length: null
+	,_marker: null
+	,destroy: function() {
+		flixel_FlxBasic.prototype.destroy.call(this);
+		if(this.members != null) {
+			var i = 0;
+			var basic = null;
+			while(i < this.length) {
+				basic = this.members[i++];
+				if(basic != null) basic.destroy();
+			}
+			this.members = null;
+		}
+	}
+	,update: function() {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && basic.exists && basic.active) basic.update();
+		}
+	}
+	,draw: function() {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && basic.exists && basic.visible) basic.draw();
+		}
+	}
+	,add: function(Object) {
+		if(Object == null) {
+			flixel_FlxG.log.warn("Cannot add a `null` object to a FlxGroup.");
+			return null;
+		}
+		if(HxOverrides.indexOf(this.members,Object,0) >= 0) return Object;
+		var index = this.getFirstNull();
+		if(index != -1) {
+			this.members[index] = Object;
+			if(index >= this.length) this.length = index + 1;
+			return Object;
+		}
+		if(this.maxSize > 0 && this.length >= this.maxSize) return Object;
+		this.members.push(Object);
+		this.length++;
+		return Object;
+	}
+	,recycle: function(ObjectClass,ContructorArgs,Force,Revive) {
+		if(Revive == null) Revive = true;
+		if(Force == null) Force = false;
+		if(ContructorArgs == null) ContructorArgs = [];
+		var basic = null;
+		if(this.maxSize > 0) {
+			if(this.length < this.maxSize) {
+				if(ObjectClass == null) return null;
+				return this.add(Type.createInstance(ObjectClass,ContructorArgs));
+			} else {
+				basic = this.members[this._marker++];
+				if(this._marker >= this.maxSize) this._marker = 0;
+				if(Revive) basic.revive();
+				return basic;
+			}
+		} else {
+			basic = this.getFirstAvailable(ObjectClass,Force);
+			if(basic != null) {
+				if(Revive) basic.revive();
+				return basic;
+			}
+			if(ObjectClass == null) return null;
+			return this.add(Type.createInstance(ObjectClass,ContructorArgs));
+		}
+	}
+	,remove: function(Object,Splice) {
+		if(Splice == null) Splice = false;
+		if(this.members == null) return null;
+		var index = HxOverrides.indexOf(this.members,Object,0);
+		if(index < 0) return null;
+		if(Splice) this.members.splice(index,1); else this.members[index] = null;
+		return Object;
+	}
+	,replace: function(OldObject,NewObject) {
+		var index = HxOverrides.indexOf(this.members,OldObject,0);
+		if(index < 0) return null;
+		this.members[index] = NewObject;
+		return NewObject;
+	}
+	,sort: function(Function,Order) {
+		if(Order == null) Order = -1;
+		this.members.sort((function(f,a1) {
+			return function(a2,a3) {
+				return f(a1,a2,a3);
+			};
+		})(Function,Order));
+	}
+	,setAll: function(VariableName,Value,Recurse) {
+		if(Recurse == null) Recurse = true;
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null) {
+				if(Recurse && basic.collisionType == 2) basic.setAll(VariableName,Value,Recurse); else Reflect.setProperty(basic,VariableName,Value);
+			}
+		}
+	}
+	,callAll: function(FunctionName,Args,Recurse) {
+		if(Recurse == null) Recurse = true;
+		if(Args == null) Args = [];
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null) {
+				if(Recurse && basic.collisionType == 2) (js_Boot.__cast(basic , flixel_group_FlxTypedGroup)).callAll(FunctionName,Args,Recurse); else Reflect.callMethod(basic,Reflect.getProperty(basic,FunctionName),Args);
+			}
+		}
+	}
+	,getFirstAvailable: function(ObjectClass,Force) {
+		if(Force == null) Force = false;
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && !basic.exists && (ObjectClass == null || js_Boot.__instanceof(basic,ObjectClass))) {
+				if(Force && Type.getClassName(basic == null?null:js_Boot.getClass(basic)) != Type.getClassName(ObjectClass)) continue;
+				return this.members[i - 1];
+			}
+		}
+		return null;
+	}
+	,getFirstNull: function() {
+		var i = 0;
+		while(i < this.length) {
+			if(this.members[i] == null) return i;
+			i++;
+		}
+		return -1;
+	}
+	,getFirstExisting: function() {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && basic.exists) return basic;
+		}
+		return null;
+	}
+	,getFirstAlive: function() {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && basic.exists && basic.alive) return basic;
+		}
+		return null;
+	}
+	,getFirstDead: function() {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && !basic.alive) return basic;
+		}
+		return null;
+	}
+	,countLiving: function() {
+		var i = 0;
+		var count = -1;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null) {
+				if(count < 0) count = 0;
+				if(basic.exists && basic.alive) count++;
+			}
+		}
+		return count;
+	}
+	,countDead: function() {
+		var i = 0;
+		var count = -1;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null) {
+				if(count < 0) count = 0;
+				if(!basic.alive) count++;
+			}
+		}
+		return count;
+	}
+	,getRandom: function(StartIndex,Length) {
+		if(Length == null) Length = 0;
+		if(StartIndex == null) StartIndex = 0;
+		if(StartIndex < 0) StartIndex = 0;
+		if(Length <= 0) Length = this.length;
+		return flixel_util_FlxRandom.getObject_getRandom_T(this.members,StartIndex,Length);
+	}
+	,clear: function() {
+		this.length = 0;
+		flixel_util_FlxArrayUtil.clearArray(this.members);
+	}
+	,kill: function() {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && basic.exists) basic.kill();
+		}
+		flixel_FlxBasic.prototype.kill.call(this);
+	}
+	,iterator: function(filter) {
+		return new flixel_group_FlxTypedGroupIterator(this.members,filter);
+	}
+	,forEach: function(Function) {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null) Function(basic);
+		}
+	}
+	,forEachAlive: function(Function) {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && basic.exists && basic.alive) Function(basic);
+		}
+	}
+	,forEachDead: function(Function) {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && !basic.alive) Function(basic);
+		}
+	}
+	,forEachExists: function(Function) {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && basic.exists) Function(basic);
+		}
+	}
+	,forEachOfType: function(ObjectClass,Function) {
+		var i = 0;
+		var basic = null;
+		while(i < this.length) {
+			basic = this.members[i++];
+			if(basic != null && js_Boot.__instanceof(basic,ObjectClass)) Function(basic);
+		}
+	}
+	,set_maxSize: function(Size) {
+		this.maxSize = Std["int"](Math.abs(Size));
+		if(this._marker >= this.maxSize) this._marker = 0;
+		if(this.maxSize == 0 || this.members == null || this.maxSize >= this.length) return this.maxSize;
+		var i = this.maxSize;
+		var l = this.length;
+		var basic = null;
+		while(i < l) {
+			basic = this.members[i++];
+			if(basic != null) basic.destroy();
+		}
+		flixel_util_FlxArrayUtil.setLength_flixel_group_FlxTypedGroup_T(this.members,this.maxSize);
+		this.length = this.members.length;
+		return this.maxSize;
+	}
+	,__class__: flixel_group_FlxTypedGroup
+	,__properties__: $extend(flixel_FlxBasic.prototype.__properties__,{set_maxSize:"set_maxSize"})
+});
+var flixel_group_FlxGroup = function(MaxSize) {
+	flixel_group_FlxTypedGroup.call(this,MaxSize);
+};
+$hxClasses["flixel.group.FlxGroup"] = flixel_group_FlxGroup;
+flixel_group_FlxGroup.__name__ = ["flixel","group","FlxGroup"];
+flixel_group_FlxGroup.overlaps = function(Callback,Group,X,Y,InScreenSpace,Camera) {
+	var result = false;
+	if(Group != null) {
+		var i = 0;
+		var l = Group.length;
+		var basic;
+		while(i < l) {
+			basic = Group.members[i++];
+			if(basic != null && Callback(basic,X,Y,InScreenSpace,Camera)) {
+				result = true;
+				break;
+			}
+		}
+	}
+	return result;
+};
+flixel_group_FlxGroup.resolveGroup = function(ObjectOrGroup) {
+	var group = null;
+	if(ObjectOrGroup.collisionType == 4 || ObjectOrGroup.collisionType == 2) {
+		if(ObjectOrGroup.collisionType == 2) group = ObjectOrGroup; else if(ObjectOrGroup.collisionType == 4) group = (js_Boot.__cast(ObjectOrGroup , flixel_group_FlxSpriteGroup)).group;
+	}
+	return group;
+};
+flixel_group_FlxGroup.__super__ = flixel_group_FlxTypedGroup;
+flixel_group_FlxGroup.prototype = $extend(flixel_group_FlxTypedGroup.prototype,{
+	__class__: flixel_group_FlxGroup
+});
+var flixel_FlxState = function(MaxSize) {
+	this._requestSubStateReset = false;
+	this.destroySubStates = true;
+	this.persistentDraw = true;
+	this.persistentUpdate = false;
+	flixel_group_FlxGroup.call(this,MaxSize);
+};
+$hxClasses["flixel.FlxState"] = flixel_FlxState;
+flixel_FlxState.__name__ = ["flixel","FlxState"];
+flixel_FlxState.__super__ = flixel_group_FlxGroup;
+flixel_FlxState.prototype = $extend(flixel_group_FlxGroup.prototype,{
+	persistentUpdate: null
+	,persistentDraw: null
+	,destroySubStates: null
+	,subState: null
+	,_requestedSubState: null
+	,_requestSubStateReset: null
+	,create: function() {
+	}
+	,draw: function() {
+		if(this.persistentDraw || this.subState == null) flixel_group_FlxGroup.prototype.draw.call(this);
+		if(this.subState != null) this.subState.draw();
+	}
+	,openSubState: function(SubState) {
+		this._requestSubStateReset = true;
+		this._requestedSubState = SubState;
+	}
+	,closeSubState: function() {
+		this._requestSubStateReset = true;
+	}
+	,resetSubState: function() {
+		if(this.subState != null) {
+			if(this.subState.closeCallback != null) this.subState.closeCallback();
+			if(this.destroySubStates) this.subState.destroy();
+		}
+		this.subState = this._requestedSubState;
+		this._requestedSubState = null;
+		if(this.subState != null) {
+			if(!this.persistentUpdate) flixel_FlxG.inputs.reset();
+			if(!this.subState._created) {
+				this.subState._created = true;
+				this.subState._parentState = this;
+				this.subState.create();
+			}
+		}
+	}
+	,destroy: function() {
+		if(this.subState != null) {
+			this.subState.destroy();
+			this.subState = null;
+		}
+		flixel_group_FlxGroup.prototype.destroy.call(this);
+	}
+	,onFocusLost: function() {
+	}
+	,onFocus: function() {
+	}
+	,onResize: function(Width,Height) {
+	}
+	,tryUpdate: function() {
+		if(this.persistentUpdate || this.subState == null) this.update();
+		if(this._requestSubStateReset) {
+			this._requestSubStateReset = false;
+			this.resetSubState();
+		} else if(this.subState != null) this.subState.tryUpdate();
+	}
+	,get_bgColor: function() {
+		return flixel_FlxG.cameras.get_bgColor();
+	}
+	,set_bgColor: function(Value) {
+		return flixel_FlxG.cameras.set_bgColor(Value);
+	}
+	,__class__: flixel_FlxState
+	,__properties__: $extend(flixel_group_FlxGroup.prototype.__properties__,{set_bgColor:"set_bgColor",get_bgColor:"get_bgColor"})
+});
+var CutSceneState = function(MaxSize) {
+	this.index = 0;
+	flixel_FlxState.call(this,MaxSize);
+};
+$hxClasses["CutSceneState"] = CutSceneState;
+CutSceneState.__name__ = ["CutSceneState"];
+CutSceneState.__super__ = flixel_FlxState;
+CutSceneState.prototype = $extend(flixel_FlxState.prototype,{
+	index: null
+	,create: function() {
+		var scene1 = new flixel_FlxSprite(0,30,"assets/images/s_cutscene_1.png");
+		this.add(scene1);
+		flixel_FlxState.prototype.create.call(this);
+	}
+	,destroy: function() {
+		flixel_FlxState.prototype.destroy.call(this);
+	}
+	,update: function() {
+		flixel_FlxG.camera.shake(0.01);
+		if(flixel_FlxG.keys.checkKeyStatus(["SPACE","ENTER"],2)) {
+			var _g = this.index;
+			switch(_g) {
+			case 0:
+				this.index++;
+				var scene2 = new flixel_FlxSprite(0,30,"assets/images/s_cutscene_2.png");
+				this.add(scene2);
+				break;
+			case 1:
+				flixel_FlxG.switchState(new PlayState());
+				break;
+			}
+		}
+		flixel_FlxState.prototype.update.call(this);
+	}
+	,doneFadeIn: function() {
+	}
+	,__class__: CutSceneState
 });
 var lime_AssetLibrary = function() {
 	this.onChange = new lime_app_Event_$Void_$Void();
@@ -2949,6 +3375,21 @@ var DefaultAssetLibrary = function() {
 	id = "assets/images/orangeShelfTop.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
+	id = "assets/images/pentCharged.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/pentgreen.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/pentorange.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/pentpurple.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/pentred.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
 	id = "assets/images/purpleShelfBottom.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
@@ -2976,6 +3417,15 @@ var DefaultAssetLibrary = function() {
 	id = "assets/images/s_book_512x216.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
+	id = "assets/images/s_boulder_160x128.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/s_cutscene_1.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/s_cutscene_2.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
 	id = "assets/images/s_heart_32x32.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
@@ -2985,24 +3435,18 @@ var DefaultAssetLibrary = function() {
 	id = "assets/images/s_monster_128x128.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
-	id = "assets/images/s_pent_charged_128x128.png";
-	this.path.set(id,id);
-	this.type.set(id,"IMAGE");
-	id = "assets/images/s_pent_orange_128x128.png";
-	this.path.set(id,id);
-	this.type.set(id,"IMAGE");
-	id = "assets/images/s_pent_purple_128x128.png";
-	this.path.set(id,id);
-	this.type.set(id,"IMAGE");
-	id = "assets/images/s_pent_red_128x128.png";
-	this.path.set(id,id);
-	this.type.set(id,"IMAGE");
 	id = "assets/images/s_player_64x128.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/images/s_title_1600x900.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
+	id = "assets/images/s_wip_cultist.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/music/bgm.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"MUSIC");
 	id = "assets/music/music-goes-here.txt";
 	this.path.set(id,id);
 	this.type.set(id,"TEXT");
@@ -3415,400 +3859,6 @@ FSM.prototype = {
 	}
 	,__class__: FSM
 };
-var flixel_group_FlxTypedGroup = function(MaxSize) {
-	if(MaxSize == null) MaxSize = 0;
-	this._marker = 0;
-	this.length = 0;
-	flixel_FlxBasic.call(this);
-	this.members = [];
-	this.set_maxSize(Std["int"](Math.abs(MaxSize)));
-	this.collisionType = 2;
-};
-$hxClasses["flixel.group.FlxTypedGroup"] = flixel_group_FlxTypedGroup;
-flixel_group_FlxTypedGroup.__name__ = ["flixel","group","FlxTypedGroup"];
-flixel_group_FlxTypedGroup.__super__ = flixel_FlxBasic;
-flixel_group_FlxTypedGroup.prototype = $extend(flixel_FlxBasic.prototype,{
-	members: null
-	,maxSize: null
-	,length: null
-	,_marker: null
-	,destroy: function() {
-		flixel_FlxBasic.prototype.destroy.call(this);
-		if(this.members != null) {
-			var i = 0;
-			var basic = null;
-			while(i < this.length) {
-				basic = this.members[i++];
-				if(basic != null) basic.destroy();
-			}
-			this.members = null;
-		}
-	}
-	,update: function() {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && basic.exists && basic.active) basic.update();
-		}
-	}
-	,draw: function() {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && basic.exists && basic.visible) basic.draw();
-		}
-	}
-	,add: function(Object) {
-		if(Object == null) {
-			flixel_FlxG.log.warn("Cannot add a `null` object to a FlxGroup.");
-			return null;
-		}
-		if(HxOverrides.indexOf(this.members,Object,0) >= 0) return Object;
-		var index = this.getFirstNull();
-		if(index != -1) {
-			this.members[index] = Object;
-			if(index >= this.length) this.length = index + 1;
-			return Object;
-		}
-		if(this.maxSize > 0 && this.length >= this.maxSize) return Object;
-		this.members.push(Object);
-		this.length++;
-		return Object;
-	}
-	,recycle: function(ObjectClass,ContructorArgs,Force,Revive) {
-		if(Revive == null) Revive = true;
-		if(Force == null) Force = false;
-		if(ContructorArgs == null) ContructorArgs = [];
-		var basic = null;
-		if(this.maxSize > 0) {
-			if(this.length < this.maxSize) {
-				if(ObjectClass == null) return null;
-				return this.add(Type.createInstance(ObjectClass,ContructorArgs));
-			} else {
-				basic = this.members[this._marker++];
-				if(this._marker >= this.maxSize) this._marker = 0;
-				if(Revive) basic.revive();
-				return basic;
-			}
-		} else {
-			basic = this.getFirstAvailable(ObjectClass,Force);
-			if(basic != null) {
-				if(Revive) basic.revive();
-				return basic;
-			}
-			if(ObjectClass == null) return null;
-			return this.add(Type.createInstance(ObjectClass,ContructorArgs));
-		}
-	}
-	,remove: function(Object,Splice) {
-		if(Splice == null) Splice = false;
-		if(this.members == null) return null;
-		var index = HxOverrides.indexOf(this.members,Object,0);
-		if(index < 0) return null;
-		if(Splice) this.members.splice(index,1); else this.members[index] = null;
-		return Object;
-	}
-	,replace: function(OldObject,NewObject) {
-		var index = HxOverrides.indexOf(this.members,OldObject,0);
-		if(index < 0) return null;
-		this.members[index] = NewObject;
-		return NewObject;
-	}
-	,sort: function(Function,Order) {
-		if(Order == null) Order = -1;
-		this.members.sort((function(f,a1) {
-			return function(a2,a3) {
-				return f(a1,a2,a3);
-			};
-		})(Function,Order));
-	}
-	,setAll: function(VariableName,Value,Recurse) {
-		if(Recurse == null) Recurse = true;
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null) {
-				if(Recurse && basic.collisionType == 2) basic.setAll(VariableName,Value,Recurse); else Reflect.setProperty(basic,VariableName,Value);
-			}
-		}
-	}
-	,callAll: function(FunctionName,Args,Recurse) {
-		if(Recurse == null) Recurse = true;
-		if(Args == null) Args = [];
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null) {
-				if(Recurse && basic.collisionType == 2) (js_Boot.__cast(basic , flixel_group_FlxTypedGroup)).callAll(FunctionName,Args,Recurse); else Reflect.callMethod(basic,Reflect.getProperty(basic,FunctionName),Args);
-			}
-		}
-	}
-	,getFirstAvailable: function(ObjectClass,Force) {
-		if(Force == null) Force = false;
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && !basic.exists && (ObjectClass == null || js_Boot.__instanceof(basic,ObjectClass))) {
-				if(Force && Type.getClassName(basic == null?null:js_Boot.getClass(basic)) != Type.getClassName(ObjectClass)) continue;
-				return this.members[i - 1];
-			}
-		}
-		return null;
-	}
-	,getFirstNull: function() {
-		var i = 0;
-		while(i < this.length) {
-			if(this.members[i] == null) return i;
-			i++;
-		}
-		return -1;
-	}
-	,getFirstExisting: function() {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && basic.exists) return basic;
-		}
-		return null;
-	}
-	,getFirstAlive: function() {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && basic.exists && basic.alive) return basic;
-		}
-		return null;
-	}
-	,getFirstDead: function() {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && !basic.alive) return basic;
-		}
-		return null;
-	}
-	,countLiving: function() {
-		var i = 0;
-		var count = -1;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null) {
-				if(count < 0) count = 0;
-				if(basic.exists && basic.alive) count++;
-			}
-		}
-		return count;
-	}
-	,countDead: function() {
-		var i = 0;
-		var count = -1;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null) {
-				if(count < 0) count = 0;
-				if(!basic.alive) count++;
-			}
-		}
-		return count;
-	}
-	,getRandom: function(StartIndex,Length) {
-		if(Length == null) Length = 0;
-		if(StartIndex == null) StartIndex = 0;
-		if(StartIndex < 0) StartIndex = 0;
-		if(Length <= 0) Length = this.length;
-		return flixel_util_FlxRandom.getObject_getRandom_T(this.members,StartIndex,Length);
-	}
-	,clear: function() {
-		this.length = 0;
-		flixel_util_FlxArrayUtil.clearArray(this.members);
-	}
-	,kill: function() {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && basic.exists) basic.kill();
-		}
-		flixel_FlxBasic.prototype.kill.call(this);
-	}
-	,iterator: function(filter) {
-		return new flixel_group_FlxTypedGroupIterator(this.members,filter);
-	}
-	,forEach: function(Function) {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null) Function(basic);
-		}
-	}
-	,forEachAlive: function(Function) {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && basic.exists && basic.alive) Function(basic);
-		}
-	}
-	,forEachDead: function(Function) {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && !basic.alive) Function(basic);
-		}
-	}
-	,forEachExists: function(Function) {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && basic.exists) Function(basic);
-		}
-	}
-	,forEachOfType: function(ObjectClass,Function) {
-		var i = 0;
-		var basic = null;
-		while(i < this.length) {
-			basic = this.members[i++];
-			if(basic != null && js_Boot.__instanceof(basic,ObjectClass)) Function(basic);
-		}
-	}
-	,set_maxSize: function(Size) {
-		this.maxSize = Std["int"](Math.abs(Size));
-		if(this._marker >= this.maxSize) this._marker = 0;
-		if(this.maxSize == 0 || this.members == null || this.maxSize >= this.length) return this.maxSize;
-		var i = this.maxSize;
-		var l = this.length;
-		var basic = null;
-		while(i < l) {
-			basic = this.members[i++];
-			if(basic != null) basic.destroy();
-		}
-		flixel_util_FlxArrayUtil.setLength_flixel_group_FlxTypedGroup_T(this.members,this.maxSize);
-		this.length = this.members.length;
-		return this.maxSize;
-	}
-	,__class__: flixel_group_FlxTypedGroup
-	,__properties__: $extend(flixel_FlxBasic.prototype.__properties__,{set_maxSize:"set_maxSize"})
-});
-var flixel_group_FlxGroup = function(MaxSize) {
-	flixel_group_FlxTypedGroup.call(this,MaxSize);
-};
-$hxClasses["flixel.group.FlxGroup"] = flixel_group_FlxGroup;
-flixel_group_FlxGroup.__name__ = ["flixel","group","FlxGroup"];
-flixel_group_FlxGroup.overlaps = function(Callback,Group,X,Y,InScreenSpace,Camera) {
-	var result = false;
-	if(Group != null) {
-		var i = 0;
-		var l = Group.length;
-		var basic;
-		while(i < l) {
-			basic = Group.members[i++];
-			if(basic != null && Callback(basic,X,Y,InScreenSpace,Camera)) {
-				result = true;
-				break;
-			}
-		}
-	}
-	return result;
-};
-flixel_group_FlxGroup.resolveGroup = function(ObjectOrGroup) {
-	var group = null;
-	if(ObjectOrGroup.collisionType == 4 || ObjectOrGroup.collisionType == 2) {
-		if(ObjectOrGroup.collisionType == 2) group = ObjectOrGroup; else if(ObjectOrGroup.collisionType == 4) group = (js_Boot.__cast(ObjectOrGroup , flixel_group_FlxSpriteGroup)).group;
-	}
-	return group;
-};
-flixel_group_FlxGroup.__super__ = flixel_group_FlxTypedGroup;
-flixel_group_FlxGroup.prototype = $extend(flixel_group_FlxTypedGroup.prototype,{
-	__class__: flixel_group_FlxGroup
-});
-var flixel_FlxState = function(MaxSize) {
-	this._requestSubStateReset = false;
-	this.destroySubStates = true;
-	this.persistentDraw = true;
-	this.persistentUpdate = false;
-	flixel_group_FlxGroup.call(this,MaxSize);
-};
-$hxClasses["flixel.FlxState"] = flixel_FlxState;
-flixel_FlxState.__name__ = ["flixel","FlxState"];
-flixel_FlxState.__super__ = flixel_group_FlxGroup;
-flixel_FlxState.prototype = $extend(flixel_group_FlxGroup.prototype,{
-	persistentUpdate: null
-	,persistentDraw: null
-	,destroySubStates: null
-	,subState: null
-	,_requestedSubState: null
-	,_requestSubStateReset: null
-	,create: function() {
-	}
-	,draw: function() {
-		if(this.persistentDraw || this.subState == null) flixel_group_FlxGroup.prototype.draw.call(this);
-		if(this.subState != null) this.subState.draw();
-	}
-	,openSubState: function(SubState) {
-		this._requestSubStateReset = true;
-		this._requestedSubState = SubState;
-	}
-	,closeSubState: function() {
-		this._requestSubStateReset = true;
-	}
-	,resetSubState: function() {
-		if(this.subState != null) {
-			if(this.subState.closeCallback != null) this.subState.closeCallback();
-			if(this.destroySubStates) this.subState.destroy();
-		}
-		this.subState = this._requestedSubState;
-		this._requestedSubState = null;
-		if(this.subState != null) {
-			if(!this.persistentUpdate) flixel_FlxG.inputs.reset();
-			if(!this.subState._created) {
-				this.subState._created = true;
-				this.subState._parentState = this;
-				this.subState.create();
-			}
-		}
-	}
-	,destroy: function() {
-		if(this.subState != null) {
-			this.subState.destroy();
-			this.subState = null;
-		}
-		flixel_group_FlxGroup.prototype.destroy.call(this);
-	}
-	,onFocusLost: function() {
-	}
-	,onFocus: function() {
-	}
-	,onResize: function(Width,Height) {
-	}
-	,tryUpdate: function() {
-		if(this.persistentUpdate || this.subState == null) this.update();
-		if(this._requestSubStateReset) {
-			this._requestSubStateReset = false;
-			this.resetSubState();
-		} else if(this.subState != null) this.subState.tryUpdate();
-	}
-	,get_bgColor: function() {
-		return flixel_FlxG.cameras.get_bgColor();
-	}
-	,set_bgColor: function(Value) {
-		return flixel_FlxG.cameras.set_bgColor(Value);
-	}
-	,__class__: flixel_FlxState
-	,__properties__: $extend(flixel_group_FlxGroup.prototype.__properties__,{set_bgColor:"set_bgColor",get_bgColor:"get_bgColor"})
-});
 var GameOver = function(win,score) {
 	this._score = 0;
 	this._win = win;
@@ -3942,17 +3992,17 @@ Lambda.count = function(it,pred) {
 	}
 	return n;
 };
-var Light = function(X,Y,Parent) {
+var Light = function(X,Y,Darkness,Parent) {
 	flixel_FlxSprite.call(this,X,Y);
 	this.makeGraphic(flixel_FlxG.width * 2,flixel_FlxG.height * 2,-16777216,false);
 	this.updateHitbox();
 	this.scrollFactor.set_x(this.scrollFactor.set_y(0));
 	this.set_blend(openfl_display_BlendMode.MULTIPLY);
-	this.set_alpha(0.9);
+	this.set_alpha(Darkness.alpha);
 	this.light = new flixel_FlxSprite();
 	this.light.loadGraphic("assets/images/light.png",false,400,400);
 	this.light.updateHitbox();
-	this.light.scale.set(2.0,2.0);
+	this.light.scale.set(2.,2.);
 	this.light.set_blend(openfl_display_BlendMode.SCREEN);
 	this.stamp(this.light,Std["int"](this.get_width() / 2 - this.light.get_width() / 2),Std["int"](this.get_height() / 2 - this.light.get_height() / 2));
 	this.kill();
@@ -3962,6 +4012,9 @@ Light.__name__ = ["Light"];
 Light.__super__ = flixel_FlxSprite;
 Light.prototype = $extend(flixel_FlxSprite.prototype,{
 	light: null
+	,getRadius: function() {
+		return 160;
+	}
 	,__class__: Light
 });
 var List = function() {
@@ -3999,19 +4052,17 @@ MenuState.__name__ = ["MenuState"];
 MenuState.__super__ = flixel_FlxState;
 MenuState.prototype = $extend(flixel_FlxState.prototype,{
 	opt0txt: null
-	,opt1txt: null
 	,pointer: null
 	,option: null
 	,create: function() {
 		var menuBg = new flixel_FlxSprite(0,30,"assets/images/s_title_1600x900.png");
 		this.add(menuBg);
-		this.opt0txt = new flixel_text_FlxText(flixel_FlxG.width * 2 / 3,flixel_FlxG.height * 2 / 3,150,"Play the Game");
-		this.opt1txt = new flixel_text_FlxText(flixel_FlxG.width * 2 / 3,flixel_FlxG.height * 2 / 3 + 30,150,"Cheat Sheet");
-		this.opt0txt.set_size(this.opt1txt.set_size(16));
+		this.opt0txt = new flixel_text_FlxText(flixel_FlxG.width / 2 - 160,flixel_FlxG.height * 3 / 4,320,"Start");
+		this.opt0txt.set_size(64);
+		this.opt0txt.set_color(-16777216);
 		this.add(this.opt0txt);
-		this.add(this.opt1txt);
 		this.pointer = new flixel_FlxSprite();
-		this.pointer.makeGraphic(10,10,-256);
+		this.pointer.makeGraphic(32,32,-65536);
 		this.pointer.set_x(this.opt0txt.x - this.pointer.get_width() - 10);
 		this.add(this.pointer);
 		flixel_FlxState.prototype.create.call(this);
@@ -4023,23 +4074,17 @@ MenuState.prototype = $extend(flixel_FlxState.prototype,{
 		var _g = this.option;
 		switch(_g) {
 		case 0:
-			this.pointer.set_y(this.opt0txt.y);
-			break;
-		case 1:
-			this.pointer.set_y(this.opt1txt.y);
+			this.pointer.set_y(this.opt0txt.y + this.pointer.get_height() / 2);
 			break;
 		}
-		if(flixel_FlxG.keys.checkStatus(38,flixel_FlxG.keys.justPressed.checkStatus)) this.option = (this.option - 1 + 2) % 2;
-		if(flixel_FlxG.keys.checkStatus(40,flixel_FlxG.keys.justPressed.checkStatus)) this.option = (this.option + 1 + 2) % 2;
+		if(flixel_FlxG.keys.checkStatus(38,flixel_FlxG.keys.justPressed.checkStatus)) this.option = (this.option - 1 + 1) % 1;
+		if(flixel_FlxG.keys.checkStatus(40,flixel_FlxG.keys.justPressed.checkStatus)) this.option = (this.option + 1 + 1) % 1;
 		if(flixel_FlxG.keys.checkKeyStatus(["SPACE","ENTER"],2)) {
 			var _g1 = this.option;
 			switch(_g1) {
 			case 0:
 				flixel_FlxG.game._state.set_bgColor(-16777216);
-				flixel_FlxG.switchState(new PlayState());
-				break;
-			case 1:
-				flixel_FlxG.openURL("http://haxeflixel.com/documentation/cheat-sheet/",null);
+				flixel_FlxG.switchState(new CutSceneState());
 				break;
 			}
 		}
@@ -4054,6 +4099,7 @@ var Monster = function(X,Y,Parent,EType) {
 	this.stunned = false;
 	this.wandering = false;
 	this.seesPlayer = false;
+	this.playerSeen = false;
 	this.speed = 60;
 	this.etype = EType;
 	flixel_FlxSprite.call(this,X,Y);
@@ -4083,6 +4129,8 @@ Monster.prototype = $extend(flixel_FlxSprite.prototype,{
 	,_moveDir: null
 	,randomPos: null
 	,playerPos: null
+	,lastSeenPlayerPos: null
+	,playerSeen: null
 	,_sndStep: null
 	,seesPlayer: null
 	,wandering: null
@@ -4102,10 +4150,22 @@ Monster.prototype = $extend(flixel_FlxSprite.prototype,{
 		} else this.idleTimer -= flixel_FlxG.elapsed;
 	}
 	,chase: function() {
-		if(!this.seesPlayer) this._brain.activeState = $bind(this,this.idle); else flixel_util_FlxVelocity.moveTowardsPoint(this,this.playerPos,this.speed | 0);
+		if(!this.seesPlayer) this._brain.activeState = $bind(this,this.idle); else {
+			flixel_util_FlxVelocity.moveTowardsPoint(this,this.playerPos,this.speed | 0);
+			this.lastSeenPlayerPos = this.playerPos;
+			this.playerSeen = true;
+		}
 	}
 	,wander: function() {
-		if(this.seesPlayer) this._brain.activeState = $bind(this,this.chase); else this.generateRandomPoint();
+		if(this.seesPlayer) this._brain.activeState = $bind(this,this.chase); else if(this.playerSeen) {
+			flixel_util_FlxVelocity.moveTowardsPoint(this,this.lastSeenPlayerPos,this.speed | 0);
+			var m_pos = this.getMidpoint();
+			var dist = flixel_util_FlxMath.getDistance(m_pos,this.lastSeenPlayerPos);
+			if(dist < 10) {
+				this.playerSeen = false;
+				this.generateRandomPoint();
+			}
+		} else this.generateRandomPoint();
 	}
 	,generateRandomPoint: function() {
 		var randomX = flixel_util_FlxRandom.intRanged(0,1200);
@@ -4213,6 +4273,33 @@ NMEPreloader.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,__class__: NMEPreloader
 });
+var Pentagram = function(X,Y,color) {
+	if(Y == null) Y = 0;
+	if(X == null) X = 0;
+	flixel_FlxSprite.call(this,X,Y);
+	this.charged = false;
+	this.set_immovable(true);
+	this.loadGraphic("assets/images/pent" + color + ".png",true,128,128);
+	this.animation.add("pulse",[0,1,2,3,4,5,4,3,2,1,0],5,true);
+	this.animation.play("pulse");
+};
+$hxClasses["Pentagram"] = Pentagram;
+Pentagram.__name__ = ["Pentagram"];
+Pentagram.__super__ = flixel_FlxSprite;
+Pentagram.prototype = $extend(flixel_FlxSprite.prototype,{
+	charged: null
+	,changeColor: function(color) {
+		if(color != "charged") {
+			this.loadGraphic("assets/images/pent" + color + ".png",true,128,128);
+			this.animation.play("pulse");
+		} else {
+			this.charged = true;
+			this.loadGraphic("assets/images/pentCharged.png",true,128,128);
+			this.animation.play("pulse");
+		}
+	}
+	,__class__: Pentagram
+});
 var PlayState = function(MaxSize) {
 	this.stunTime = 100;
 	this.recoveryTime = 200;
@@ -4220,6 +4307,8 @@ var PlayState = function(MaxSize) {
 };
 $hxClasses["PlayState"] = PlayState;
 PlayState.__name__ = ["PlayState"];
+PlayState.pentagram = null;
+PlayState.currentSequence = null;
 PlayState.__super__ = flixel_FlxState;
 PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	player: null
@@ -4237,6 +4326,11 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,darkness: null
 	,won: null
 	,ending: null
+	,t1: null
+	,t2: null
+	,t3: null
+	,t4: null
+	,t5: null
 	,enemyGroup: null
 	,shelfGroup: null
 	,boulderGroup: null
@@ -4246,6 +4340,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,level: null
 	,create: function() {
 		flixel_FlxG.game._state.set_bgColor(-12171706);
+		flixel_FlxG.sound.playMusic("assets/music/bgm.ogg");
 		flixel_FlxG["debugger"].visible;
 		this.boulderGroup = new flixel_group_FlxTypedGroup();
 		this.shelfGroup = new flixel_group_FlxTypedGroup();
@@ -4254,33 +4349,28 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.enemyGroup);
 		this.earthquakeTimer = flixel_util_FlxRandom.intRanged(200,600);
 		var x = 1535;
-		var y = 0;
+		var y = 20;
 		var init = true;
 		var init2 = true;
-		var shelfColors = ["red","purple","brown","orange"];
-		while(x + y < 2450) {
-			if(x > 60 && y < 300) {
-				this.add(this.tmp = new Shelf(x,y,this,"top",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-				x -= 100;
-			} else if(x < 60 && y < 800) {
-				if(init) {
-					y += 200;
-					init = false;
-				}
-				x = 0;
-				this.add(this.tmp = new Shelf(x,y,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-				y += 145;
-			} else {
-				if(init2) {
-					x = 150;
-					init2 = false;
-				}
-				y = 805;
-				this.add(this.tmp = new Shelf(x,y,this,"bottom",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-				x += 100;
-			}
-			this.shelfGroup.add(this.tmp);
-		}
+		var shelfColors = ["red","purple","green","orange"];
+		this.add(this.tmp = new Shelf(300,150,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
+		this.add(this.t2 = new Shelf(300,300,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
+		this.add(this.t3 = new Shelf(300,450,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
+		this.add(this.t4 = new Shelf(300,600,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
+		this.add(this.t5 = new Shelf(300,750,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
+		this.tmp.mySequenceNum = 1;
+		this.t2.mySequenceNum = 2;
+		this.t3.mySequenceNum = 3;
+		this.t4.mySequenceNum = 4;
+		this.t5.mySequenceNum = 5;
+		this.shelfGroup.add(this.tmp);
+		this.shelfGroup.add(this.t2);
+		this.shelfGroup.add(this.t3);
+		this.shelfGroup.add(this.t4);
+		this.shelfGroup.add(this.t5);
+		this.add(PlayState.pentagram = new Pentagram(678,322,this.tmp.myColor));
+		PlayState.currentSequence = 1;
+		this.lastHitShelf = this.tmp;
 		this.add(this.monster = new Monster(600,600,this,0));
 		this.add(this.player = new Player(800,450,this));
 		this.darkness = new flixel_FlxSprite();
@@ -4288,17 +4378,14 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.darkness.scrollFactor.set_x(this.darkness.scrollFactor.set_y(0));
 		this.darkness.set_blend(openfl_display_BlendMode.MULTIPLY);
 		this.darkness.set_alpha(0.8);
-		this.light = new Light(0,0,this);
+		this.light = new Light(0,0,this.darkness,this);
 		this.add(this.light);
 		this.add(this.darkness);
-		this.lastHitShelf = this.tmp;
 		this.add(this.readBar = new flixel_ui_FlxBar(50,50,1,150,20,this.player,"testShelf.timer.progress",0.0,1.0,true));
 		this.readBar.trackParent(-47,-30);
-		this.readBar.set_exists(false);
-		this.readBar.set_alive(false);
+		this.readBar.kill();
 		this.add(this.useText = new flixel_text_FlxText(this.player.x,this.player.y,20,"!",100,false));
-		this.useText.set_exists(false);
-		this.useText.set_alive(false);
+		this.useText.kill();
 		this.healthBar = new flixel_ui_FlxBar(0,0,2,150,20,this.player,"health",0.0,100.0,true);
 		this.healthBar.createFilledBar(-16777216,-2354116,true,-1);
 		this.add(this.healthBar);
@@ -4338,6 +4425,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 				this.recoveryTime -= 1;
 				if(this.recoveryTime <= 0) {
 					this.player.invulnerable = false;
+					this.player.set_alpha(1);
 					this.recoveryTime = 200;
 				}
 			}
@@ -4377,7 +4465,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		flixel_FlxG.cameras.shake();
 		var randomX = flixel_util_FlxRandom.intRanged(200,flixel_FlxG.width - 200);
 		var randomY = flixel_util_FlxRandom.intRanged(200,flixel_FlxG.height - 200);
-		this.numBoulders = this.randomBoulders(3,10);
+		this.numBoulders = this.randomBoulders(3,5);
 		while(this.numBoulders != 0) {
 			randomX = flixel_util_FlxRandom.intRanged(0,1200);
 			randomY = flixel_util_FlxRandom.intRanged(0,600);
@@ -4410,11 +4498,13 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,playerTouchBoulder: function(P,B) {
 		if(P.invulnerable == false) {
-			P.hurt(34);
+			P.hurt(10);
 			P.invulnerable = true;
+			P.set_alpha(0.4);
 			B.kill();
 		}
 		if(P.health <= 0) {
+			P.set_alpha(1);
 			if(P.alive) P.kill();
 		}
 	}
@@ -4422,9 +4512,14 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		if(P.invulnerable == false) {
 			P.hurt(34);
 			P.invulnerable = true;
+			P.set_alpha(0.4);
 		}
 		if(P.health <= 0) {
-			if(P.alive) P.kill();
+			P.set_alpha(1);
+			if(P.alive) {
+				this.deathSnd.play(true);
+				P.kill();
+			}
 		}
 	}
 	,enemyTouchBoulder: function(M,B) {
@@ -4442,17 +4537,21 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			var m_pos = M.getMidpoint();
 			var p_pos = this.player.getMidpoint();
 			var dist = flixel_util_FlxMath.getDistance(m_pos,p_pos);
-			var radius = 160;
-			if(dist < radius * 3 || this.player.lightOn) {
+			var radius = this.light.getRadius();
+			if(this.player.lightOn) {
 				M.seesPlayer = true;
 				M.speed = 60;
 				M.playerPos.copyFrom(this.player.getMidpoint());
-				if(dist < radius * 2 || this.player.lightOn) {
-					M.speed = 70;
+				if(dist < radius * 3) {
+					M.speed = 80;
 					M.playerPos.copyFrom(this.player.getMidpoint());
-					if(dist < radius || this.player.lightOn) {
-						M.speed = 80;
+					if(dist < radius * 2) {
+						M.speed = 110;
 						M.playerPos.copyFrom(this.player.getMidpoint());
+						if(dist < radius) {
+							M.speed = 150;
+							M.playerPos.copyFrom(this.player.getMidpoint());
+						}
 					}
 				}
 			} else M.seesPlayer = false;
@@ -4463,43 +4562,46 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 var Player = function(X,Y,Parent) {
 	if(Y == null) Y = 0;
 	if(X == null) X = 0;
-	this.invulnerable = true;
+	this.invulnerable = false;
 	this.touchingShelf = false;
+	this.reading = false;
 	this.lightOn = false;
 	flixel_FlxSprite.call(this,X,Y);
 	this.loadGraphic("assets/images/s_player_64x128.png",true,64,128);
 	this.animation.add("walkLR",[32,33,34,35,36,37,38,39],15,false);
+	this.animation.add("walkLR_c",[40,41,42,43,44,45,46,47],15,false);
 	this.animation.add("walkU",[48,49,50,51,52,53,54],15,false);
 	this.animation.add("walkD",[16,17,18,19,20,21,22,23],15,false);
+	this.animation.add("walkD_c",[24,25,26,27,28,29,30],15,false);
+	this.animation.add("read",[8,9,10,11,12,13,14,15],15,false);
 	this.animation.add("idleLR",[5],1,false);
 	this.animation.add("idleU",[4],1,false);
 	this.animation.add("idleD",[3],1,false);
 	this.animation.add("death",[0,1,2],1,false);
 	this.drag.set(1440,1440);
 	this.maxVelocity.set(320,320);
-	this.health = 100;
+	this.health = 100000;
 	this.set_facing(16);
 	this.parent = Parent;
 	this.updateHitbox();
-	this.touchingShelf = false;
 	this.candleSnd = flixel_FlxG.sound.load("assets/sounds/candle.wav");
 	this.stepSnd = flixel_FlxG.sound.load("assets/sounds/step.wav");
+	this.currentSequenceNumber = 1;
 };
 $hxClasses["Player"] = Player;
 Player.__name__ = ["Player"];
 Player.__super__ = flixel_FlxSprite;
 Player.prototype = $extend(flixel_FlxSprite.prototype,{
-	parent: null
-	,lightOn: null
-	,centerX: null
-	,centerY: null
+	lightOn: null
+	,reading: null
 	,touchingShelf: null
 	,invulnerable: null
+	,parent: null
+	,centerX: null
+	,centerY: null
 	,candleSnd: null
 	,stepSnd: null
-	,getCenter: function() {
-		return new lime_math_Vector2(this.centerX,this.centerY);
-	}
+	,currentSequenceNumber: null
 	,destroy: function() {
 		this.candleSnd = flixel_util_FlxDestroyUtil.destroy(this.candleSnd);
 		this.stepSnd = flixel_util_FlxDestroyUtil.destroy(this.stepSnd);
@@ -4509,7 +4611,7 @@ Player.prototype = $extend(flixel_FlxSprite.prototype,{
 		this.acceleration.set_x(0);
 		this.acceleration.set_y(0);
 		if(this.alive) {
-			if(flixel_FlxG.keys.checkKeyStatus(["LEFT","A"],1)) {
+			if(flixel_FlxG.keys.checkKeyStatus(["LEFT","A"],1) && this.x > 100) {
 				if(this.x > 40) {
 					this.stepSnd.play(true);
 					this.acceleration.set_x(-this.drag.x);
@@ -4525,14 +4627,14 @@ Player.prototype = $extend(flixel_FlxSprite.prototype,{
 					this.set_facing(16);
 				} else this.set_x(flixel_FlxG.width - 40 - this.get_width());
 			}
-			if(flixel_FlxG.keys.checkKeyStatus(["UP","W"],1)) {
+			if(flixel_FlxG.keys.checkKeyStatus(["UP","W"],1) && this.y > 180) {
 				if(this.y > 40) {
 					this.stepSnd.play(true);
 					this.acceleration.set_y(-this.drag.y);
 					this.set_facing(256);
 				} else this.set_y(40);
 			}
-			if(flixel_FlxG.keys.checkKeyStatus(["DOWN","S"],1)) {
+			if(flixel_FlxG.keys.checkKeyStatus(["DOWN","S"],1) && this.y < 660) {
 				if(this.y + this.get_height() < flixel_FlxG.height - 40) {
 					this.stepSnd.play(true);
 					this.acceleration.set_y(this.drag.y);
@@ -4540,15 +4642,23 @@ Player.prototype = $extend(flixel_FlxSprite.prototype,{
 				} else this.set_y(flixel_FlxG.height - 40 - this.get_height());
 			}
 			if(flixel_FlxG.keys.checkKeyStatus(["E"],1)) {
-				if(this.touchingShelf == true) haxe_Log.trace("Touching shelf & interacting",{ fileName : "Player.hx", lineNumber : 116, className : "Player", methodName : "update"}); else haxe_Log.trace("Not touching shelf & interacting",{ fileName : "Player.hx", lineNumber : 119, className : "Player", methodName : "update"});
-			}
+				if(this.touchingShelf) this.reading = true; else this.reading = false;
+			} else this.reading = false;
 			if(flixel_FlxG.keys.checkStatus(32,flixel_FlxG.keys.justPressed.checkStatus)) {
 				this.candleSnd.play(true);
 				if(!this.lightOn) this.lightOn = true; else this.lightOn = false;
 			}
 			if(this.velocity.x != 0) {
-				if(this.velocity.y > 0) this.animation.play("walkD"); else if(this.velocity.y < 0) this.animation.play("walkU"); else this.animation.play("walkLR");
-			} else if(this.velocity.y > 0) this.animation.play("walkD"); else if(this.velocity.y < 0) this.animation.play("walkU"); else {
+				if(this.velocity.y > 0) {
+					if(this.reading) this.animation.play("read"); else if(this.lightOn) this.animation.play("walkD_c"); else this.animation.play("walkD");
+				} else if(this.velocity.y < 0) {
+					if(this.reading) this.animation.play("read"); else this.animation.play("walkU");
+				} else if(this.reading) this.animation.play("read"); else if(this.lightOn) this.animation.play("walkLR_c"); else this.animation.play("walkLR");
+			} else if(this.velocity.y > 0) {
+				if(this.reading) this.animation.play("read"); else if(this.lightOn) this.animation.play("walkD_c"); else this.animation.play("walkD");
+			} else if(this.velocity.y < 0) {
+				if(this.reading) this.animation.play("read"); else this.animation.play("walkU");
+			} else if(this.reading) this.animation.play("read"); else {
 				var _g = this.facing;
 				switch(_g) {
 				case 4096:
@@ -4568,8 +4678,11 @@ Player.prototype = $extend(flixel_FlxSprite.prototype,{
 	}
 	,kill: function() {
 		if(!this.alive || !this.exists) return;
-		this.set_alive(false);
 		this.animation.play("death",true);
+		this.set_alive(false);
+	}
+	,getCenter: function() {
+		return new lime_math_Vector2(this.centerX,this.centerY);
 	}
 	,__class__: Player
 });
@@ -4643,6 +4756,7 @@ var Shelf = function(X,Y,Parent,position,color) {
 	this.updateHitbox();
 	this.parent = Parent;
 	this.myColor = color;
+	this.resetTimer = false;
 	if(position == "left") {
 		this.loadGraphic("assets/images/" + color + "ShelfLeft.png",true,90,128);
 		var _g = this;
@@ -4660,7 +4774,7 @@ var Shelf = function(X,Y,Parent,position,color) {
 		this.offset.set_x(30);
 	}
 	this.set_immovable(true);
-	this.timer = new flixel_util_FlxTimer(5.0,$bind(this,this.readBook),1);
+	this.timer = new flixel_util_FlxTimer(2.5,$bind(this,this.readBook),1);
 	this.timer.active = false;
 };
 $hxClasses["Shelf"] = Shelf;
@@ -4671,11 +4785,29 @@ Shelf.prototype = $extend(flixel_FlxSprite.prototype,{
 	,timer: null
 	,myColor: null
 	,mySequenceNum: null
+	,resetTimer: null
 	,update: function() {
 		flixel_FlxSprite.prototype.update.call(this);
+		if(flixel_FlxG.keys.checkKeyStatus(["E"],-1) && this.resetTimer == true) {
+			this.timer.reset();
+			this.timer.active = false;
+			this.resetTimer = false;
+		}
 	}
 	,readBook: function(Timer) {
-		haxe_Log.trace("read book",{ fileName : "Shelf.hx", lineNumber : 65, className : "Shelf", methodName : "readBook"});
+		haxe_Log.trace("reading mySeq = " + this.mySequenceNum + " || currSeq = " + PlayState.currentSequence,{ fileName : "Shelf.hx", lineNumber : 72, className : "Shelf", methodName : "readBook"});
+		if(this.mySequenceNum == PlayState.currentSequence) {
+			haxe_Log.trace("changing playstate from " + PlayState.currentSequence + " to " + (PlayState.currentSequence + 1),{ fileName : "Shelf.hx", lineNumber : 75, className : "Shelf", methodName : "readBook"});
+			if(PlayState.currentSequence == 5) {
+				haxe_Log.trace("kill state triggered",{ fileName : "Shelf.hx", lineNumber : 78, className : "Shelf", methodName : "readBook"});
+				PlayState.pentagram.changeColor("charged");
+				PlayState.currentSequence += 1;
+			} else {
+				PlayState.currentSequence += 1;
+				PlayState.pentagram.changeColor(this.myColor);
+			}
+		}
+		this.resetTimer = true;
 	}
 	,startTimer: function() {
 		this.timer.active = true;
@@ -8639,9 +8771,7 @@ openfl_display_BitmapData.prototype = {
 	,getColorBoundsRect: function(mask,color,findColor) {
 		if(findColor == null) findColor = true;
 		if(!this.__isValid) return new openfl_geom_Rectangle(0,0,this.width,this.height);
-		var color1 = color;
-		if((color1 >> 24 & 255) == 0) color1 = 0;
-		var rect = this.image.getColorBoundsRect(mask,color1,findColor,1);
+		var rect = this.image.getColorBoundsRect(mask,color,findColor,1);
 		return new openfl_geom_Rectangle(rect.x,rect.y,rect.width,rect.height);
 	}
 	,getPixel: function(x,y) {
@@ -22066,17 +22196,10 @@ openfl_geom_ColorTransform.prototype = {
 	,redMultiplier: null
 	,redOffset: null
 	,concat: function(second) {
-		this.redMultiplier *= second.redMultiplier;
-		this.greenMultiplier *= second.greenMultiplier;
-		this.blueMultiplier *= second.blueMultiplier;
-		this.alphaMultiplier *= second.alphaMultiplier;
-		this.redOffset = second.redMultiplier * this.redOffset + second.redOffset;
-		this.greenOffset = second.greenMultiplier * this.greenOffset + second.greenOffset;
-		this.blueOffset = second.blueMultiplier * this.blueOffset + second.blueOffset;
-		this.alphaOffset = second.alphaMultiplier * this.alphaOffset + second.alphaOffset;
-	}
-	,__clone: function() {
-		return new openfl_geom_ColorTransform(this.redMultiplier,this.greenMultiplier,this.blueMultiplier,this.alphaMultiplier,this.redOffset,this.greenOffset,this.blueOffset,this.alphaOffset);
+		this.redMultiplier += second.redMultiplier;
+		this.greenMultiplier += second.greenMultiplier;
+		this.blueMultiplier += second.blueMultiplier;
+		this.alphaMultiplier += second.alphaMultiplier;
 	}
 	,__combine: function(ct) {
 		this.redMultiplier *= ct.redMultiplier;
@@ -22091,6 +22214,9 @@ openfl_geom_ColorTransform.prototype = {
 	,__equals: function(ct,skipAlphaMultiplier) {
 		if(skipAlphaMultiplier == null) skipAlphaMultiplier = false;
 		return ct != null && this.redMultiplier == ct.redMultiplier && this.greenMultiplier == ct.greenMultiplier && this.blueMultiplier == ct.blueMultiplier && (skipAlphaMultiplier || this.alphaMultiplier == ct.alphaMultiplier) && this.redOffset == ct.redOffset && this.greenOffset == ct.greenOffset && this.blueOffset == ct.blueOffset && this.alphaOffset == ct.alphaOffset;
+	}
+	,__clone: function() {
+		return new openfl_geom_ColorTransform(this.redMultiplier,this.greenMultiplier,this.blueMultiplier,this.alphaMultiplier,this.redOffset,this.greenOffset,this.blueOffset,this.alphaOffset);
 	}
 	,get_color: function() {
 		return (this.redOffset | 0) << 16 | (this.greenOffset | 0) << 8 | (this.blueOffset | 0);
@@ -24506,9 +24632,9 @@ lime_Assets.getAudioBuffer = function(id,useCache) {
 				var audio1 = library.getAudioBuffer(symbolName);
 				if(useCache && lime_Assets.cache.enabled) lime_Assets.cache.audio.set(id,audio1);
 				return audio1;
-			} else haxe_Log.trace("[Assets] Audio asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 122, className : "lime.Assets", methodName : "getAudioBuffer"});
-		} else haxe_Log.trace("[Assets] There is no audio asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 128, className : "lime.Assets", methodName : "getAudioBuffer"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 134, className : "lime.Assets", methodName : "getAudioBuffer"});
+			} else haxe_Log.trace("[Assets] Audio asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 121, className : "lime.Assets", methodName : "getAudioBuffer"});
+		} else haxe_Log.trace("[Assets] There is no audio asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 127, className : "lime.Assets", methodName : "getAudioBuffer"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 133, className : "lime.Assets", methodName : "getAudioBuffer"});
 	return null;
 };
 lime_Assets.getBytes = function(id) {
@@ -24520,9 +24646,9 @@ lime_Assets.getBytes = function(id) {
 	var library = lime_Assets.getLibrary(libraryName);
 	if(library != null) {
 		if(library.exists(symbolName,"BINARY")) {
-			if(library.isLocal(symbolName,"BINARY")) return library.getBytes(symbolName); else haxe_Log.trace("[Assets] String or ByteArray asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 171, className : "lime.Assets", methodName : "getBytes"});
-		} else haxe_Log.trace("[Assets] There is no String or ByteArray asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 177, className : "lime.Assets", methodName : "getBytes"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 183, className : "lime.Assets", methodName : "getBytes"});
+			if(library.isLocal(symbolName,"BINARY")) return library.getBytes(symbolName); else haxe_Log.trace("[Assets] String or ByteArray asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 170, className : "lime.Assets", methodName : "getBytes"});
+		} else haxe_Log.trace("[Assets] There is no String or ByteArray asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 176, className : "lime.Assets", methodName : "getBytes"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 182, className : "lime.Assets", methodName : "getBytes"});
 	return null;
 };
 lime_Assets.getFont = function(id,useCache) {
@@ -24540,9 +24666,9 @@ lime_Assets.getFont = function(id,useCache) {
 				var font = library.getFont(symbolName);
 				if(useCache && lime_Assets.cache.enabled) lime_Assets.cache.font.set(id,font);
 				return font;
-			} else haxe_Log.trace("[Assets] Font asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 234, className : "lime.Assets", methodName : "getFont"});
-		} else haxe_Log.trace("[Assets] There is no Font asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 240, className : "lime.Assets", methodName : "getFont"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 246, className : "lime.Assets", methodName : "getFont"});
+			} else haxe_Log.trace("[Assets] Font asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 233, className : "lime.Assets", methodName : "getFont"});
+		} else haxe_Log.trace("[Assets] There is no Font asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 239, className : "lime.Assets", methodName : "getFont"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 245, className : "lime.Assets", methodName : "getFont"});
 	return null;
 };
 lime_Assets.getImage = function(id,useCache) {
@@ -24563,9 +24689,9 @@ lime_Assets.getImage = function(id,useCache) {
 				var image1 = library.getImage(symbolName);
 				if(useCache && lime_Assets.cache.enabled) lime_Assets.cache.image.set(id,image1);
 				return image1;
-			} else haxe_Log.trace("[Assets] Image asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 304, className : "lime.Assets", methodName : "getImage"});
-		} else haxe_Log.trace("[Assets] There is no Image asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 310, className : "lime.Assets", methodName : "getImage"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 316, className : "lime.Assets", methodName : "getImage"});
+			} else haxe_Log.trace("[Assets] Image asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 303, className : "lime.Assets", methodName : "getImage"});
+		} else haxe_Log.trace("[Assets] There is no Image asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 309, className : "lime.Assets", methodName : "getImage"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 315, className : "lime.Assets", methodName : "getImage"});
 	return null;
 };
 lime_Assets.getLibrary = function(name) {
@@ -24580,8 +24706,8 @@ lime_Assets.getPath = function(id) {
 	symbolName = HxOverrides.substr(id,pos,null);
 	var library = lime_Assets.getLibrary(libraryName);
 	if(library != null) {
-		if(library.exists(symbolName,null)) return library.getPath(symbolName); else haxe_Log.trace("[Assets] There is no asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 364, className : "lime.Assets", methodName : "getPath"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 370, className : "lime.Assets", methodName : "getPath"});
+		if(library.exists(symbolName,null)) return library.getPath(symbolName); else haxe_Log.trace("[Assets] There is no asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 363, className : "lime.Assets", methodName : "getPath"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 369, className : "lime.Assets", methodName : "getPath"});
 	return null;
 };
 lime_Assets.getText = function(id) {
@@ -24593,9 +24719,9 @@ lime_Assets.getText = function(id) {
 	var library = lime_Assets.getLibrary(libraryName);
 	if(library != null) {
 		if(library.exists(symbolName,"TEXT")) {
-			if(library.isLocal(symbolName,"TEXT")) return library.getText(symbolName); else haxe_Log.trace("[Assets] String asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 407, className : "lime.Assets", methodName : "getText"});
-		} else haxe_Log.trace("[Assets] There is no String asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 413, className : "lime.Assets", methodName : "getText"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 419, className : "lime.Assets", methodName : "getText"});
+			if(library.isLocal(symbolName,"TEXT")) return library.getText(symbolName); else haxe_Log.trace("[Assets] String asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 406, className : "lime.Assets", methodName : "getText"});
+		} else haxe_Log.trace("[Assets] There is no String asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 412, className : "lime.Assets", methodName : "getText"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 418, className : "lime.Assets", methodName : "getText"});
 	return null;
 };
 lime_Assets.initialize = function() {
@@ -27317,28 +27443,22 @@ lime_app_Preloader.prototype = {
 			var _g2 = types[i];
 			switch(_g2) {
 			case "IMAGE":
-				if(!lime_app_Preloader.images.exists(url)) {
-					var image = new Image();
-					lime_app_Preloader.images.set(url,image);
-					image.onload = $bind(this,this.image_onLoad);
-					image.src = url;
-					this.total++;
-				}
+				var image = new Image();
+				lime_app_Preloader.images.set(url,image);
+				image.onload = $bind(this,this.image_onLoad);
+				image.src = url;
+				this.total++;
 				break;
 			case "BINARY":
-				if(!lime_app_Preloader.loaders.exists(url)) {
-					var loader = new lime_net_URLLoader();
-					loader.set_dataFormat(lime_net_URLLoaderDataFormat.BINARY);
-					lime_app_Preloader.loaders.set(url,loader);
-					this.total++;
-				}
+				var loader = new lime_net_URLLoader();
+				loader.set_dataFormat(lime_net_URLLoaderDataFormat.BINARY);
+				lime_app_Preloader.loaders.set(url,loader);
+				this.total++;
 				break;
 			case "TEXT":
-				if(!lime_app_Preloader.loaders.exists(url)) {
-					var loader1 = new lime_net_URLLoader();
-					lime_app_Preloader.loaders.set(url,loader1);
-					this.total++;
-				}
+				var loader1 = new lime_net_URLLoader();
+				lime_app_Preloader.loaders.set(url,loader1);
+				this.total++;
 				break;
 			case "FONT":
 				this.total++;
@@ -35108,7 +35228,7 @@ lime_system_Endian.BIG_ENDIAN.__enum__ = lime_system_Endian;
 var lime_system_System = function() { };
 $hxClasses["lime.system.System"] = lime_system_System;
 lime_system_System.__name__ = ["lime","system","System"];
-lime_system_System.__properties__ = {get_userDirectory:"get_userDirectory",get_numDisplays:"get_numDisplays",get_fontsDirectory:"get_fontsDirectory",get_endianness:"get_endianness",get_documentsDirectory:"get_documentsDirectory",get_desktopDirectory:"get_desktopDirectory",get_applicationStorageDirectory:"get_applicationStorageDirectory",get_applicationDirectory:"get_applicationDirectory",set_allowScreenTimeout:"set_allowScreenTimeout",get_allowScreenTimeout:"get_allowScreenTimeout"}
+lime_system_System.__properties__ = {get_userDirectory:"get_userDirectory",get_numDisplays:"get_numDisplays",get_fontsDirectory:"get_fontsDirectory",get_endianness:"get_endianness",get_documentsDirectory:"get_documentsDirectory",get_desktopDirectory:"get_desktopDirectory",get_applicationStorageDirectory:"get_applicationStorageDirectory",get_applicationDirectory:"get_applicationDirectory"}
 lime_system_System.applicationDirectory = null;
 lime_system_System.applicationStorageDirectory = null;
 lime_system_System.desktopDirectory = null;
@@ -35156,12 +35276,6 @@ lime_system_System.load = function(library,method,args,lazy) {
 	if(lazy == null) lazy = false;
 	if(args == null) args = 0;
 	return lime_system_CFFI.load(library,method,args,lazy);
-};
-lime_system_System.get_allowScreenTimeout = function() {
-	return true;
-};
-lime_system_System.set_allowScreenTimeout = function(value) {
-	return true;
 };
 lime_system_System.get_applicationDirectory = function() {
 	return null;
@@ -36771,6 +36885,9 @@ openfl_display_MovieClip.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,prevFrame: function() {
 	}
+	,resolve: function(fieldName) {
+		return this.getChildByName(fieldName);
+	}
 	,stop: function() {
 	}
 	,get_currentFrame: function() {
@@ -37381,7 +37498,7 @@ openfl__$internal_renderer_DrawCommandBuffer.prototype = {
 				data.advance();
 				data.prev = openfl__$internal_renderer_DrawCommandType.LINE_BITMAP_STYLE;
 				c13 = data;
-				this.lineBitmapStyle(c13.buffer.o[c13.oPos],c13.buffer.o[c13.oPos + 1],c13.buffer.b[c13.bPos],c13.buffer.b[c13.bPos + 1]);
+				this.lineBitmapStyle(c13.buffer.o[c13.oPos],c13.buffer.o[c13.oPos + 1],c13.buffer.o[c13.oPos + 2],c13.buffer.o[c13.oPos + 3]);
 				break;
 			case 14:
 				var c14;
@@ -38081,10 +38198,10 @@ openfl__$internal_renderer__$DrawCommandReader_LineBitmapStyleView_$Impl_$.get_m
 	return this1.buffer.o[this1.oPos + 1];
 };
 openfl__$internal_renderer__$DrawCommandReader_LineBitmapStyleView_$Impl_$.get_repeat = function(this1) {
-	return this1.buffer.b[this1.bPos];
+	return this1.buffer.o[this1.oPos + 2];
 };
 openfl__$internal_renderer__$DrawCommandReader_LineBitmapStyleView_$Impl_$.get_smooth = function(this1) {
-	return this1.buffer.b[this1.bPos + 1];
+	return this1.buffer.o[this1.oPos + 3];
 };
 var openfl__$internal_renderer__$DrawCommandReader_LineGradientStyleView_$Impl_$ = {};
 $hxClasses["openfl._internal.renderer._DrawCommandReader.LineGradientStyleView_Impl_"] = openfl__$internal_renderer__$DrawCommandReader_LineGradientStyleView_$Impl_$;
@@ -38827,7 +38944,7 @@ openfl__$internal_renderer_cairo_CairoGraphics.playCommands = function(commands,
 				c10 = data;
 				if(stroke && openfl__$internal_renderer_cairo_CairoGraphics.hasStroke) openfl__$internal_renderer_cairo_CairoGraphics.closePath();
 				openfl__$internal_renderer_cairo_CairoGraphics.cairo.moveTo(positionX - offsetX,positionY - offsetY);
-				openfl__$internal_renderer_cairo_CairoGraphics.strokePattern = openfl__$internal_renderer_cairo_CairoGraphics.createImagePattern(c10.buffer.o[c10.oPos],c10.buffer.o[c10.oPos + 1],c10.buffer.b[c10.bPos]);
+				openfl__$internal_renderer_cairo_CairoGraphics.strokePattern = openfl__$internal_renderer_cairo_CairoGraphics.createImagePattern(c10.buffer.o[c10.oPos],c10.buffer.o[c10.oPos + 1],c10.buffer.o[c10.oPos + 2]);
 				openfl__$internal_renderer_cairo_CairoGraphics.hasStroke = true;
 				break;
 			case 0:
@@ -39556,7 +39673,7 @@ openfl__$internal_renderer_canvas_CanvasGraphics.hitTest = function(graphics,x,y
 				data.advance();
 				data.prev = openfl__$internal_renderer_DrawCommandType.LINE_BITMAP_STYLE;
 				c5 = data;
-				openfl__$internal_renderer_canvas_CanvasGraphics.strokeCommands.lineBitmapStyle(c5.buffer.o[c5.oPos],c5.buffer.o[c5.oPos + 1],c5.buffer.b[c5.bPos],c5.buffer.b[c5.bPos + 1]);
+				openfl__$internal_renderer_canvas_CanvasGraphics.strokeCommands.lineBitmapStyle(c5.buffer.o[c5.oPos],c5.buffer.o[c5.oPos + 1],c5.buffer.o[c5.oPos + 2],c5.buffer.o[c5.oPos + 3]);
 				break;
 			case 15:
 				var c6;
@@ -39849,7 +39966,7 @@ openfl__$internal_renderer_canvas_CanvasGraphics.playCommands = function(command
 			c9 = data;
 			if(stroke && openfl__$internal_renderer_canvas_CanvasGraphics.hasStroke) openfl__$internal_renderer_canvas_CanvasGraphics.closePath();
 			openfl__$internal_renderer_canvas_CanvasGraphics.context.moveTo(positionX - offsetX,positionY - offsetY);
-			openfl__$internal_renderer_canvas_CanvasGraphics.context.strokeStyle = openfl__$internal_renderer_canvas_CanvasGraphics.createBitmapFill(c9.buffer.o[c9.oPos],c9.buffer.b[c9.bPos]);
+			openfl__$internal_renderer_canvas_CanvasGraphics.context.strokeStyle = openfl__$internal_renderer_canvas_CanvasGraphics.createBitmapFill(c9.buffer.o[c9.oPos],c9.buffer.o[c9.oPos + 2]);
 			openfl__$internal_renderer_canvas_CanvasGraphics.hasStroke = true;
 			break;
 		case 0:
@@ -40047,7 +40164,7 @@ openfl__$internal_renderer_canvas_CanvasGraphics.render = function(graphics,rend
 						data.advance();
 						data.prev = openfl__$internal_renderer_DrawCommandType.LINE_BITMAP_STYLE;
 						c6 = data;
-						openfl__$internal_renderer_canvas_CanvasGraphics.strokeCommands.lineBitmapStyle(c6.buffer.o[c6.oPos],c6.buffer.o[c6.oPos + 1],c6.buffer.b[c6.bPos],c6.buffer.b[c6.bPos + 1]);
+						openfl__$internal_renderer_canvas_CanvasGraphics.strokeCommands.lineBitmapStyle(c6.buffer.o[c6.oPos],c6.buffer.o[c6.oPos + 1],c6.buffer.o[c6.oPos + 2],c6.buffer.o[c6.oPos + 3]);
 						break;
 					case 0:case 1:case 2:
 						openfl__$internal_renderer_canvas_CanvasGraphics.endFill();
@@ -40348,13 +40465,13 @@ openfl__$internal_renderer_canvas_CanvasGraphics.render = function(graphics,rend
 							}
 							if(rect != null && rect.width > 0 && rect.height > 0 && center != null) {
 								openfl__$internal_renderer_canvas_CanvasGraphics.context.save();
-								openfl__$internal_renderer_canvas_CanvasGraphics.context.translate(c15.buffer.ff[c15.ffPos][index] - offsetX,c15.buffer.ff[c15.ffPos][index + 1] - offsetY);
+								openfl__$internal_renderer_canvas_CanvasGraphics.context.translate(c15.buffer.ff[c15.ffPos][index],c15.buffer.ff[c15.ffPos][index + 1]);
 								if(useRotation) openfl__$internal_renderer_canvas_CanvasGraphics.context.rotate(c15.buffer.ff[c15.ffPos][index + rotationIndex]);
 								var scale = 1.0;
 								if(useScale) scale = c15.buffer.ff[c15.ffPos][index + scaleIndex];
 								if(useTransform) openfl__$internal_renderer_canvas_CanvasGraphics.context.transform(c15.buffer.ff[c15.ffPos][index + transformIndex],c15.buffer.ff[c15.ffPos][index + transformIndex + 1],c15.buffer.ff[c15.ffPos][index + transformIndex + 2],c15.buffer.ff[c15.ffPos][index + transformIndex + 3],0,0);
 								if(useAlpha) openfl__$internal_renderer_canvas_CanvasGraphics.context.globalAlpha = c15.buffer.ff[c15.ffPos][index + alphaIndex];
-								openfl__$internal_renderer_canvas_CanvasGraphics.context.drawImage(surface,rect.x,rect.y,rect.width,rect.height,-center.x * scale,-center.y * scale,rect.width * scale,rect.height * scale);
+								openfl__$internal_renderer_canvas_CanvasGraphics.context.drawImage(surface,rect.x,rect.y,rect.width,rect.height,-center.x * scale - offsetX,-center.y * scale - offsetY,rect.width * scale,rect.height * scale);
 								openfl__$internal_renderer_canvas_CanvasGraphics.context.restore();
 							}
 							index += numValues;
@@ -47541,16 +47658,10 @@ openfl_display_Stage.prototype = $extend(openfl_display_DisplayObjectContainer.p
 	,set_displayState: function(value) {
 		if(this.window != null) switch(value[1]) {
 		case 0:
-			if(this.window.__fullscreen) {
-				this.window.set_fullscreen(false);
-				this.dispatchEvent(new openfl_events_FullScreenEvent(openfl_events_FullScreenEvent.FULL_SCREEN,false,false,false,true));
-			}
+			this.window.set_fullscreen(false);
 			break;
 		default:
-			if(!this.window.__fullscreen) {
-				this.window.set_fullscreen(true);
-				this.dispatchEvent(new openfl_events_FullScreenEvent(openfl_events_FullScreenEvent.FULL_SCREEN,false,false,true,true));
-			}
+			this.window.set_fullscreen(true);
 		}
 		return this.__displayState = value;
 	}
@@ -48935,33 +49046,6 @@ openfl_events_FocusEvent.prototype = $extend(openfl_events_Event.prototype,{
 		return "[FocusEvent type=\"" + this.type + "\" bubbles=" + Std.string(this.bubbles) + " cancelable=" + Std.string(this.cancelable) + " relatedObject=" + Std.string(this.relatedObject) + " shiftKey=" + Std.string(this.shiftKey) + " keyCode=" + this.keyCode + "]";
 	}
 	,__class__: openfl_events_FocusEvent
-});
-var openfl_events_FullScreenEvent = function(type,bubbles,cancelable,fullScreen,interactive) {
-	if(interactive == null) interactive = false;
-	if(fullScreen == null) fullScreen = false;
-	if(cancelable == null) cancelable = false;
-	if(bubbles == null) bubbles = false;
-	openfl_events_Event.call(this,type,bubbles,cancelable);
-	this.fullScreen = fullScreen;
-	this.interactive = interactive;
-};
-$hxClasses["openfl.events.FullScreenEvent"] = openfl_events_FullScreenEvent;
-openfl_events_FullScreenEvent.__name__ = ["openfl","events","FullScreenEvent"];
-openfl_events_FullScreenEvent.__super__ = openfl_events_Event;
-openfl_events_FullScreenEvent.prototype = $extend(openfl_events_Event.prototype,{
-	fullScreen: null
-	,interactive: null
-	,clone: function() {
-		var event = new openfl_events_FullScreenEvent(this.type,this.bubbles,this.cancelable,this.fullScreen,this.interactive);
-		event.target = this.target;
-		event.currentTarget = this.currentTarget;
-		event.eventPhase = this.eventPhase;
-		return event;
-	}
-	,toString: function() {
-		return "[FullscreenEvent type=\"" + this.type + "\" bubbles=" + Std.string(this.bubbles) + " cancelable=" + Std.string(this.cancelable) + " fullscreen=" + Std.string(this.fullScreen) + " interactive=" + Std.string(this.interactive) + "]";
-	}
-	,__class__: openfl_events_FullScreenEvent
 });
 var openfl_events_GameInputEvent = function(type,bubbles,cancelable,device) {
 	if(cancelable == null) cancelable = false;
@@ -55243,6 +55327,11 @@ AssetPaths.light__png = "assets/images/light.png";
 AssetPaths.orangeShelfBottom__png = "assets/images/orangeShelfBottom.png";
 AssetPaths.orangeShelfLeft__png = "assets/images/orangeShelfLeft.png";
 AssetPaths.orangeShelfTop__png = "assets/images/orangeShelfTop.png";
+AssetPaths.pentCharged__png = "assets/images/pentCharged.png";
+AssetPaths.pentgreen__png = "assets/images/pentgreen.png";
+AssetPaths.pentorange__png = "assets/images/pentorange.png";
+AssetPaths.pentpurple__png = "assets/images/pentpurple.png";
+AssetPaths.pentred__png = "assets/images/pentred.png";
 AssetPaths.purpleShelfBottom__png = "assets/images/purpleShelfBottom.png";
 AssetPaths.purpleShelfLeft__png = "assets/images/purpleShelfLeft.png";
 AssetPaths.purpleShelfTop__png = "assets/images/purpleShelfTop.png";
@@ -55252,15 +55341,16 @@ AssetPaths.redShelfTop__png = "assets/images/redShelfTop.png";
 AssetPaths.shelf__png = "assets/images/shelf.png";
 AssetPaths.s_bookshelf_64x129__png = "assets/images/s_bookshelf_64x129.png";
 AssetPaths.s_book_512x216__png = "assets/images/s_book_512x216.png";
+AssetPaths.s_boulder_160x128__png = "assets/images/s_boulder_160x128.png";
+AssetPaths.s_cutscene_1__png = "assets/images/s_cutscene_1.png";
+AssetPaths.s_cutscene_2__png = "assets/images/s_cutscene_2.png";
 AssetPaths.s_heart_32x32__png = "assets/images/s_heart_32x32.png";
 AssetPaths.s_heart_64x64__png = "assets/images/s_heart_64x64.png";
 AssetPaths.s_monster_128x128__png = "assets/images/s_monster_128x128.png";
-AssetPaths.s_pent_charged_128x128__png = "assets/images/s_pent_charged_128x128.png";
-AssetPaths.s_pent_orange_128x128__png = "assets/images/s_pent_orange_128x128.png";
-AssetPaths.s_pent_purple_128x128__png = "assets/images/s_pent_purple_128x128.png";
-AssetPaths.s_pent_red_128x128__png = "assets/images/s_pent_red_128x128.png";
 AssetPaths.s_player_64x128__png = "assets/images/s_player_64x128.png";
 AssetPaths.s_title_1600x900__png = "assets/images/s_title_1600x900.png";
+AssetPaths.s_wip_cultist__png = "assets/images/s_wip_cultist.png";
+AssetPaths.bgm__ogg = "assets/music/bgm.ogg";
 AssetPaths.music_goes_here__txt = "assets/music/music-goes-here.txt";
 AssetPaths.book_multiple_pages__wav = "assets/sounds/book_multiple_pages.wav";
 AssetPaths.book_single_page__wav = "assets/sounds/book_single_page.wav";
@@ -55292,10 +55382,11 @@ flixel_FlxObject.WALL = 17;
 flixel_FlxObject.ANY = 4369;
 flixel_FlxObject._firstSeparateFlxRect = flixel_util_FlxRect.get(null,null,null,null);
 flixel_FlxObject._secondSeparateFlxRect = flixel_util_FlxRect.get(null,null,null,null);
+CutSceneState.OPTIONS = 2;
 openfl_text_Font.__registeredFonts = [];
 Light.LIGHT_R = 160;
 Light.CANVAS_SIZE = 960;
-MenuState.OPTIONS = 2;
+MenuState.OPTIONS = 1;
 Player.RUN_SPEED = 160;
 Player.PADDING = 40;
 Shelf.RUN_SPEED = 90;
@@ -56675,8 +56766,6 @@ openfl_events_FocusEvent.FOCUS_IN = "focusIn";
 openfl_events_FocusEvent.FOCUS_OUT = "focusOut";
 openfl_events_FocusEvent.KEY_FOCUS_CHANGE = "keyFocusChange";
 openfl_events_FocusEvent.MOUSE_FOCUS_CHANGE = "mouseFocusChange";
-openfl_events_FullScreenEvent.FULL_SCREEN = "fullScreen";
-openfl_events_FullScreenEvent.FULL_SCREEN_INTERACTIVE_ACCEPTED = "fullScreenInteractiveAccepted";
 openfl_events_GameInputEvent.DEVICE_ADDED = "deviceAdded";
 openfl_events_GameInputEvent.DEVICE_REMOVED = "deviceRemoved";
 openfl_events_GameInputEvent.DEVICE_UNUSABLE = "deviceUnusable";

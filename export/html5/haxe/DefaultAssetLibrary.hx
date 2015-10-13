@@ -104,6 +104,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -139,6 +145,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/orangeShelfLeft.png", AssetType.IMAGE);
 		className.set ("assets/images/orangeShelfTop.png", __ASSET__assets_images_orangeshelftop_png);
 		type.set ("assets/images/orangeShelfTop.png", AssetType.IMAGE);
+		className.set ("assets/images/pentCharged.png", __ASSET__assets_images_pentcharged_png);
+		type.set ("assets/images/pentCharged.png", AssetType.IMAGE);
+		className.set ("assets/images/pentgreen.png", __ASSET__assets_images_pentgreen_png);
+		type.set ("assets/images/pentgreen.png", AssetType.IMAGE);
+		className.set ("assets/images/pentorange.png", __ASSET__assets_images_pentorange_png);
+		type.set ("assets/images/pentorange.png", AssetType.IMAGE);
+		className.set ("assets/images/pentpurple.png", __ASSET__assets_images_pentpurple_png);
+		type.set ("assets/images/pentpurple.png", AssetType.IMAGE);
+		className.set ("assets/images/pentred.png", __ASSET__assets_images_pentred_png);
+		type.set ("assets/images/pentred.png", AssetType.IMAGE);
 		className.set ("assets/images/purpleShelfBottom.png", __ASSET__assets_images_purpleshelfbottom_png);
 		type.set ("assets/images/purpleShelfBottom.png", AssetType.IMAGE);
 		className.set ("assets/images/purpleShelfLeft.png", __ASSET__assets_images_purpleshelfleft_png);
@@ -157,24 +173,26 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/s_bookshelf_64x129.png", AssetType.IMAGE);
 		className.set ("assets/images/s_book_512x216.png", __ASSET__assets_images_s_book_512x216_png);
 		type.set ("assets/images/s_book_512x216.png", AssetType.IMAGE);
+		className.set ("assets/images/s_boulder_160x128.png", __ASSET__assets_images_s_boulder_160x128_png);
+		type.set ("assets/images/s_boulder_160x128.png", AssetType.IMAGE);
+		className.set ("assets/images/s_cutscene_1.png", __ASSET__assets_images_s_cutscene_1_png);
+		type.set ("assets/images/s_cutscene_1.png", AssetType.IMAGE);
+		className.set ("assets/images/s_cutscene_2.png", __ASSET__assets_images_s_cutscene_2_png);
+		type.set ("assets/images/s_cutscene_2.png", AssetType.IMAGE);
 		className.set ("assets/images/s_heart_32x32.png", __ASSET__assets_images_s_heart_32x32_png);
 		type.set ("assets/images/s_heart_32x32.png", AssetType.IMAGE);
 		className.set ("assets/images/s_heart_64x64.png", __ASSET__assets_images_s_heart_64x64_png);
 		type.set ("assets/images/s_heart_64x64.png", AssetType.IMAGE);
 		className.set ("assets/images/s_monster_128x128.png", __ASSET__assets_images_s_monster_128x128_png);
 		type.set ("assets/images/s_monster_128x128.png", AssetType.IMAGE);
-		className.set ("assets/images/s_pent_charged_128x128.png", __ASSET__assets_images_s_pent_charged_128x128_png);
-		type.set ("assets/images/s_pent_charged_128x128.png", AssetType.IMAGE);
-		className.set ("assets/images/s_pent_orange_128x128.png", __ASSET__assets_images_s_pent_orange_128x128_png);
-		type.set ("assets/images/s_pent_orange_128x128.png", AssetType.IMAGE);
-		className.set ("assets/images/s_pent_purple_128x128.png", __ASSET__assets_images_s_pent_purple_128x128_png);
-		type.set ("assets/images/s_pent_purple_128x128.png", AssetType.IMAGE);
-		className.set ("assets/images/s_pent_red_128x128.png", __ASSET__assets_images_s_pent_red_128x128_png);
-		type.set ("assets/images/s_pent_red_128x128.png", AssetType.IMAGE);
 		className.set ("assets/images/s_player_64x128.png", __ASSET__assets_images_s_player_64x128_png);
 		type.set ("assets/images/s_player_64x128.png", AssetType.IMAGE);
 		className.set ("assets/images/s_title_1600x900.png", __ASSET__assets_images_s_title_1600x900_png);
 		type.set ("assets/images/s_title_1600x900.png", AssetType.IMAGE);
+		className.set ("assets/images/s_wip_cultist.png", __ASSET__assets_images_s_wip_cultist_png);
+		type.set ("assets/images/s_wip_cultist.png", AssetType.IMAGE);
+		className.set ("assets/music/bgm.ogg", __ASSET__assets_music_bgm_ogg);
+		type.set ("assets/music/bgm.ogg", AssetType.MUSIC);
 		className.set ("assets/music/music-goes-here.txt", __ASSET__assets_music_music_goes_here_txt);
 		type.set ("assets/music/music-goes-here.txt", AssetType.TEXT);
 		className.set ("assets/sounds/book_multiple_pages.wav", __ASSET__assets_sounds_book_multiple_pages_wav);
@@ -280,6 +298,26 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
+		id = "assets/images/pentCharged.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/pentgreen.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/pentorange.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/pentpurple.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/pentred.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/images/purpleShelfBottom.png";
 		path.set (id, id);
 		
@@ -316,6 +354,18 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_boulder_160x128.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_cutscene_1.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_cutscene_2.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/images/s_heart_32x32.png";
 		path.set (id, id);
 		
@@ -328,22 +378,6 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_pent_charged_128x128.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_pent_orange_128x128.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_pent_purple_128x128.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "assets/images/s_pent_red_128x128.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
 		id = "assets/images/s_player_64x128.png";
 		path.set (id, id);
 		
@@ -352,6 +386,14 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_wip_cultist.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/music/bgm.ogg";
+		path.set (id, id);
+		
+		type.set (id, AssetType.MUSIC);
 		id = "assets/music/music-goes-here.txt";
 		path.set (id, id);
 		
@@ -500,6 +542,21 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/images/orangeShelfTop.png", __ASSET__assets_images_orangeshelftop_png);
 		type.set ("assets/images/orangeShelfTop.png", AssetType.IMAGE);
 		
+		className.set ("assets/images/pentCharged.png", __ASSET__assets_images_pentcharged_png);
+		type.set ("assets/images/pentCharged.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/pentgreen.png", __ASSET__assets_images_pentgreen_png);
+		type.set ("assets/images/pentgreen.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/pentorange.png", __ASSET__assets_images_pentorange_png);
+		type.set ("assets/images/pentorange.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/pentpurple.png", __ASSET__assets_images_pentpurple_png);
+		type.set ("assets/images/pentpurple.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/pentred.png", __ASSET__assets_images_pentred_png);
+		type.set ("assets/images/pentred.png", AssetType.IMAGE);
+		
 		className.set ("assets/images/purpleShelfBottom.png", __ASSET__assets_images_purpleshelfbottom_png);
 		type.set ("assets/images/purpleShelfBottom.png", AssetType.IMAGE);
 		
@@ -527,6 +584,15 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/images/s_book_512x216.png", __ASSET__assets_images_s_book_512x216_png);
 		type.set ("assets/images/s_book_512x216.png", AssetType.IMAGE);
 		
+		className.set ("assets/images/s_boulder_160x128.png", __ASSET__assets_images_s_boulder_160x128_png);
+		type.set ("assets/images/s_boulder_160x128.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/s_cutscene_1.png", __ASSET__assets_images_s_cutscene_1_png);
+		type.set ("assets/images/s_cutscene_1.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/s_cutscene_2.png", __ASSET__assets_images_s_cutscene_2_png);
+		type.set ("assets/images/s_cutscene_2.png", AssetType.IMAGE);
+		
 		className.set ("assets/images/s_heart_32x32.png", __ASSET__assets_images_s_heart_32x32_png);
 		type.set ("assets/images/s_heart_32x32.png", AssetType.IMAGE);
 		
@@ -536,23 +602,17 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/images/s_monster_128x128.png", __ASSET__assets_images_s_monster_128x128_png);
 		type.set ("assets/images/s_monster_128x128.png", AssetType.IMAGE);
 		
-		className.set ("assets/images/s_pent_charged_128x128.png", __ASSET__assets_images_s_pent_charged_128x128_png);
-		type.set ("assets/images/s_pent_charged_128x128.png", AssetType.IMAGE);
-		
-		className.set ("assets/images/s_pent_orange_128x128.png", __ASSET__assets_images_s_pent_orange_128x128_png);
-		type.set ("assets/images/s_pent_orange_128x128.png", AssetType.IMAGE);
-		
-		className.set ("assets/images/s_pent_purple_128x128.png", __ASSET__assets_images_s_pent_purple_128x128_png);
-		type.set ("assets/images/s_pent_purple_128x128.png", AssetType.IMAGE);
-		
-		className.set ("assets/images/s_pent_red_128x128.png", __ASSET__assets_images_s_pent_red_128x128_png);
-		type.set ("assets/images/s_pent_red_128x128.png", AssetType.IMAGE);
-		
 		className.set ("assets/images/s_player_64x128.png", __ASSET__assets_images_s_player_64x128_png);
 		type.set ("assets/images/s_player_64x128.png", AssetType.IMAGE);
 		
 		className.set ("assets/images/s_title_1600x900.png", __ASSET__assets_images_s_title_1600x900_png);
 		type.set ("assets/images/s_title_1600x900.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/s_wip_cultist.png", __ASSET__assets_images_s_wip_cultist_png);
+		type.set ("assets/images/s_wip_cultist.png", AssetType.IMAGE);
+		
+		className.set ("assets/music/bgm.ogg", __ASSET__assets_music_bgm_ogg);
+		type.set ("assets/music/bgm.ogg", AssetType.MUSIC);
 		
 		className.set ("assets/music/music-goes-here.txt", __ASSET__assets_music_music_goes_here_txt);
 		type.set ("assets/music/music-goes-here.txt", AssetType.TEXT);
@@ -1215,7 +1275,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 			var bytes = ByteArray.readFile ("assets/manifest");
 			#elseif (mac && java)
 			var bytes = ByteArray.readFile ("../Resources/manifest");
-			#elseif (ios || tvos)
+			#elseif ios
 			var bytes = ByteArray.readFile ("assets/manifest");
 			#else
 			var bytes = ByteArray.readFile ("manifest");
@@ -1237,7 +1297,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 							
 							if (!className.exists (asset.id)) {
 								
-								#if (ios || tvos)
+								#if ios
 								path.set (asset.id, "assets/" + asset.path);
 								#else
 								path.set (asset.id, asset.path);
@@ -1351,6 +1411,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_images_orangeshelfbottom_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_orangeshelfleft_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_orangeshelftop_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_pentcharged_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_pentgreen_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_pentorange_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_pentpurple_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_pentred_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_purpleshelfbottom_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_purpleshelfleft_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_purpleshelftop_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1360,15 +1425,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_images_shelf_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_s_bookshelf_64x129_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_s_book_512x216_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_s_boulder_160x128_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_s_cutscene_1_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_s_cutscene_2_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_s_heart_32x32_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_s_heart_64x64_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_s_monster_128x128_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_images_s_pent_charged_128x128_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_images_s_pent_orange_128x128_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_images_s_pent_purple_128x128_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_images_s_pent_red_128x128_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_s_player_64x128_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_s_title_1600x900_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_s_wip_cultist_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_music_bgm_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_music_music_goes_here_txt extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_book_multiple_pages_wav extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_book_single_page_wav extends null { }
@@ -1447,6 +1513,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
+
+
+
+
 @:keep #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends lime.text.Font { public function new () { super (); name = "Nokia Cellphone FC Small"; } } 
 @:keep #if display private #end class __ASSET__assets_fonts_arial_ttf extends lime.text.Font { public function new () { super (); name = "Arial"; } } 
 
@@ -1472,6 +1544,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:image("assets/images/orangeShelfBottom.png") #if display private #end class __ASSET__assets_images_orangeshelfbottom_png extends lime.graphics.Image {}
 @:image("assets/images/orangeShelfLeft.png") #if display private #end class __ASSET__assets_images_orangeshelfleft_png extends lime.graphics.Image {}
 @:image("assets/images/orangeShelfTop.png") #if display private #end class __ASSET__assets_images_orangeshelftop_png extends lime.graphics.Image {}
+@:image("assets/images/pentCharged.png") #if display private #end class __ASSET__assets_images_pentcharged_png extends lime.graphics.Image {}
+@:image("assets/images/pentgreen.png") #if display private #end class __ASSET__assets_images_pentgreen_png extends lime.graphics.Image {}
+@:image("assets/images/pentorange.png") #if display private #end class __ASSET__assets_images_pentorange_png extends lime.graphics.Image {}
+@:image("assets/images/pentpurple.png") #if display private #end class __ASSET__assets_images_pentpurple_png extends lime.graphics.Image {}
+@:image("assets/images/pentred.png") #if display private #end class __ASSET__assets_images_pentred_png extends lime.graphics.Image {}
 @:image("assets/images/purpleShelfBottom.png") #if display private #end class __ASSET__assets_images_purpleshelfbottom_png extends lime.graphics.Image {}
 @:image("assets/images/purpleShelfLeft.png") #if display private #end class __ASSET__assets_images_purpleshelfleft_png extends lime.graphics.Image {}
 @:image("assets/images/purpleShelfTop.png") #if display private #end class __ASSET__assets_images_purpleshelftop_png extends lime.graphics.Image {}
@@ -1481,15 +1558,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:image("assets/images/shelf.png") #if display private #end class __ASSET__assets_images_shelf_png extends lime.graphics.Image {}
 @:image("assets/images/s_bookshelf_64x129.png") #if display private #end class __ASSET__assets_images_s_bookshelf_64x129_png extends lime.graphics.Image {}
 @:image("assets/images/s_book_512x216.png") #if display private #end class __ASSET__assets_images_s_book_512x216_png extends lime.graphics.Image {}
+@:image("assets/images/s_boulder_160x128.png") #if display private #end class __ASSET__assets_images_s_boulder_160x128_png extends lime.graphics.Image {}
+@:image("assets/images/s_cutscene_1.png") #if display private #end class __ASSET__assets_images_s_cutscene_1_png extends lime.graphics.Image {}
+@:image("assets/images/s_cutscene_2.png") #if display private #end class __ASSET__assets_images_s_cutscene_2_png extends lime.graphics.Image {}
 @:image("assets/images/s_heart_32x32.png") #if display private #end class __ASSET__assets_images_s_heart_32x32_png extends lime.graphics.Image {}
 @:image("assets/images/s_heart_64x64.png") #if display private #end class __ASSET__assets_images_s_heart_64x64_png extends lime.graphics.Image {}
 @:image("assets/images/s_monster_128x128.png") #if display private #end class __ASSET__assets_images_s_monster_128x128_png extends lime.graphics.Image {}
-@:image("assets/images/s_pent_charged_128x128.png") #if display private #end class __ASSET__assets_images_s_pent_charged_128x128_png extends lime.graphics.Image {}
-@:image("assets/images/s_pent_orange_128x128.png") #if display private #end class __ASSET__assets_images_s_pent_orange_128x128_png extends lime.graphics.Image {}
-@:image("assets/images/s_pent_purple_128x128.png") #if display private #end class __ASSET__assets_images_s_pent_purple_128x128_png extends lime.graphics.Image {}
-@:image("assets/images/s_pent_red_128x128.png") #if display private #end class __ASSET__assets_images_s_pent_red_128x128_png extends lime.graphics.Image {}
 @:image("assets/images/s_player_64x128.png") #if display private #end class __ASSET__assets_images_s_player_64x128_png extends lime.graphics.Image {}
 @:image("assets/images/s_title_1600x900.png") #if display private #end class __ASSET__assets_images_s_title_1600x900_png extends lime.graphics.Image {}
+@:image("assets/images/s_wip_cultist.png") #if display private #end class __ASSET__assets_images_s_wip_cultist_png extends lime.graphics.Image {}
+@:file("assets/music/bgm.ogg") #if display private #end class __ASSET__assets_music_bgm_ogg extends lime.utils.ByteArray {}
 @:file("assets/music/music-goes-here.txt") #if display private #end class __ASSET__assets_music_music_goes_here_txt extends lime.utils.ByteArray {}
 @:file("assets/sounds/book_multiple_pages.wav") #if display private #end class __ASSET__assets_sounds_book_multiple_pages_wav extends lime.utils.ByteArray {}
 @:file("assets/sounds/book_single_page.wav") #if display private #end class __ASSET__assets_sounds_book_single_page_wav extends lime.utils.ByteArray {}

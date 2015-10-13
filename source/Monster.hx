@@ -33,7 +33,8 @@ class Monster extends FlxSprite
 	
 	public var randomPos(default, null): FlxPoint;
 	public var playerPos(default, null): FlxPoint;
-
+	public var lastSeenPlayerPos(default, null): FlxPoint;
+	private var playerSeen:Bool = false;
 	private var _sndStep:FlxSound;
 	
 	public var seesPlayer:Bool = false;
@@ -112,6 +113,8 @@ class Monster extends FlxSprite
 		else
 		{
 			FlxVelocity.moveTowardsPoint(this, playerPos, Std.int(speed));
+			lastSeenPlayerPos = playerPos;
+			playerSeen = true;
 			//FlxTween.tween(this, { x:100, y:200 }, 3.0, { ease: FlxEase.quadInOut, complete: myCallback });
 
 			
@@ -128,7 +131,18 @@ class Monster extends FlxSprite
 			//var randomY = FlxRandom.intRanged(0, 400);
 			//trace(randomPos);
 			//FlxVelocity.moveTowardsPoint(this, randomPos, Std.int(speed));
+			if (playerSeen) {
+				FlxVelocity.moveTowardsPoint(this, lastSeenPlayerPos, Std.int(speed));
+				var m_pos = this.getMidpoint();
+				var dist = m_pos.distanceTo(lastSeenPlayerPos);
+				if (dist < 10) {
+					playerSeen = false;
+					generateRandomPoint();
+				}
+			}
+			else {
 			generateRandomPoint();
+			}
 			//FlxTween.tween(this, { x:randomX, y:randomY }, 3.0, { ease: FlxEase.quadInOut } );
 			//FlxTween.cubicMotion(this, 0, 0, 500, 100, 400, 200, 100, 100, 2, { ease: FlxEase.quadInOut, type: FlxTween.LOOPING });
 		}

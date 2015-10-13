@@ -23,7 +23,6 @@ class CutSceneState extends FlxState
 	{
 		//FlxG.state.bgColor = FlxColor.BLUE;
 		var scene1 = new FlxSprite(0, 30, 'assets/images/s_cutscene_1.png');
-
 		add(scene1);
 		super.create();
 	}
@@ -49,7 +48,9 @@ class CutSceneState extends FlxState
 			switch(index) {
 			case 0:
 				index++;
-				FlxG.camera.fade(FlxColor.BLACK, 1, true, doneFadeIn);
+				//FlxG.camera.fade(FlxColor.BLACK, 1, true, doneFadeIn);
+				var scene2 = new FlxSprite(0, 30, 'assets/images/s_cutscene_2.png');
+				add(scene2);
 
 			case 1:
 
@@ -59,8 +60,6 @@ class CutSceneState extends FlxState
 		super.update();
 	}
 	private function doneFadeIn():Void {
-		var scene2 = new FlxSprite(0, 30, 'assets/images/s_cutscene_2.png');
-		add(scene2);
 
 	}
 }
