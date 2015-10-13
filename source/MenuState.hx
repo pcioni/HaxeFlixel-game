@@ -72,11 +72,9 @@ class MenuState extends FlxState
 			case 0:
 				FlxG.state.bgColor = FlxColor.BLACK;
 				FlxG.switchState(new CutSceneState());
-<<<<<<< HEAD
 			case 1:
 				FlxG.openURL("http://haxeflixel.com/documentation/cheat-sheet/");
-=======
->>>>>>> 739523d045eba739ad01078560d8b81fbd1e8d82
+
 			}
 		}
 		super.update();

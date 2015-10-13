@@ -28,6 +28,7 @@ class Shelf extends FlxSprite {
 		parent = Parent;
 		myColor = color;
 		resetTimer = false;
+		mySequenceNum = -1;
 		
 		
 		// Initialize our shelves with proper orientation and hitboxes.

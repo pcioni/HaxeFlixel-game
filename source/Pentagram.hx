@@ -26,7 +26,7 @@ class Pentagram extends FlxSprite {
 		super(X, Y);
 		updateHitbox();
 		
-		charged = true;
+		charged = false;
 		
 		immovable = true;
 
