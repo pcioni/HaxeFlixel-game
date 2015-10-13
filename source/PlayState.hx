@@ -30,6 +30,7 @@ class PlayState extends FlxState {
 	var healthBar:FlxBar;
 	var recoveryTime: Int = 200;
 	var stunTime: Int = 100;
+	
 	//boulder var
 	var earthquakeTimer: Int;
 	var numBoulders:Int;
@@ -97,7 +98,7 @@ class PlayState extends FlxState {
 		var y:Int = 20;
 		var init:Bool = true;
 		var init2:Bool = true;
-		var shelfColors:Array<String> = ["red", "purple", "brown", "orange"];
+		var shelfColors:Array<String> = ["red", "purple", "green", "orange"];
 		
 		
 		/*
@@ -310,7 +311,7 @@ class PlayState extends FlxState {
 			FlxG.cameras.shake();
 			var randomX = FlxRandom.intRanged(200, FlxG.width-200);
 			var randomY = FlxRandom.intRanged(200, FlxG.height-200);
-			numBoulders = randomBoulders(3,10);
+			numBoulders = randomBoulders(3,5);
 			while (numBoulders != 0) {
 				randomX = FlxRandom.intRanged(0, 1200);
 				randomY = FlxRandom.intRanged(0, 600);
@@ -346,7 +347,7 @@ class PlayState extends FlxState {
 	}
 	private function playerTouchBoulder(P:Player, B:Boulder):Void {
 		if (P.invulnerable == false) {
-			P.hurt(34);
+			P.hurt(10);
 			P.invulnerable = true;
 			P.alpha = 0.4;
 			B.kill();	
@@ -412,10 +413,10 @@ class PlayState extends FlxState {
 					M.speed = 80;
 					M.playerPos.copyFrom(player.getMidpoint());
 					if (dist < radius * 2) {
-						M.speed = 100;			
+						M.speed = 110;			
 						M.playerPos.copyFrom(player.getMidpoint());
 						if (dist < radius) {
-							M.speed = 120;
+							M.speed = 150;
 							M.playerPos.copyFrom(player.getMidpoint());
 						}
 					}

@@ -31,7 +31,7 @@ class Boulder extends FlxSprite
 		
 		super(X, Y);
 		//load the boulder sprite
-		loadGraphic("assets/images/boulder.png", true, 160, 128);
+		loadGraphic("assets/images/s_boulder_160x128.png", true, 160, 128);
 		
 		scale.set(scaleX,scaleY);
 		updateHitbox();
@@ -43,8 +43,8 @@ class Boulder extends FlxSprite
 	//generate a random point while wandering
 	
 	private function generateRandomPoint():Void {
-		var randomX = FlxRandom.intRanged(0, 1200);
-		var randomY = FlxRandom.intRanged(0, 600);
+		var randomX = FlxRandom.intRanged(100, 1500);
+		var randomY = FlxRandom.intRanged(180, 660);
 
 	}
 	public override function update(): Void {
