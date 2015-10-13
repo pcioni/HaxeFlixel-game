@@ -127,6 +127,9 @@ class PlayState extends FlxState {
 		
 		
 
+		/*
+		 * These numbers are for testing
+		 */
 		add( tmp = new Shelf(300, 150, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
 		add( t2 = new Shelf(300, 300, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
 		add( t3 = new Shelf(300, 450, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
@@ -144,6 +147,9 @@ class PlayState extends FlxState {
 		shelfGroup.add(t3);
 		shelfGroup.add(t4);
 		shelfGroup.add(t5); 
+		/*
+		 * These numbers are for testing
+		 */
 		
 		
 		currentSequence = 1;
