@@ -13,10 +13,9 @@ import flixel.util.FlxColor;
  */
 class MenuState extends FlxState
 {
-	public static inline var OPTIONS:Int = 2;
+	public static inline var OPTIONS:Int = 1;
 	
 	var opt0txt:FlxText;
-	var opt1txt:FlxText;
 	
 	var pointer:FlxSprite;
 	var option:Int = 0;
@@ -30,11 +29,9 @@ class MenuState extends FlxState
 		add(menuBg);
 
 		opt0txt = new FlxText(FlxG.width /2 - 160, FlxG.height * 3/4, 320, "Start");
-		opt1txt = new FlxText(FlxG.width /2 - 160, FlxG.height * 3/4 + 96, 320, "Credits");
-		opt0txt.size = opt1txt.size = 64;
-		opt0txt.color = opt1txt.color = FlxColor.BLACK;
+		opt0txt.size = 64;
+		opt0txt.color  = FlxColor.BLACK;
 		add(opt0txt);
-		add(opt1txt);
 		pointer = new FlxSprite();
 		pointer.makeGraphic(32, 32, FlxColor.RED);
 		pointer.x = opt0txt.x - pointer.width - 10;
@@ -60,8 +57,6 @@ class MenuState extends FlxState
 		switch(option) {
 		case 0:
 			pointer.y = opt0txt.y + pointer.height/2;
-		case 1:
-			pointer.y = opt1txt.y + pointer.height / 2;
 		}
 		
 		//listen for keys
@@ -76,9 +71,7 @@ class MenuState extends FlxState
 			switch(option) {
 			case 0:
 				FlxG.state.bgColor = FlxColor.BLACK;
-				FlxG.switchState(new PlayState());
-			case 1:
-				FlxG.openURL("http://haxeflixel.com/documentation/cheat-sheet/");
+				FlxG.switchState(new CutSceneState());
 			}
 		}
 		super.update();
