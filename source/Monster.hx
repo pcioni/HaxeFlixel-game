@@ -11,6 +11,8 @@ import flixel.util.FlxRandom;
 import flixel.util.FlxVelocity;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import flixel.util.FlxTimer;
+import haxe.Timer;
 using flixel.util.FlxSpriteUtil;
 import FSM;
 
@@ -31,7 +33,8 @@ class Monster extends FlxSprite
 	
 	public var randomPos(default, null): FlxPoint;
 	public var playerPos(default, null): FlxPoint;
-
+	public var lastSeenPlayerPos(default, null): FlxPoint;
+	private var playerSeen:Bool = false;
 	private var _sndStep:FlxSound;
 	
 	public var seesPlayer:Bool = false;
@@ -51,7 +54,7 @@ class Monster extends FlxSprite
 		animation.add("walkLR", [48, 49, 50], 1, true);
 		animation.add("walkU", [32, 33, 34], 1, true);
 		animation.add("walkD", [40, 41, 42], 1, true);
-		animation.add("death", [0, 1], 1, true);// 1, 2, 3, 4, 8, 9, 10, 11, 12, 16, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 29, 30, 31], 6, false);
+		animation.add("death", [0, 1, 2, 3, 4, 8, 9, 10, 11, 12, 16, 17, 18, 19, 20, 21, 24], 6, false);
 		//makeGraphic(16, 16);
 		animation.add("idle", [40]);
 		scale.set(2, 2);
@@ -110,6 +113,8 @@ class Monster extends FlxSprite
 		else
 		{
 			FlxVelocity.moveTowardsPoint(this, playerPos, Std.int(speed));
+			lastSeenPlayerPos = playerPos;
+			playerSeen = true;
 			//FlxTween.tween(this, { x:100, y:200 }, 3.0, { ease: FlxEase.quadInOut, complete: myCallback });
 
 			
@@ -126,7 +131,18 @@ class Monster extends FlxSprite
 			//var randomY = FlxRandom.intRanged(0, 400);
 			//trace(randomPos);
 			//FlxVelocity.moveTowardsPoint(this, randomPos, Std.int(speed));
+			if (playerSeen) {
+				FlxVelocity.moveTowardsPoint(this, lastSeenPlayerPos, Std.int(speed));
+				var m_pos = this.getMidpoint();
+				var dist = m_pos.distanceTo(lastSeenPlayerPos);
+				if (dist < 10) {
+					playerSeen = false;
+					generateRandomPoint();
+				}
+			}
+			else {
 			generateRandomPoint();
+			}
 			//FlxTween.tween(this, { x:randomX, y:randomY }, 3.0, { ease: FlxEase.quadInOut } );
 			//FlxTween.cubicMotion(this, 0, 0, 500, 100, 400, 200, 100, 100, 2, { ease: FlxEase.quadInOut, type: FlxTween.LOOPING });
 		}
@@ -161,38 +177,41 @@ class Monster extends FlxSprite
 	private function monsterPatrol():Void {
 		//patrol state
 	}
-	public override function draw():Void
-	{
-		if (velocity.x != 0) {
-			
-			if (velocity.x > 0) {
-				facing = FlxObject.RIGHT;
-				flipX = true;
+	public override function draw():Void {
+		if (alive) {
+			if (velocity.x != 0) {
+				
+				if (velocity.x > 0) {
+					facing = FlxObject.RIGHT;
+					flipX = true;
 
-				animation.play("walkLR");
-			}
-			else if (velocity.x < 0) {
-				facing = FlxObject.LEFT;
-				flipX = false;
-
-				animation.play("walkLR");
+					animation.play("walkLR");
 				}
-			
-		}
-		else {
-			if (velocity.y > 0) {
-				facing = FlxObject.DOWN;
-				animation.play("walkD");
-			}
-			else if (velocity.y < 0) {
-				facing = FlxObject.UP;
-				animation.play("walkU");
+				else if (velocity.x < 0) {
+					facing = FlxObject.LEFT;
+					flipX = false;
+
+					animation.play("walkLR");
+					}
+				
 			}
 			else {
-				animation.play("idle");
+				if (velocity.y > 0) {
+					facing = FlxObject.DOWN;
+					animation.play("walkD");
+				}
+				else if (velocity.y < 0) {
+					facing = FlxObject.UP;
+					animation.play("walkU");
+				}
+				else {
+					animation.play("idle");
+				}
 			}
 		}
-			super.draw();
+
+		super.draw();
+
 	}
 	public override function update(): Void {
 
@@ -205,12 +224,19 @@ class Monster extends FlxSprite
 			
 		}*/
 	}
-		override public function kill():Void
-	{
-		  if (!alive || !exists)
-		  {
+	
+	override public function kill():Void {
+		alive = false;
+		var timer = new FlxTimer(2, winGame, 1);
+		if (!alive || !exists) {
+			speed = 0;
+			animation.play("death");
 			return;
-		  }
-		  alive = false;
+		}
+		
+	}
+	
+	public function winGame(Timer:FlxTimer):Void {
+		FlxG.switchState(new CutSceneState());
 	}
 }

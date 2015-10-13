@@ -53,7 +53,7 @@ class Player extends FlxSprite
 
 		drag.set(RUN_SPEED * 9, RUN_SPEED * 9);
 		maxVelocity.set(RUN_SPEED * 2, RUN_SPEED * 2);
-		health = 100;
+		health = 100000;
 		facing = FlxObject.RIGHT;
 		parent = Parent;
 		updateHitbox();

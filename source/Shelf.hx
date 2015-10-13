@@ -70,13 +70,20 @@ class Shelf extends FlxSprite {
 	// This is called when the timer hits 0.
 	public function readBook(Timer:FlxTimer):Void {
 		trace("reading mySeq = " + mySequenceNum + " || currSeq = " + PlayState.currentSequence);
+		
 		if (mySequenceNum == PlayState.currentSequence) {
 			trace("changing playstate from " + PlayState.currentSequence + " to " + (PlayState.currentSequence + 1));
+			
 			if (PlayState.currentSequence == 5) {
-				// trigger the kill state
 				trace("kill state triggered");
+				PlayState.pentagram.changeColor("charged");
+				PlayState.currentSequence += 1;
 			}
-			PlayState.currentSequence += 1;
+			
+			else {
+				PlayState.currentSequence += 1;
+				PlayState.pentagram.changeColor( PlayState.goalShelves[PlayState.currentSequence - 1].myColor ) ;
+			}
 		}
 		resetTimer = true;
 	}
