@@ -366,21 +366,22 @@ class PlayState extends FlxState {
 			// Each if statement represents the radius of the rings inside the light
 			// The outermost loop is the outermost ring
 			// The monster constantly checks its position and increases speed as he gets closer to the enemy
-			if (dist < radius*3 || player.lightOn) {
+			if (player.lightOn) {
 				M.seesPlayer = true;
 				M.speed = 60;
-			
 				M.playerPos.copyFrom(player.getMidpoint());
-				if (dist < radius * 2 || player.lightOn) {
-					M.speed = 70;
+				if (dist < radius * 3) {
+					M.speed = 90;
 					M.playerPos.copyFrom(player.getMidpoint());
-					if (dist < radius || player.lightOn) {
-						M.speed = 80;			
+					if (dist < radius * 2) {
+						M.speed = 120;			
 						M.playerPos.copyFrom(player.getMidpoint());
-
+						if (dist < radius) {
+							M.speed = 150;			
+							M.playerPos.copyFrom(player.getMidpoint());
+						}
 					}
 				}
-
 			}
 			else {
 				M.seesPlayer = false;
