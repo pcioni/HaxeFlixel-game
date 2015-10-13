@@ -30,6 +30,7 @@ class PlayState extends FlxState {
 	var healthBar:FlxBar;
 	var recoveryTime: Int = 200;
 	var stunTime: Int = 100;
+	
 	//boulder var
 	var earthquakeTimer: Int;
 	var numBoulders:Int;
@@ -46,6 +47,12 @@ class PlayState extends FlxState {
 	var won:Bool;
 	var ending:Bool;
 	
+	var t1:Shelf;
+	var t2:Shelf;
+	var t3:Shelf;
+	var t4:Shelf;
+	var t5:Shelf;
+	
 	private var enemyGroup:FlxTypedGroup<Monster>;
 	private var shelfGroup:FlxTypedGroup<Shelf>;
 	private var boulderGroup:FlxTypedGroup<Boulder>;
@@ -55,6 +62,8 @@ class PlayState extends FlxState {
 	private var monsterRoarSnd:FlxSound;
 	
 	private var level:FlxTilemap;
+	
+	public static var currentSequence:Int;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -66,7 +75,9 @@ class PlayState extends FlxState {
 		//add(level);
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
+		FlxG.sound.playMusic(AssetPaths.bgm__ogg);
 		FlxG.debugger.visible;
+		
 		//groups
 		boulderGroup = new FlxTypedGroup<Boulder>();
 		shelfGroup = new FlxTypedGroup<Shelf>();
@@ -82,11 +93,13 @@ class PlayState extends FlxState {
 		 * 	along the way at a set increment. Pick random colors from the list of colors.
 		 */
 		var x:Int = 1535;
-		var y:Int = 0;
+		var y:Int = 20;
 		var init:Bool = true;
 		var init2:Bool = true;
 		var shelfColors:Array<String> = ["red", "purple", "brown", "orange"];
-
+		
+		
+		/*
 		while ( x + y < 2450) {
 			if (x > 60 && y < 300) {
 				add( tmp = new Shelf(x, y, this, "top", FlxRandom.getObject(shelfColors, 0) ) );
@@ -112,6 +125,39 @@ class PlayState extends FlxState {
 			}
 			shelfGroup.add(tmp);
 		}
+		*/
+		
+		
+
+		/*
+		 * These numbers are for testing
+		 */
+		add( tmp = new Shelf(300, 150, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		add( t2 = new Shelf(300, 300, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		add( t3 = new Shelf(300, 450, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		add( t4 = new Shelf(300, 600, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		add( t5 = new Shelf(300, 750, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		
+		tmp.mySequenceNum = 1;
+		t2.mySequenceNum = 2;
+		t3.mySequenceNum = 3;
+		t4.mySequenceNum = 4;
+		t5.mySequenceNum = 5;
+		
+		shelfGroup.add(tmp);
+		shelfGroup.add(t2);
+		shelfGroup.add(t3);
+		shelfGroup.add(t4);
+		shelfGroup.add(t5); 
+		/*
+		 * These numbers are for testing
+		 */
+		
+		
+		currentSequence = 1;
+		
+		//keep track of the last shelf we interacted with
+		lastHitShelf = tmp;
 
 		//monster
 		add(monster = new Monster(600, 600, this, 0));
@@ -126,23 +172,18 @@ class PlayState extends FlxState {
 		darkness.blend = BlendMode.MULTIPLY;
 		darkness.alpha = 0.8;
 		
-		light = new Light(0, 0, this);
+		light = new Light(0, 0, darkness, this);
 		add(light);
 		add(darkness);
-		
-		//keep track of the last shelf we interacted with
-		lastHitShelf = tmp;
-		
+	
 		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
 		add( readBar = new FlxBar(50, 50, FlxBar.FILL_LEFT_TO_RIGHT, 150, 20, player, "testShelf.timer.progress", 0.0, 1.0, true) );
 		readBar.trackParent( -47, -30);
-		readBar.exists = false;
-		readBar.alive = false;
+		readBar.kill();
 		
 		//indicator for detecting shelves
 		add( useText = new FlxText(player.x , player.y, 20, "!", 100, false) );
-		useText.exists = false;
-		useText.alive = false;
+		useText.kill();
 		
 		//health bar 
 		healthBar = new FlxBar(0, 0, FlxBar.FILL_RIGHT_TO_LEFT, 150, 20, player, "health", 0.0, 100.0, true);
@@ -151,8 +192,8 @@ class PlayState extends FlxState {
 		healthBar.trackParent( -47, -40);
 		
 		//adding elements to groups
-		
 		enemyGroup.add(monster);
+		
 		//sounds
 		bookSnd = FlxG.sound.load(AssetPaths.book_multiple_pages__wav);
 		deathSnd = FlxG.sound.load(AssetPaths.PC_death__wav);
@@ -187,8 +228,7 @@ class PlayState extends FlxState {
 			Earthquake();
 			earthquakeTimer = FlxRandom.intRanged(200, 600);
 		}
-		if (ending)
-		{
+		if (ending) {
 			return;
 		}
 		if (monster.alive) {
@@ -211,6 +251,7 @@ class PlayState extends FlxState {
 				//reset player invulnerability and timer
 				if (recoveryTime <= 0) {
 					player.invulnerable = false;
+					player.alpha = 1;
 					recoveryTime = 200;
 				}
 			}
@@ -221,14 +262,14 @@ class PlayState extends FlxState {
 			// check if we're colliding with any shelf in our shelf group.
 			// if we do, call playerTouchShelf.
 			if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) && player.lightOn ) {
-			player.touchingShelf = true;
-		}
-		else {
-			player.touchingShelf = false;
-			readBar.kill();
-			useText.kill();
-			lastHitShelf.stopTimer();
-		}
+				player.touchingShelf = true;
+			}
+			else {
+				player.touchingShelf = false;
+				readBar.kill();
+				useText.kill();
+				lastHitShelf.stopTimer();
+			}
 		}
 		else {
 			if (player.animation.finished) {
@@ -249,8 +290,6 @@ class PlayState extends FlxState {
 		useText.x = player.x + 22;
 		useText.y = player.y - 150;
 
-		//ai
-
 	}	
 	private function spawnMonster() {
 			var randomX = FlxRandom.intRanged(0, 1200);
@@ -268,7 +307,7 @@ class PlayState extends FlxState {
 			FlxG.cameras.shake();
 			var randomX = FlxRandom.intRanged(200, FlxG.width-200);
 			var randomY = FlxRandom.intRanged(200, FlxG.height-200);
-			numBoulders = randomBoulders(3,10);
+			numBoulders = randomBoulders(3,5);
 			while (numBoulders != 0) {
 				randomX = FlxRandom.intRanged(0, 1200);
 				randomY = FlxRandom.intRanged(0, 600);
@@ -279,7 +318,6 @@ class PlayState extends FlxState {
 	}
 	private function spawnBoulders(x, y) {
 			var randomFloat = FlxRandom.floatRanged(0.3, .7);
-
 			var newBoulder = new Boulder(x, y, randomFloat, randomFloat, this, 1);
 			newBoulder.updateHitbox();
 			newBoulder.offset.set( -1, -10);
@@ -303,44 +341,42 @@ class PlayState extends FlxState {
 			useText.exists = true;
 		}
 	}
-	private function playerTouchBoulder(P:Player, B:Boulder):Void
-	{
+	private function playerTouchBoulder(P:Player, B:Boulder):Void {
 		if (P.invulnerable == false) {
-			P.hurt(34);
+			P.hurt(10);
 			P.invulnerable = true;
-			B.kill();
-		
+			P.alpha = 0.4;
+			B.kill();	
 		}
 		if (P.health <= 0 ) {
 			//if we havent died yet
+			P.alpha = 1;
 			if (P.alive) {
 				//play the death animation
 				P.kill();
-			
-			}
-	
+			}	
 			//on completion, switch to end state/cut scene
 				
-			}
+		}
 	}
 	private function playerTouchEnemy(P:Player, M:Monster):Void
 	{
 		if (P.invulnerable == false) {
 			P.hurt(34);
 			P.invulnerable = true;
-		
+			P.alpha = 0.4;	
 		}
 		if (P.health <= 0 ) {
 			//if we havent died yet
+			P.alpha = 1;
 			if (P.alive) {
 				//play the death animation
+				deathSnd.play(true);
 				P.kill();
-			
 			}
-	
 			//on completion, switch to end state/cut scene
 				
-			}
+		}
 	}
 	private function enemyTouchBoulder(M:Monster, B:Boulder):Void
 	{
@@ -360,26 +396,27 @@ class PlayState extends FlxState {
 			var dist = m_pos.distanceTo(p_pos);
 
 			//Light radius
-			var radius = 160;
+			var radius = light.getRadius();
 			
 			// Each if statement represents the radius of the rings inside the light
 			// The outermost loop is the outermost ring
 			// The monster constantly checks its position and increases speed as he gets closer to the enemy
-			if (dist < radius*3 || player.lightOn) {
+			if (player.lightOn) {
 				M.seesPlayer = true;
 				M.speed = 60;
-			
 				M.playerPos.copyFrom(player.getMidpoint());
-				if (dist < radius * 2 || player.lightOn) {
-					M.speed = 70;
+				if (dist < radius * 3) {
+					M.speed = 80;
 					M.playerPos.copyFrom(player.getMidpoint());
-					if (dist < radius || player.lightOn) {
-						M.speed = 80;			
+					if (dist < radius * 2) {
+						M.speed = 110;			
 						M.playerPos.copyFrom(player.getMidpoint());
-
+						if (dist < radius) {
+							M.speed = 150;
+							M.playerPos.copyFrom(player.getMidpoint());
+						}
 					}
 				}
-
 			}
 			else {
 				M.seesPlayer = false;

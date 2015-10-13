@@ -19,6 +19,7 @@ class Shelf extends FlxSprite {
 	public var timer:FlxTimer;
 	public var myColor:String;
 	public var mySequenceNum:Int;
+	private var resetTimer:Bool;
 	
 	
 	public function new(X:Float = 0, Y:Float = 0, Parent:PlayState, position:String, color:String) {
@@ -26,6 +27,7 @@ class Shelf extends FlxSprite {
 		updateHitbox();
 		parent = Parent;
 		myColor = color;
+		resetTimer = false;
 		
 		
 		// Initialize our shelves with proper orientation and hitboxes.
@@ -51,18 +53,32 @@ class Shelf extends FlxSprite {
 		
 		// initialize our timer and pause it.
 		// arg1 is duration, arg2 is callback, arg3 is how many times to loop (0 for infinite).
-		timer = new FlxTimer(5.0, readBook, 1) ;
+		timer = new FlxTimer(2.5, readBook, 1) ;
 		timer.active = false;
 	}
 	
 	public override function update():Void {
 		super.update();
+		if (FlxG.keys.anyJustReleased(["E"]) && resetTimer == true) {
+			timer.reset();
+			timer.active = false;
+			resetTimer = false;
+		}
 	}
 	
 	// Callback function for timer. 
 	// This is called when the timer hits 0.
 	public function readBook(Timer:FlxTimer):Void {
-		trace("read book");
+		trace("reading mySeq = " + mySequenceNum + " || currSeq = " + PlayState.currentSequence);
+		if (mySequenceNum == PlayState.currentSequence) {
+			trace("changing playstate from " + PlayState.currentSequence + " to " + (PlayState.currentSequence + 1));
+			if (PlayState.currentSequence == 5) {
+				// trigger the kill state
+				trace("kill state triggered");
+			}
+			PlayState.currentSequence += 1;
+		}
+		resetTimer = true;
 	}
 	
 	// Helper functions that pause and resume the timer.
