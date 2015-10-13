@@ -75,9 +75,12 @@ class PlayState extends FlxState {
 	 */
 	override public function create():Void {
 		
+		super.create();
+		/*
 		level = new FlxTilemap();
 		level.loadMap(Assets.getText("assets/data/map.csv"), "assets/data/tile_sheet.png", 64, 64);
 		add(level);
+		*/
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
 		FlxG.sound.playMusic(AssetPaths.bgm__ogg);
@@ -106,6 +109,7 @@ class PlayState extends FlxState {
 		
 		/*
 		 * Randomly generate our bookshelves in a 'U' pattern
+		 */
 		while ( x + y < 2450) {
 			if (x > 60 && y < 300) {
 				add( tmp = new Shelf(x, y, this, "top", FlxRandom.getObject(shelfColors, 0) ) );
@@ -131,13 +135,23 @@ class PlayState extends FlxState {
 			}
 			shelfGroup.add(tmp);
 		}
-		*/
 		
+		var count:Int = 1;
+		var she:Shelf;
+		goalShelves = [];
+		while (count < 6) {
+			she = shelfGroup.getRandom();
+			if (she.mySequenceNum == -1) {
+				she.mySequenceNum = count;
+				goalShelves.push(she);
+ 				count += 1;
+			}
+		}
 		
 
 		/*
 		 * These numbers are for testing
-		 */
+		 *
 		add( tmp = new Shelf(300, 150, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
 		add( t2 = new Shelf(300, 300, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
 		add( t3 = new Shelf(300, 450, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
@@ -213,7 +227,6 @@ class PlayState extends FlxState {
 		deathSnd = FlxG.sound.load(AssetPaths.PC_death__wav);
 		monsterRoarSnd = FlxG.sound.load(AssetPaths.monster_roar_1__wav);
 		
-		super.create();
 	}
 	
 	/**

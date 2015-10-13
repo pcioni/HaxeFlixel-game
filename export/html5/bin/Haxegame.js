@@ -165,7 +165,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "17", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "35", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -4359,9 +4359,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,monsterRoarSnd: null
 	,level: null
 	,create: function() {
-		this.level = new flixel_tile_FlxTilemap();
-		this.level.loadMap(openfl_Assets.getText("assets/data/map.csv"),"assets/data/tile_sheet.png",64,64);
-		this.add(this.level);
+		flixel_FlxState.prototype.create.call(this);
 		flixel_FlxG.game._state.set_bgColor(-12171706);
 		flixel_FlxG.sound.playMusic("assets/music/bgm.ogg");
 		flixel_FlxG["debugger"].visible;
@@ -4376,22 +4374,40 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		var init = true;
 		var init2 = true;
 		var shelfColors = ["red","purple","green","orange"];
-		this.add(this.tmp = new Shelf(300,150,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-		this.add(this.t2 = new Shelf(300,300,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-		this.add(this.t3 = new Shelf(300,450,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-		this.add(this.t4 = new Shelf(300,600,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-		this.add(this.t5 = new Shelf(300,750,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-		this.tmp.mySequenceNum = 1;
-		this.t2.mySequenceNum = 2;
-		this.t3.mySequenceNum = 3;
-		this.t4.mySequenceNum = 4;
-		this.t5.mySequenceNum = 5;
-		this.shelfGroup.add(this.tmp);
-		this.shelfGroup.add(this.t2);
-		this.shelfGroup.add(this.t3);
-		this.shelfGroup.add(this.t4);
-		this.shelfGroup.add(this.t5);
-		PlayState.goalShelves = [this.tmp,this.t2,this.t3,this.t4,this.t5];
+		while(x + y < 2450) {
+			if(x > 60 && y < 300) {
+				this.add(this.tmp = new Shelf(x,y,this,"top",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
+				x -= 100;
+			} else if(x < 60 && y < 800) {
+				if(init) {
+					y += 200;
+					init = false;
+				}
+				x = 0;
+				this.add(this.tmp = new Shelf(x,y,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
+				y += 145;
+			} else {
+				if(init2) {
+					x = 150;
+					init2 = false;
+				}
+				y = 805;
+				this.add(this.tmp = new Shelf(x,y,this,"bottom",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
+				x += 100;
+			}
+			this.shelfGroup.add(this.tmp);
+		}
+		var count = 1;
+		var she;
+		PlayState.goalShelves = [];
+		while(count < 6) {
+			she = this.shelfGroup.getRandom();
+			if(she.mySequenceNum == -1) {
+				she.mySequenceNum = count;
+				PlayState.goalShelves.push(she);
+				count += 1;
+			}
+		}
 		this.add(PlayState.pentagram = new Pentagram(730,390,this.tmp.myColor));
 		PlayState.currentSequence = 1;
 		this.lastHitShelf = this.tmp;
@@ -4422,7 +4438,6 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.bookSnd = flixel_FlxG.sound.load("assets/sounds/book_multiple_pages.wav");
 		this.deathSnd = flixel_FlxG.sound.load("assets/sounds/PC_death.wav");
 		this.monsterRoarSnd = flixel_FlxG.sound.load("assets/sounds/monster_roar_1.wav");
-		flixel_FlxState.prototype.create.call(this);
 	}
 	,destroy: function() {
 		this.bookSnd = flixel_util_FlxDestroyUtil.destroy(this.bookSnd);
@@ -4510,8 +4525,6 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,spawnBoulders: function(x,y) {
 		var randomFloat = flixel_util_FlxRandom.floatRanged(0.3,.7);
 		var newBoulder = new Boulder(x,y,randomFloat,randomFloat,this,1);
-		newBoulder.updateHitbox();
-		newBoulder.offset.set(-1,-10);
 		this.add(newBoulder);
 		this.boulderGroup.add(newBoulder);
 	}
