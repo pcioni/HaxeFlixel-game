@@ -50,6 +50,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/boulder.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/brownShelfBottom.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -114,6 +118,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/s_book_512x216.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/s_heart_32x32.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -143,6 +151,10 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/images/s_player_64x128.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/s_title_1600x900.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -294,7 +306,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "34",
+			build: "90",
 			company: "HaxeFlixel",
 			file: "Haxegame",
 			fps: 60,

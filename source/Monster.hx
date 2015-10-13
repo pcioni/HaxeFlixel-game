@@ -22,16 +22,25 @@ class Monster extends FlxSprite
 {
 	public var speed:Float = 60;
 	public var etype(default, null):Int;
+	
 	private var _brain: FSM;
-	private var _idleTmr:Float;
+	private var idleTimer:Float;
+	private var stunTimer:Int;
 	private var _moveDir:Float;
-	public var seesPlayer:Bool = false;
+	
+	
 	public var randomPos(default, null): FlxPoint;
 	public var playerPos(default, null): FlxPoint;
+
 	private var _sndStep:FlxSound;
+	
+	public var seesPlayer:Bool = false;
 	private var wandering:Bool = false;
+	public var stunned:Bool = false;
 	public var banished:Bool = false;
+	
 	var parent:PlayState;
+	
 	public function new(X:Float = 0, Y:Float = 0, Parent: PlayState, EType:Int) 
 	{
 		etype = EType;
@@ -47,7 +56,7 @@ class Monster extends FlxSprite
 		animation.add("idle", [40]);
 		scale.set(2, 2);
 		_brain = new FSM(idle);
-		_idleTmr = 0;
+		idleTimer = 0;
 		playerPos = FlxPoint.get();
 		//put sound here later
 		
@@ -59,7 +68,7 @@ class Monster extends FlxSprite
 		
 	}
 	public function idle():Void
-	{
+	{	
 		if (seesPlayer)
 		{
 			_brain.activeState = chase;
@@ -68,7 +77,7 @@ class Monster extends FlxSprite
 		{
 			_brain.activeState = wander;
 		}
-		else if (_idleTmr <= 0)
+		else if (idleTimer <= 0)
 		{
 			//_brain.activeState = idle;
 
@@ -81,19 +90,20 @@ class Monster extends FlxSprite
 				_moveDir = FlxRandom.intRanged(0, 8) * 45;
 				FlxAngle.rotatePoint(speed * .5, 0, 0, 0, _moveDir, velocity);
 			}
-			_idleTmr = FlxRandom.intRanged(1, 4);
+			idleTimer = FlxRandom.intRanged(1, 4);
 		}
 		else
 			{
 		//	_brain.activeState = wander;
-			_idleTmr -= FlxG.elapsed;
+			idleTimer -= FlxG.elapsed;
 			
-			trace("time is:" + _idleTmr);
+			//trace("time is:" + idleTimer);
 			}
-	}
+		}
+	
 	public function chase():Void
 	{
-		if (!seesPlayer) {
+		if (!seesPlayer ) {
 			
 			_brain.activeState = idle;
 		}

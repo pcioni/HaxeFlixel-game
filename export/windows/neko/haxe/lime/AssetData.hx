@@ -26,6 +26,8 @@ class AssetData {
 			type.set ("assets/data/mapeditor.csv", Reflect.field (AssetType, "text".toUpperCase ()));
 			path.set ("assets/data/tile_sheet.png", "assets/data/tile_sheet.png");
 			type.set ("assets/data/tile_sheet.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/boulder.png", "assets/images/boulder.png");
+			type.set ("assets/images/boulder.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/brownShelfBottom.png", "assets/images/brownShelfBottom.png");
 			type.set ("assets/images/brownShelfBottom.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/brownShelfLeft.png", "assets/images/brownShelfLeft.png");
@@ -60,6 +62,12 @@ class AssetData {
 			type.set ("assets/images/s_bookshelf_64x129.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_book_512x216.png", "assets/images/s_book_512x216.png");
 			type.set ("assets/images/s_book_512x216.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_boulder_160x128.png", "assets/images/s_boulder_160x128.png");
+			type.set ("assets/images/s_boulder_160x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_cutscene_1.png", "assets/images/s_cutscene_1.png");
+			type.set ("assets/images/s_cutscene_1.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_cutscene_2.png", "assets/images/s_cutscene_2.png");
+			type.set ("assets/images/s_cutscene_2.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_heart_32x32.png", "assets/images/s_heart_32x32.png");
 			type.set ("assets/images/s_heart_32x32.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_heart_64x64.png", "assets/images/s_heart_64x64.png");
@@ -78,6 +86,8 @@ class AssetData {
 			type.set ("assets/images/s_player_64x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_title_1600x900.png", "assets/images/s_title_1600x900.png");
 			type.set ("assets/images/s_title_1600x900.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/music/bgm.ogg", "assets/music/bgm.ogg");
+			type.set ("assets/music/bgm.ogg", Reflect.field (AssetType, "music".toUpperCase ()));
 			path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 			type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 			path.set ("assets/sounds/book_multiple_pages.wav", "assets/sounds/book_multiple_pages.wav");
