@@ -31,7 +31,7 @@ class GameOver extends FlxState
 		#if !FLX_NO_MOUSE
 		FlxG.mouse.visible = true;
 		#end
-		txt_title = new FlxText(0, 20, 0, _win ? "You win!" : "Game Over!", 22);
+		txt_title = new FlxText(0, 20, 0, _win ? "You win!" : "Game Over!", 36);
 		txt_title.alignment = "center";
 		txt_title.color = FlxColor.WHITE;
 		txt_title.screenCenter(true, false);

@@ -7,6 +7,7 @@ import flixel.group.FlxTypedGroup;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
+import flixel.util.FlxTimer;
 import flixel.ui.FlxBar;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
@@ -27,8 +28,12 @@ class PlayState extends FlxState {
 	var player:Player;
 	var monster:Monster;
 	var healthBar:FlxBar;
-	var recoveryTime: Int = 100;
-
+	var recoveryTime: Int = 200;
+	var stunTime: Int = 100;
+	//boulder var
+	var earthquakeTimer: Int;
+	var numBoulders:Int;
+	
 	var tmp:Shelf;
 	var lastHitShelf:Shelf;
 	
@@ -43,7 +48,8 @@ class PlayState extends FlxState {
 	
 	private var enemyGroup:FlxTypedGroup<Monster>;
 	private var shelfGroup:FlxTypedGroup<Shelf>;
-
+	private var boulderGroup:FlxTypedGroup<Boulder>;
+	
 	private var bookSnd:FlxSound;
 	private var deathSnd:FlxSound;
 	private var monsterRoarSnd:FlxSound;
@@ -62,11 +68,13 @@ class PlayState extends FlxState {
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
 		FlxG.debugger.visible;
 		//groups
+		boulderGroup = new FlxTypedGroup<Boulder>();
 		shelfGroup = new FlxTypedGroup<Shelf>();
 		enemyGroup = new FlxTypedGroup<Monster>();
 		add(shelfGroup);
 		add(enemyGroup);
 		
+		earthquakeTimer = FlxRandom.intRanged(200, 600);
 		
 		/*
 		 * Randomly generate our map.
@@ -104,7 +112,7 @@ class PlayState extends FlxState {
 			}
 			shelfGroup.add(tmp);
 		}
-		
+
 		//monster
 		add(monster = new Monster(600, 600, this, 0));
 		
@@ -116,7 +124,7 @@ class PlayState extends FlxState {
 		darkness.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK, false);
 		darkness.scrollFactor.x = darkness.scrollFactor.y = 0;
 		darkness.blend = BlendMode.MULTIPLY;
-		darkness.alpha = 0.9;
+		darkness.alpha = 0.8;
 		
 		light = new Light(0, 0, this);
 		add(light);
@@ -145,7 +153,6 @@ class PlayState extends FlxState {
 		//adding elements to groups
 		
 		enemyGroup.add(monster);
-		
 		//sounds
 		bookSnd = FlxG.sound.load(AssetPaths.book_multiple_pages__wav);
 		deathSnd = FlxG.sound.load(AssetPaths.PC_death__wav);
@@ -173,9 +180,27 @@ class PlayState extends FlxState {
 	override public function update():Void
 	{
 		super.update();
+		if (earthquakeTimer > 0) {
+			earthquakeTimer -= 1;
+		}
+		else {
+			Earthquake();
+			earthquakeTimer = FlxRandom.intRanged(200, 600);
+		}
 		if (ending)
 		{
 			return;
+		}
+		if (monster.alive) {
+			FlxG.overlap(monster, boulderGroup, enemyTouchBoulder);
+			if (monster.stunned = true) {
+				monster.speed = 0;
+				stunTime -= 1;
+			}
+			if (stunTime <= 0 ) {
+				monster.speed = 60;
+				monster.stunned = false;
+			}
 		}
 		//If the player is alive and gets hit
 		if (player.alive) {
@@ -184,14 +209,15 @@ class PlayState extends FlxState {
 				//recoverytimer decrements
 				recoveryTime -= 1;
 				//reset player invulnerability and timer
-				if (recoveryTime == 0) {
+				if (recoveryTime <= 0) {
 					player.invulnerable = false;
-					recoveryTime = 100;
+					recoveryTime = 200;
 				}
 			}
 			enemyGroup.forEachAlive(checkEnemyVision);
 			FlxG.overlap(player, enemyGroup, playerTouchEnemy);
-			
+			FlxG.overlap(player, boulderGroup, playerTouchBoulder);
+
 			// check if we're colliding with any shelf in our shelf group.
 			// if we do, call playerTouchShelf.
 			if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) && player.lightOn ) {
@@ -233,6 +259,34 @@ class PlayState extends FlxState {
 			add(newMonster);
 			enemyGroup.add(newMonster);
 	}
+	private function randomBoulders(min,max) {
+		return FlxRandom.intRanged(min,max);
+	}
+	private function Earthquake() {
+			boulderGroup = FlxDestroyUtil.destroy(boulderGroup);
+			boulderGroup = new FlxTypedGroup<Boulder>();
+			FlxG.cameras.shake();
+			var randomX = FlxRandom.intRanged(200, FlxG.width-200);
+			var randomY = FlxRandom.intRanged(200, FlxG.height-200);
+			numBoulders = randomBoulders(3,10);
+			while (numBoulders != 0) {
+				randomX = FlxRandom.intRanged(0, 1200);
+				randomY = FlxRandom.intRanged(0, 600);
+				spawnBoulders(randomX, randomY);
+				numBoulders -= 1;
+			}
+			
+	}
+	private function spawnBoulders(x, y) {
+			var randomFloat = FlxRandom.floatRanged(0.3, .7);
+
+			var newBoulder = new Boulder(x, y, randomFloat, randomFloat, this, 1);
+			newBoulder.updateHitbox();
+			newBoulder.offset.set( -1, -10);
+			add(newBoulder);
+			boulderGroup.add(newBoulder);
+	}
+
 	private function playerTouchShelf(P:Player, S:Shelf):Void {
 		if ( FlxG.keys.anyPressed(["E"]) ) {
 			lastHitShelf = S;
@@ -248,6 +302,26 @@ class PlayState extends FlxState {
 			useText.alive = true;
 			useText.exists = true;
 		}
+	}
+	private function playerTouchBoulder(P:Player, B:Boulder):Void
+	{
+		if (P.invulnerable == false) {
+			P.hurt(34);
+			P.invulnerable = true;
+			B.kill();
+		
+		}
+		if (P.health <= 0 ) {
+			//if we havent died yet
+			if (P.alive) {
+				//play the death animation
+				P.kill();
+			
+			}
+	
+			//on completion, switch to end state/cut scene
+				
+			}
 	}
 	private function playerTouchEnemy(P:Player, M:Monster):Void
 	{
@@ -268,39 +342,48 @@ class PlayState extends FlxState {
 				
 			}
 	}
+	private function enemyTouchBoulder(M:Monster, B:Boulder):Void
+	{
+		B.kill();
+		if (M.stunned == false) {
+			M.stunned = true;
+			stunTime = 200;
+		}
+	}
 	private function doneFadeout():Void {
 		FlxG.switchState(new GameOver(won, 0));	
 	}
 	private function checkEnemyVision(M:Monster):Void {
-		
-		var m_pos = M.getMidpoint();
-		var p_pos = player.getMidpoint();
-		var dist = m_pos.distanceTo(p_pos);
+		if (M.stunned == false){
+			var m_pos = M.getMidpoint();
+			var p_pos = player.getMidpoint();
+			var dist = m_pos.distanceTo(p_pos);
 
-		//Light radius
-		var radius = 160;
-		
-		// Each if statement represents the radius of the rings inside the light
-		// The outermost loop is the outermost ring
-		// The monster constantly checks its position and increases speed as he gets closer to the enemy
-		if (dist < radius*3 || player.lightOn) {
-			M.seesPlayer = true;
-			M.speed = 60;
-		
-			M.playerPos.copyFrom(player.getMidpoint());
-			if (dist < radius * 2 || player.lightOn) {
-				M.speed = 70;
+			//Light radius
+			var radius = 160;
+			
+			// Each if statement represents the radius of the rings inside the light
+			// The outermost loop is the outermost ring
+			// The monster constantly checks its position and increases speed as he gets closer to the enemy
+			if (dist < radius*3 || player.lightOn) {
+				M.seesPlayer = true;
+				M.speed = 60;
+			
 				M.playerPos.copyFrom(player.getMidpoint());
-				if (dist < radius || player.lightOn) {
-					M.speed = 80;			
+				if (dist < radius * 2 || player.lightOn) {
+					M.speed = 70;
 					M.playerPos.copyFrom(player.getMidpoint());
+					if (dist < radius || player.lightOn) {
+						M.speed = 80;			
+						M.playerPos.copyFrom(player.getMidpoint());
 
+					}
 				}
-			}
 
-		}
-		else {
-			M.seesPlayer = false;
+			}
+			else {
+				M.seesPlayer = false;
+			}
 		}
 	}
 	

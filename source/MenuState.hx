@@ -25,7 +25,10 @@ class MenuState extends FlxState
 	 */
 	override public function create():Void
 	{
-		FlxG.state.bgColor = FlxColor.BLUE;
+		//FlxG.state.bgColor = FlxColor.BLUE;
+		var menuBg = new FlxSprite(0, 30, 'assets/images/s_title_1600x900.png');
+		add(menuBg);
+
 		opt0txt = new FlxText(FlxG.width * 2 / 3, FlxG.height * 2 / 3, 150, "Play the Game");
 		opt1txt = new FlxText(FlxG.width * 2 / 3, FlxG.height * 2 / 3 + 30, 150, "Cheat Sheet");
 		opt0txt.size = opt1txt.size = 16;
