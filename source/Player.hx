@@ -72,7 +72,7 @@ class Player extends FlxSprite
 		//reset the accelration each update so the player doesn't continually move in one direction
 		acceleration.x = 0;
 		acceleration.y = 0;
-		
+
 		//check inputs and assign corresponding acceleration
 		if (alive){
 		if (FlxG.keys.anyPressed(["LEFT", "A"])) {

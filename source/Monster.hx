@@ -38,10 +38,13 @@ class Monster extends FlxSprite
 		
 		super(X, Y);
 		//load the monster sprite
-		//loadGraphic("assets/images/linda.png", true, 16, 16);
-		//animation.add("walk", [4, 5, 6, 7], 12, true);
-		makeGraphic(16, 16);
-		//animation.add("idle", [5]);
+		loadGraphic("assets/images/s_monster_128x128.png", true, 128, 128);
+		animation.add("walkLR", [48, 49, 50], 1, true);
+		animation.add("walkU", [32, 33, 34], 1, true);
+		animation.add("walkD", [40, 41, 42], 1, true);
+		animation.add("death", [0, 1], 1, true);// 1, 2, 3, 4, 8, 9, 10, 11, 12, 16, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 29, 30, 31], 6, false);
+		//makeGraphic(16, 16);
+		animation.add("idle", [40]);
 		scale.set(2, 2);
 		_brain = new FSM(idle);
 		_idleTmr = 0;
@@ -150,33 +153,39 @@ class Monster extends FlxSprite
 	}
 	public override function draw():Void
 	{
-	/*	if ((velocity.x != 0 || velocity.y != 0) && touching == FlxObject.NONE) {
-				if (Math.abs(velocity.x) > Math.abs(velocity.y)) {
-					if (velocity.x < 0)
-						facing = FlxObject.LEFT;
-					else
-						facing = FlxObject.RIGHT;
+		if (velocity.x != 0) {
+			
+			if (velocity.x > 0) {
+				facing = FlxObject.RIGHT;
+				flipX = true;
+
+				animation.play("walkLR");
+			}
+			else if (velocity.x < 0) {
+				facing = FlxObject.LEFT;
+				flipX = false;
+
+				animation.play("walkLR");
 				}
-				else
-				{
-					if (velocity.y < 0)
-						facing = FlxObject.UP;
-					else
-						facing = FlxObject.DOWN;
-				}
-				switch(facing)
-				{
-					case FlxObject.LEFT, FlxObject.RIGHT:
-						animation.play("walk");
-					case FlxObject.UP:
-						animation.play("walk");
-					case FlxObject.DOWN:
-						animation.play("walk");
-				}
-			}*/
+			
+		}
+		else {
+			if (velocity.y > 0) {
+				facing = FlxObject.DOWN;
+				animation.play("walkD");
+			}
+			else if (velocity.y < 0) {
+				facing = FlxObject.UP;
+				animation.play("walkU");
+			}
+			else {
+				animation.play("idle");
+			}
+		}
 			super.draw();
 	}
 	public override function update(): Void {
+
 		if (isFlickering())
 			return;
 		_brain.update();
@@ -185,5 +194,13 @@ class Monster extends FlxSprite
 		{
 			
 		}*/
+	}
+		override public function kill():Void
+	{
+		  if (!alive || !exists)
+		  {
+			return;
+		  }
+		  alive = false;
 	}
 }

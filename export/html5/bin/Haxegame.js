@@ -147,7 +147,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "10", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "34", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -3955,7 +3955,12 @@ var Monster = function(X,Y,Parent,EType) {
 	this.speed = 60;
 	this.etype = EType;
 	flixel_FlxSprite.call(this,X,Y);
-	this.makeGraphic(16,16);
+	this.loadGraphic("assets/images/s_monster_128x128.png",true,128,128);
+	this.animation.add("walkLR",[48,49,50],1,true);
+	this.animation.add("walkU",[32,33,34],1,true);
+	this.animation.add("walkD",[40,41,42],1,true);
+	this.animation.add("death",[0,1],1,true);
+	this.animation.add("idle",[40]);
 	this.scale.set(2,2);
 	this._brain = new FSM($bind(this,this.idle));
 	this._idleTmr = 0;
@@ -3992,7 +3997,7 @@ Monster.prototype = $extend(flixel_FlxSprite.prototype,{
 			this._idleTmr = flixel_util_FlxRandom.intRanged(1,4);
 		} else {
 			this._idleTmr -= flixel_FlxG.elapsed;
-			haxe_Log.trace("time is:" + this._idleTmr,{ fileName : "Monster.hx", lineNumber : 88, className : "Monster", methodName : "idle"});
+			haxe_Log.trace("time is:" + this._idleTmr,{ fileName : "Monster.hx", lineNumber : 91, className : "Monster", methodName : "idle"});
 		}
 	}
 	,chase: function() {
@@ -4020,12 +4025,33 @@ Monster.prototype = $extend(flixel_FlxSprite.prototype,{
 	,monsterPatrol: function() {
 	}
 	,draw: function() {
+		if(this.velocity.x != 0) {
+			if(this.velocity.x > 0) {
+				this.set_facing(16);
+				this.set_flipX(true);
+				this.animation.play("walkLR");
+			} else if(this.velocity.x < 0) {
+				this.set_facing(1);
+				this.set_flipX(false);
+				this.animation.play("walkLR");
+			}
+		} else if(this.velocity.y > 0) {
+			this.set_facing(4096);
+			this.animation.play("walkD");
+		} else if(this.velocity.y < 0) {
+			this.set_facing(256);
+			this.animation.play("walkU");
+		} else this.animation.play("idle");
 		flixel_FlxSprite.prototype.draw.call(this);
 	}
 	,update: function() {
 		if(flixel_effects_FlxFlicker.isFlickering(this)) return;
 		this._brain.update();
 		flixel_FlxSprite.prototype.update.call(this);
+	}
+	,kill: function() {
+		if(!this.alive || !this.exists) return;
+		this.set_alive(false);
 	}
 	,__class__: Monster
 });
@@ -4236,8 +4262,6 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,playerTouchEnemy: function(P,M) {
 		if(P.invulnerable == false) {
 			P.hurt(34);
-			M.set_x(0);
-			M.set_y(0);
 			P.invulnerable = true;
 		}
 		if(P.health <= 0) {

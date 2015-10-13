@@ -61,7 +61,6 @@ class PlayState extends FlxState {
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
 		FlxG.debugger.visible;
-		
 		//groups
 		shelfGroup = new FlxTypedGroup<Shelf>();
 		enemyGroup = new FlxTypedGroup<Monster>();
@@ -178,9 +177,13 @@ class PlayState extends FlxState {
 		{
 			return;
 		}
+		//If the player is alive and gets hit
 		if (player.alive) {
+			// check if hit recently
 			if (player.invulnerable == true) {
+				//recoverytimer decrements
 				recoveryTime -= 1;
+				//reset player invulnerability and timer
 				if (recoveryTime == 0) {
 					player.invulnerable = false;
 					recoveryTime = 100;
@@ -189,6 +192,8 @@ class PlayState extends FlxState {
 			enemyGroup.forEachAlive(checkEnemyVision);
 			FlxG.overlap(player, enemyGroup, playerTouchEnemy);
 			
+			// check if we're colliding with any shelf in our shelf group.
+			// if we do, call playerTouchShelf.
 			if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) && player.lightOn ) {
 			player.touchingShelf = true;
 		}
@@ -217,10 +222,9 @@ class PlayState extends FlxState {
 		// move our useText to our players head
 		useText.x = player.x + 22;
 		useText.y = player.y - 150;
-		
+
 		//ai
-		// check if we're colliding with any shelf in our shelf group.
-		// if we do, call playerTouchShelf.
+
 	}	
 	private function spawnMonster() {
 			var randomX = FlxRandom.intRanged(0, 1200);
@@ -247,11 +251,10 @@ class PlayState extends FlxState {
 	}
 	private function playerTouchEnemy(P:Player, M:Monster):Void
 	{
-				if (P.invulnerable == false) {
+		if (P.invulnerable == false) {
 			P.hurt(34);
-			M.x = 0;
-			M.y = 0;
 			P.invulnerable = true;
+		
 		}
 		if (P.health <= 0 ) {
 			//if we havent died yet
@@ -266,7 +269,7 @@ class PlayState extends FlxState {
 			}
 	}
 	private function doneFadeout():Void {
-	FlxG.switchState(new GameOver(won, 0));	
+		FlxG.switchState(new GameOver(won, 0));	
 	}
 	private function checkEnemyVision(M:Monster):Void {
 		
