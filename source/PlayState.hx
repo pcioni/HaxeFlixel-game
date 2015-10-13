@@ -49,6 +49,8 @@ class PlayState extends FlxState {
 	
 	public static var pentagram:Pentagram;
 	
+	public static var goalShelves:Array<Shelf>;
+	
 	var t1:Shelf;
 	var t2:Shelf;
 	var t3:Shelf;
@@ -152,11 +154,13 @@ class PlayState extends FlxState {
 		shelfGroup.add(t3);
 		shelfGroup.add(t4);
 		shelfGroup.add(t5); 
+		
+		goalShelves = [tmp, t2, t3, t4, t5];
 		/*
 		 * These numbers are for testing
 		 */
 		
-		add(pentagram = new Pentagram(678, 322, tmp.myColor));
+		add(pentagram = new Pentagram(730, 390, tmp.myColor));
 		
 		currentSequence = 1;
 		
@@ -246,6 +250,8 @@ class PlayState extends FlxState {
 				monster.stunned = false;
 			}
 		}
+		
+		
 		//If the player is alive and gets hit
 		if (player.alive) {
 			// check if hit recently
@@ -280,6 +286,14 @@ class PlayState extends FlxState {
 				FlxG.camera.fade(FlxColor.BLACK, .33, false, doneFadeout);
 			}
 		}
+		
+		if (pentagram.charged) {
+			if (FlxG.overlap(pentagram, monster)) {
+				monster.kill();
+				monster.solid = false;
+			}
+		}
+		
 		//Checks if the light is toggled on then draws the light
 		if (player.lightOn) {
 			light.reset(player.getCenter().x-light.width/2, player.getCenter().y-light.height/2);
@@ -295,6 +309,8 @@ class PlayState extends FlxState {
 		useText.y = player.y - 150;
 
 	}	
+	
+
 	private function spawnMonster() {
 			var randomX = FlxRandom.intRanged(0, 1200);
 			var randomY = FlxRandom.intRanged(0, 600);

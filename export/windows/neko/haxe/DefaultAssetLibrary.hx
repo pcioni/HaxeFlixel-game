@@ -111,6 +111,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
 		Font.registerFont (__ASSET__assets_fonts_nokiafc22_ttf);
 		Font.registerFont (__ASSET__assets_fonts_arial_ttf);
 		
@@ -118,6 +119,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -713,6 +715,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -732,12 +735,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/data/tile_sheet.png", AssetType.IMAGE);
 		path.set ("assets/images/boulder.png", "assets/images/boulder.png");
 		type.set ("assets/images/boulder.png", AssetType.IMAGE);
-		path.set ("assets/images/brownShelfBottom.png", "assets/images/brownShelfBottom.png");
-		type.set ("assets/images/brownShelfBottom.png", AssetType.IMAGE);
-		path.set ("assets/images/brownShelfLeft.png", "assets/images/brownShelfLeft.png");
-		type.set ("assets/images/brownShelfLeft.png", AssetType.IMAGE);
-		path.set ("assets/images/brownShelfTop.png", "assets/images/brownShelfTop.png");
-		type.set ("assets/images/brownShelfTop.png", AssetType.IMAGE);
+		path.set ("assets/images/greenShelfBottom.png", "assets/images/greenShelfBottom.png");
+		type.set ("assets/images/greenShelfBottom.png", AssetType.IMAGE);
+		path.set ("assets/images/greenShelfLeft.png", "assets/images/greenShelfLeft.png");
+		type.set ("assets/images/greenShelfLeft.png", AssetType.IMAGE);
+		path.set ("assets/images/greenShelfTop.png", "assets/images/greenShelfTop.png");
+		type.set ("assets/images/greenShelfTop.png", AssetType.IMAGE);
 		path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 		type.set ("assets/images/images-go-here.txt", AssetType.TEXT);
 		path.set ("assets/images/light.png", "assets/images/light.png");
@@ -792,6 +795,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/s_player_64x128.png", AssetType.IMAGE);
 		path.set ("assets/images/s_title_1600x900.png", "assets/images/s_title_1600x900.png");
 		type.set ("assets/images/s_title_1600x900.png", AssetType.IMAGE);
+		path.set ("assets/images/s_wip_cultist.png", "assets/images/s_wip_cultist.png");
+		type.set ("assets/images/s_wip_cultist.png", AssetType.IMAGE);
 		path.set ("assets/music/bgm.ogg", "assets/music/bgm.ogg");
 		type.set ("assets/music/bgm.ogg", AssetType.MUSIC);
 		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
@@ -857,13 +862,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/images/boulder.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/brownShelfBottom.png";
+		id = "assets/images/greenShelfBottom.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/brownShelfLeft.png";
+		id = "assets/images/greenShelfLeft.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/brownShelfTop.png";
+		id = "assets/images/greenShelfTop.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/images-go-here.txt";
@@ -945,6 +950,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/s_title_1600x900.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_wip_cultist.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/music/bgm.ogg";
@@ -1029,6 +1037,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -1863,11 +1872,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
 @:keep @:bind #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_fonts_arial_ttf extends null { }
 
 
 #elseif html5
+
 
 
 

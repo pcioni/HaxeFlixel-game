@@ -24,31 +24,37 @@ class Pentagram extends FlxSprite {
 	public function new(X:Float = 0, Y:Float = 0, color:String)  {
 		
 		super(X, Y);
+		updateHitbox();
 		
-		charged = false;
+		charged = true;
 		
 		immovable = true;
-		
+
 		loadGraphic("assets/images/pent" + color + ".png", true, 128, 128);
-		animation.add("pulse", [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0], 5, true);
+		animation.add("pulse", [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0], 15, true);
 		animation.play("pulse");
-		
 		//blend = BlendMode.SCREEN;
 		
 		//stamp(this, 678, 322);
+		
+		width -= 100;
+		height -= 100;
+		offset.x = 50;
+		offset.y = 50;
 	}
 	
 	public function changeColor(color:String):Void {
 		if (color != "charged") {
 			loadGraphic("assets/images/pent" + color + ".png", true, 128, 128);
-			animation.play("pulse");
 		}
 		
 		else {
 			charged = true;
 			loadGraphic("assets/images/pentCharged.png", true, 128, 128);
-			animation.play("pulse");
 		}
+		animation.add("pulse", [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0], 15, true);
+		animation.play("pulse");
+
 	}
 	
 	

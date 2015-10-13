@@ -28,12 +28,12 @@ class AssetData {
 			type.set ("assets/data/tile_sheet.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/boulder.png", "assets/images/boulder.png");
 			type.set ("assets/images/boulder.png", Reflect.field (AssetType, "image".toUpperCase ()));
-			path.set ("assets/images/brownShelfBottom.png", "assets/images/brownShelfBottom.png");
-			type.set ("assets/images/brownShelfBottom.png", Reflect.field (AssetType, "image".toUpperCase ()));
-			path.set ("assets/images/brownShelfLeft.png", "assets/images/brownShelfLeft.png");
-			type.set ("assets/images/brownShelfLeft.png", Reflect.field (AssetType, "image".toUpperCase ()));
-			path.set ("assets/images/brownShelfTop.png", "assets/images/brownShelfTop.png");
-			type.set ("assets/images/brownShelfTop.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/greenShelfBottom.png", "assets/images/greenShelfBottom.png");
+			type.set ("assets/images/greenShelfBottom.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/greenShelfLeft.png", "assets/images/greenShelfLeft.png");
+			type.set ("assets/images/greenShelfLeft.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/greenShelfTop.png", "assets/images/greenShelfTop.png");
+			type.set ("assets/images/greenShelfTop.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/images-go-here.txt", "assets/images/images-go-here.txt");
 			type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 			path.set ("assets/images/light.png", "assets/images/light.png");
@@ -88,6 +88,8 @@ class AssetData {
 			type.set ("assets/images/s_player_64x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_title_1600x900.png", "assets/images/s_title_1600x900.png");
 			type.set ("assets/images/s_title_1600x900.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_wip_cultist.png", "assets/images/s_wip_cultist.png");
+			type.set ("assets/images/s_wip_cultist.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/music/bgm.ogg", "assets/music/bgm.ogg");
 			type.set ("assets/music/bgm.ogg", Reflect.field (AssetType, "music".toUpperCase ()));
 			path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");

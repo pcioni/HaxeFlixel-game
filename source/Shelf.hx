@@ -82,7 +82,7 @@ class Shelf extends FlxSprite {
 			
 			else {
 				PlayState.currentSequence += 1;
-				PlayState.pentagram.changeColor(myColor);
+				PlayState.pentagram.changeColor( PlayState.goalShelves[PlayState.currentSequence - 1].myColor ) ;
 			}
 		}
 		resetTimer = true;
