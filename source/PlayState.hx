@@ -42,6 +42,7 @@ class PlayState extends FlxState {
 	var useText:FlxText;
 	
 	var light:Light;
+	var pentaLight:FlxSprite;
 	var darkness:FlxSprite;
 	
 	var won:Bool;
@@ -182,6 +183,11 @@ class PlayState extends FlxState {
 		
 		light = new Light(0, 0, darkness, this);
 		add(light);
+		
+		pentaLight = new FlxSprite();
+		pentaLight.loadGraphic("assets/images/light.png", false, 400, 400);
+		pentaLight.blend = BlendMode.SCREEN;
+		darkness.stamp(pentaLight, Std.int(pentagram.x - pentaLight.width/2), Std.int(pentagram.y-pentaLight.height/2));
 		add(darkness);
 	
 		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
