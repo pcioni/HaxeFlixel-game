@@ -61,6 +61,7 @@ class PlayState extends FlxState {
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
 		FlxG.debugger.visible;
+		
 		//groups
 		shelfGroup = new FlxTypedGroup<Shelf>();
 		enemyGroup = new FlxTypedGroup<Monster>();
@@ -74,7 +75,7 @@ class PlayState extends FlxState {
 		 * 	along the way at a set increment. Pick random colors from the list of colors.
 		 */
 		var x:Int = 1535;
-		var y:Int = 0;
+		var y:Int = 20;
 		var init:Bool = true;
 		var init2:Bool = true;
 		var shelfColors:Array<String> = ["red", "purple", "brown", "orange"];
@@ -116,7 +117,7 @@ class PlayState extends FlxState {
 		darkness.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK, false);
 		darkness.scrollFactor.x = darkness.scrollFactor.y = 0;
 		darkness.blend = BlendMode.MULTIPLY;
-		darkness.alpha = 0.9;
+		darkness.alpha = 0.8;
 		
 		light = new Light(0, 0, this);
 		add(light);
@@ -186,6 +187,7 @@ class PlayState extends FlxState {
 				//reset player invulnerability and timer
 				if (recoveryTime == 0) {
 					player.invulnerable = false;
+					player.alpha = 1;
 					recoveryTime = 100;
 				}
 			}
@@ -195,14 +197,14 @@ class PlayState extends FlxState {
 			// check if we're colliding with any shelf in our shelf group.
 			// if we do, call playerTouchShelf.
 			if ( FlxG.overlap(player, shelfGroup, playerTouchShelf) && player.lightOn ) {
-			player.touchingShelf = true;
-		}
-		else {
-			player.touchingShelf = false;
-			readBar.kill();
-			useText.kill();
-			lastHitShelf.stopTimer();
-		}
+				player.touchingShelf = true;
+			}
+			else {
+				player.touchingShelf = false;
+				readBar.kill();
+				useText.kill();
+				lastHitShelf.stopTimer();
+			}
 		}
 		else {
 			if (player.animation.finished) {
@@ -222,8 +224,6 @@ class PlayState extends FlxState {
 		// move our useText to our players head
 		useText.x = player.x + 22;
 		useText.y = player.y - 150;
-
-		//ai
 
 	}	
 	private function spawnMonster() {
@@ -254,19 +254,22 @@ class PlayState extends FlxState {
 		if (P.invulnerable == false) {
 			P.hurt(34);
 			P.invulnerable = true;
+			P.alpha = 0.4;
 		
 		}
 		if (P.health <= 0 ) {
 			//if we havent died yet
+			P.alpha = 1;
 			if (P.alive) {
 				//play the death animation
+				deathSnd.play(true);
 				P.kill();
 			
 			}
 	
 			//on completion, switch to end state/cut scene
 				
-			}
+		}
 	}
 	private function doneFadeout():Void {
 		FlxG.switchState(new GameOver(won, 0));	

@@ -58,10 +58,14 @@ class AssetData {
 			type.set ("assets/images/shelf.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_bookshelf_64x129.png", "assets/images/s_bookshelf_64x129.png");
 			type.set ("assets/images/s_bookshelf_64x129.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_book_512x216.png", "assets/images/s_book_512x216.png");
+			type.set ("assets/images/s_book_512x216.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_heart_32x32.png", "assets/images/s_heart_32x32.png");
 			type.set ("assets/images/s_heart_32x32.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_heart_64x64.png", "assets/images/s_heart_64x64.png");
 			type.set ("assets/images/s_heart_64x64.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_monster_128x128.png", "assets/images/s_monster_128x128.png");
+			type.set ("assets/images/s_monster_128x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_pent_charged_128x128.png", "assets/images/s_pent_charged_128x128.png");
 			type.set ("assets/images/s_pent_charged_128x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_pent_orange_128x128.png", "assets/images/s_pent_orange_128x128.png");
@@ -72,6 +76,8 @@ class AssetData {
 			type.set ("assets/images/s_pent_red_128x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/images/s_player_64x128.png", "assets/images/s_player_64x128.png");
 			type.set ("assets/images/s_player_64x128.png", Reflect.field (AssetType, "image".toUpperCase ()));
+			path.set ("assets/images/s_title_1600x900.png", "assets/images/s_title_1600x900.png");
+			type.set ("assets/images/s_title_1600x900.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 			type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
 			path.set ("assets/sounds/book_multiple_pages.wav", "assets/sounds/book_multiple_pages.wav");

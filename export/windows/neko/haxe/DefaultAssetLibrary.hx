@@ -102,6 +102,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
 		Font.registerFont (__ASSET__assets_fonts_nokiafc22_ttf);
 		Font.registerFont (__ASSET__assets_fonts_arial_ttf);
 		
@@ -109,6 +112,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -566,8 +572,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if (windows || mac || linux)
 
 
-@:font("G:/HaxeToolkit/haxe/lib/flixel/3,3,11/assets/fonts/nokiafc22.ttf") @:keep #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends flash.text.Font {}
-@:font("G:/HaxeToolkit/haxe/lib/flixel/3,3,11/assets/fonts/arial.ttf") @:keep #if display private #end class __ASSET__assets_fonts_arial_ttf extends flash.text.Font {}
+@:font("C:/HaxeToolkit/haxe/lib/flixel/3,3,11/assets/fonts/nokiafc22.ttf") @:keep #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends flash.text.Font {}
+@:font("C:/HaxeToolkit/haxe/lib/flixel/3,3,11/assets/fonts/arial.ttf") @:keep #if display private #end class __ASSET__assets_fonts_arial_ttf extends flash.text.Font {}
 
 
 
@@ -686,6 +692,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -735,10 +744,14 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/shelf.png", AssetType.IMAGE);
 		path.set ("assets/images/s_bookshelf_64x129.png", "assets/images/s_bookshelf_64x129.png");
 		type.set ("assets/images/s_bookshelf_64x129.png", AssetType.IMAGE);
+		path.set ("assets/images/s_book_512x216.png", "assets/images/s_book_512x216.png");
+		type.set ("assets/images/s_book_512x216.png", AssetType.IMAGE);
 		path.set ("assets/images/s_heart_32x32.png", "assets/images/s_heart_32x32.png");
 		type.set ("assets/images/s_heart_32x32.png", AssetType.IMAGE);
 		path.set ("assets/images/s_heart_64x64.png", "assets/images/s_heart_64x64.png");
 		type.set ("assets/images/s_heart_64x64.png", AssetType.IMAGE);
+		path.set ("assets/images/s_monster_128x128.png", "assets/images/s_monster_128x128.png");
+		type.set ("assets/images/s_monster_128x128.png", AssetType.IMAGE);
 		path.set ("assets/images/s_pent_charged_128x128.png", "assets/images/s_pent_charged_128x128.png");
 		type.set ("assets/images/s_pent_charged_128x128.png", AssetType.IMAGE);
 		path.set ("assets/images/s_pent_orange_128x128.png", "assets/images/s_pent_orange_128x128.png");
@@ -749,6 +762,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/s_pent_red_128x128.png", AssetType.IMAGE);
 		path.set ("assets/images/s_player_64x128.png", "assets/images/s_player_64x128.png");
 		type.set ("assets/images/s_player_64x128.png", AssetType.IMAGE);
+		path.set ("assets/images/s_title_1600x900.png", "assets/images/s_title_1600x900.png");
+		type.set ("assets/images/s_title_1600x900.png", AssetType.IMAGE);
 		path.set ("assets/music/music-goes-here.txt", "assets/music/music-goes-here.txt");
 		type.set ("assets/music/music-goes-here.txt", AssetType.TEXT);
 		path.set ("assets/sounds/book_multiple_pages.wav", "assets/sounds/book_multiple_pages.wav");
@@ -857,10 +872,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 		id = "assets/images/s_bookshelf_64x129.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_book_512x216.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
 		id = "assets/images/s_heart_32x32.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/s_heart_64x64.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_monster_128x128.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/s_pent_charged_128x128.png";
@@ -876,6 +897,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/s_player_64x128.png";
+		path.set (id, id);
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/s_title_1600x900.png";
 		path.set (id, id);
 		type.set (id, AssetType.IMAGE);
 		id = "assets/music/music-goes-here.txt";
@@ -957,6 +981,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		useManifest = true;
+		useManifest = true;
+		useManifest = true;
 		useManifest = true;
 		useManifest = true;
 		useManifest = true;
@@ -1773,11 +1800,17 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
+
 @:keep @:bind #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_fonts_arial_ttf extends null { }
 
 
 #elseif html5
+
+
+
 
 
 
@@ -1836,8 +1869,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if (windows || mac || linux || cpp)
 
 
-@:font("G:/HaxeToolkit/haxe/lib/flixel/3,3,11/assets/fonts/nokiafc22.ttf") #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends lime.text.Font {}
-@:font("G:/HaxeToolkit/haxe/lib/flixel/3,3,11/assets/fonts/arial.ttf") #if display private #end class __ASSET__assets_fonts_arial_ttf extends lime.text.Font {}
+@:font("C:/HaxeToolkit/haxe/lib/flixel/3,3,11/assets/fonts/nokiafc22.ttf") #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends lime.text.Font {}
+@:font("C:/HaxeToolkit/haxe/lib/flixel/3,3,11/assets/fonts/arial.ttf") #if display private #end class __ASSET__assets_fonts_arial_ttf extends lime.text.Font {}
 
 
 
