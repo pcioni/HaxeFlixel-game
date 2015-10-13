@@ -75,9 +75,9 @@ class PlayState extends FlxState {
 	 */
 	override public function create():Void {
 		
-		//level = new FlxTilemap();
-		//level.loadMap(Assets.getText("assets/data/map.txt"), "assets/data/tile_sheet.png", 64, 64);
-		//add(level);
+		level = new FlxTilemap();
+		level.loadMap(Assets.getText("assets/data/map.csv"), "assets/data/tile_sheet.png", 64, 64);
+		add(level);
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
 		FlxG.sound.playMusic(AssetPaths.bgm__ogg);
@@ -353,6 +353,7 @@ class PlayState extends FlxState {
 
 	private function playerTouchShelf(P:Player, S:Shelf):Void {
 		if ( FlxG.keys.anyPressed(["E"]) ) {
+			bookSnd.play(true);
 			lastHitShelf = S;
 			readBar.currentValue = S.timer.progress;
 			S.startTimer();
@@ -428,6 +429,7 @@ class PlayState extends FlxState {
 			// The outermost loop is the outermost ring
 			// The monster constantly checks its position and increases speed as he gets closer to the enemy
 			if (player.lightOn) {
+				monsterRoarSnd.play();
 				M.seesPlayer = true;
 				M.speed = 60;
 				M.playerPos.copyFrom(player.getMidpoint());
