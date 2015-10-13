@@ -46,6 +46,8 @@ class PlayState extends FlxState {
 	var won:Bool;
 	var ending:Bool;
 	
+	public static var pentagram:Pentagram;
+	
 	var t1:Shelf;
 	var t2:Shelf;
 	var t3:Shelf;
@@ -99,6 +101,7 @@ class PlayState extends FlxState {
 		
 		
 		/*
+		 * Randomly generate our bookshelves in a 'U' pattern
 		while ( x + y < 2450) {
 			if (x > 60 && y < 300) {
 				add( tmp = new Shelf(x, y, this, "top", FlxRandom.getObject(shelfColors, 0) ) );
@@ -152,6 +155,7 @@ class PlayState extends FlxState {
 		 * These numbers are for testing
 		 */
 		
+		add(pentagram = new Pentagram(678, 322, tmp.myColor));
 		
 		currentSequence = 1;
 		
