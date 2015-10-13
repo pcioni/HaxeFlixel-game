@@ -171,7 +171,7 @@ class PlayState extends FlxState {
 		darkness.blend = BlendMode.MULTIPLY;
 		darkness.alpha = 0.8;
 		
-		light = new Light(0, 0, this);
+		light = new Light(0, 0, darkness, this);
 		add(light);
 		add(darkness);
 	
@@ -395,26 +395,27 @@ class PlayState extends FlxState {
 			var dist = m_pos.distanceTo(p_pos);
 
 			//Light radius
-			var radius = 160;
+			var radius = light.getRadius();
 			
 			// Each if statement represents the radius of the rings inside the light
 			// The outermost loop is the outermost ring
 			// The monster constantly checks its position and increases speed as he gets closer to the enemy
-			if (dist < radius*3 || player.lightOn) {
+			if (player.lightOn) {
 				M.seesPlayer = true;
 				M.speed = 60;
-			
 				M.playerPos.copyFrom(player.getMidpoint());
-				if (dist < radius * 2 || player.lightOn) {
-					M.speed = 70;
+				if (dist < radius * 3) {
+					M.speed = 80;
 					M.playerPos.copyFrom(player.getMidpoint());
-					if (dist < radius || player.lightOn) {
-						M.speed = 80;			
+					if (dist < radius * 2) {
+						M.speed = 100;			
 						M.playerPos.copyFrom(player.getMidpoint());
-
+						if (dist < radius) {
+							M.speed = 120;
+							M.playerPos.copyFrom(player.getMidpoint());
+						}
 					}
 				}
-
 			}
 			else {
 				M.seesPlayer = false;

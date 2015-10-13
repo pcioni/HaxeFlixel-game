@@ -23,26 +23,27 @@ class Light extends FlxSprite
 	
 	private var light:FlxSprite;
 	
-	public function new(X:Int, Y:Int, Parent:PlayState) 
+	public function new(X:Int, Y:Int, Darkness:FlxSprite, Parent:PlayState) 
 	{
 		super(X, Y);
 		makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK, false);
 		updateHitbox();
 		scrollFactor.x = scrollFactor.y = 0;
 		blend = BlendMode.MULTIPLY;
-		alpha = 0.9;
+		alpha = Darkness.alpha;
 		
 		light = new FlxSprite();
 		light.loadGraphic("assets/images/light.png", false, 400, 400);
 		light.updateHitbox();
-		light.scale.set(2.0,2.0);
+		light.scale.set(LIGHT_R/80,LIGHT_R/80);
 		light.blend = BlendMode.SCREEN;
 		
 		this.stamp(light, Std.int(width / 2 - light.width / 2), Std.int(height / 2 - light.height / 2));
 		kill();
-		
-		
-		
+	}
+	
+	public function getRadius():Int {
+		return LIGHT_R;
 	}
 	
 }
