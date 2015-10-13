@@ -125,28 +125,31 @@ class PlayState extends FlxState {
 		}
 		*/
 		
-		add( t1 = new Shelf(300, 150, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
+		
+
+		add( tmp = new Shelf(300, 150, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
 		add( t2 = new Shelf(300, 300, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
 		add( t3 = new Shelf(300, 450, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
 		add( t4 = new Shelf(300, 600, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
 		add( t5 = new Shelf(300, 750, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
 		
-		t1.mySequenceNum = 1;
+		tmp.mySequenceNum = 1;
 		t2.mySequenceNum = 2;
 		t3.mySequenceNum = 3;
 		t4.mySequenceNum = 4;
 		t5.mySequenceNum = 5;
 		
-		shelfGroup.add(t1);
+		shelfGroup.add(tmp);
 		shelfGroup.add(t2);
 		shelfGroup.add(t3);
 		shelfGroup.add(t4);
-		shelfGroup.add(t5);
+		shelfGroup.add(t5); 
+		
 		
 		currentSequence = 1;
 		
 		//keep track of the last shelf we interacted with
-		lastHitShelf = t1;
+		lastHitShelf = tmp;
 
 		//monster
 		add(monster = new Monster(600, 600, this, 0));
@@ -165,17 +168,14 @@ class PlayState extends FlxState {
 		add(light);
 		add(darkness);
 	
-		
 		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
 		add( readBar = new FlxBar(50, 50, FlxBar.FILL_LEFT_TO_RIGHT, 150, 20, player, "testShelf.timer.progress", 0.0, 1.0, true) );
 		readBar.trackParent( -47, -30);
-		readBar.exists = false;
-		readBar.alive = false;
+		readBar.kill();
 		
 		//indicator for detecting shelves
 		add( useText = new FlxText(player.x , player.y, 20, "!", 100, false) );
-		useText.exists = false;
-		useText.alive = false;
+		useText.kill();
 		
 		//health bar 
 		healthBar = new FlxBar(0, 0, FlxBar.FILL_RIGHT_TO_LEFT, 150, 20, player, "health", 0.0, 100.0, true);
@@ -220,8 +220,7 @@ class PlayState extends FlxState {
 			Earthquake();
 			earthquakeTimer = FlxRandom.intRanged(200, 600);
 		}
-		if (ending)
-		{
+		if (ending) {
 			return;
 		}
 		if (monster.alive) {
@@ -334,8 +333,7 @@ class PlayState extends FlxState {
 			useText.exists = true;
 		}
 	}
-	private function playerTouchBoulder(P:Player, B:Boulder):Void
-	{
+	private function playerTouchBoulder(P:Player, B:Boulder):Void {
 		if (P.invulnerable == false) {
 			P.hurt(34);
 			P.invulnerable = true;
