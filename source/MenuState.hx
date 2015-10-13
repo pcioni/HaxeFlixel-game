@@ -29,14 +29,13 @@ class MenuState extends FlxState
 		var menuBg = new FlxSprite(0, 30, 'assets/images/s_title_1600x900.png');
 		add(menuBg);
 
-		opt0txt = new FlxText(FlxG.width /2 - 160, FlxG.height * 3 / 4, 320, "Start");
-		opt1txt = new FlxText(FlxG.width /2 - 160, FlxG.height * 3 / 4 + 96, 320, "Credits");
-		opt0txt.size = opt1txt.size = 64;
-		opt0txt.color = opt1txt.color = FlxColor.BLACK;
+		opt0txt = new FlxText(FlxG.width * 2 / 3, FlxG.height * 2 / 3, 150, "Play the Game");
+		opt1txt = new FlxText(FlxG.width * 2 / 3, FlxG.height * 2 / 3 + 30, 150, "Cheat Sheet");
+		opt0txt.size = opt1txt.size = 16;
 		add(opt0txt);
 		add(opt1txt);
 		pointer = new FlxSprite();
-		pointer.makeGraphic(32, 32, FlxColor.CRIMSON);
+		pointer.makeGraphic(10, 10, FlxColor.YELLOW);
 		pointer.x = opt0txt.x - pointer.width - 10;
 		add(pointer);
 		super.create();
@@ -59,9 +58,9 @@ class MenuState extends FlxState
 		//set y position of cursor based on option choice
 		switch(option) {
 		case 0:
-			pointer.y = opt0txt.y+opt0txt.size/2;
+			pointer.y = opt0txt.y;
 		case 1:
-			pointer.y = opt1txt.y+opt1txt.size/2;
+			pointer.y = opt1txt.y;
 		}
 		
 		//listen for keys
@@ -78,7 +77,7 @@ class MenuState extends FlxState
 				FlxG.state.bgColor = FlxColor.BLACK;
 				FlxG.switchState(new PlayState());
 			case 1:
-				
+				FlxG.openURL("http://haxeflixel.com/documentation/cheat-sheet/");
 			}
 		}
 		super.update();

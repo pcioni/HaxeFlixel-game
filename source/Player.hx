@@ -74,7 +74,7 @@ class Player extends FlxSprite
 
 		//check inputs and assign corresponding acceleration
 		if (alive){
-			if (FlxG.keys.anyPressed(["LEFT", "A"])) {
+			if (FlxG.keys.anyPressed(["LEFT", "A"]) && x > 100 ) {
 				if (x > PADDING) {
 					stepSnd.play(true);
 					acceleration.x = -drag.x;
@@ -92,7 +92,7 @@ class Player extends FlxSprite
 				}
 				else { x = FlxG.width - PADDING - width; }
 			}
-			if (FlxG.keys.anyPressed(["UP", "W"])) {
+			if (FlxG.keys.anyPressed(["UP", "W"]) && y > 180) {
 				if (y > PADDING) {
 					stepSnd.play(true);
 					acceleration.y = -drag.y;
@@ -100,7 +100,7 @@ class Player extends FlxSprite
 				}
 				else { y = PADDING; }
 			}
-			if (FlxG.keys.anyPressed(["DOWN", "S"])) {
+			if (FlxG.keys.anyPressed(["DOWN", "S"]) && y < 660) {
 				if (y + height < FlxG.height - PADDING) {
 					stepSnd.play(true);
 					acceleration.y = drag.y;

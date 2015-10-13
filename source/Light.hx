@@ -30,7 +30,7 @@ class Light extends FlxSprite
 		updateHitbox();
 		scrollFactor.x = scrollFactor.y = 0;
 		blend = BlendMode.MULTIPLY;
-		alpha = 0.8;
+		alpha = 0.9;
 		
 		light = new FlxSprite();
 		light.loadGraphic("assets/images/light.png", false, 400, 400);

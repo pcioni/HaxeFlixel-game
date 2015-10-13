@@ -54,8 +54,6 @@ class PlayState extends FlxState {
 	private var deathSnd:FlxSound;
 	private var monsterRoarSnd:FlxSound;
 	
-	
-	
 	private var level:FlxTilemap;
 	
 	/**
@@ -68,7 +66,6 @@ class PlayState extends FlxState {
 		//add(level);
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
-		FlxG.sound.playMusic(AssetPaths.bgm__ogg);
 		FlxG.debugger.visible;
 		
 		//groups
