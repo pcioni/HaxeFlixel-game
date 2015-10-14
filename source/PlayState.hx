@@ -106,8 +106,9 @@ class PlayState extends FlxState {
 		 * 	Run from the top right corner to the bottom right corner in a 'U' shape, adding bookshelves 
 		 * 	along the way at a set increment. Pick random colors from the list of colors.
 		 */
-		var x:Int = 1455;
+		var x:Int = 1400;
 		var y:Int = 13;
+		var lastX:Int = 0;
 		var init:Bool = true;
 		var init2:Bool = true;
 		var shelfColors:Array<String> = ["red", "purple", "green", "orange"];
@@ -119,7 +120,8 @@ class PlayState extends FlxState {
 		while ( x + y < 2450) {
 			if (x > 60 && y < 300) {
 				add( tmp = new Shelf(x, y, this, "top", FlxRandom.getObject(shelfColors, 0) ) );
-				x -= 185;
+				lastX = x;
+				x -= 235;
 			}
 			else if (x < 60 && y < 800) {
 				if (init) { 
@@ -132,12 +134,12 @@ class PlayState extends FlxState {
 			}
 			else {
 				if (init2) {
-					x = 150;
+					x = lastX;
 					init2 = false;
 				}
 				y = 805;
 				add( tmp = new Shelf(x, y, this, "bottom", FlxRandom.getObject(shelfColors, 0) ) );
-				x += 100;
+				x += 235;
 			}
 			shelfGroup.add(tmp);
 		}
@@ -199,7 +201,7 @@ class PlayState extends FlxState {
 		darkness.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK, false);
 		darkness.scrollFactor.x = darkness.scrollFactor.y = 0;
 		darkness.blend = BlendMode.MULTIPLY;
-		darkness.alpha = 0.8;
+		darkness.alpha = 0.9;
 		
 		light = new Light(0, 0, darkness, this);
 		add(light);
@@ -207,7 +209,7 @@ class PlayState extends FlxState {
 		pentaLight = new FlxSprite();
 		pentaLight.loadGraphic("assets/images/light.png", false, 400, 400);
 		pentaLight.blend = BlendMode.SCREEN;
-		darkness.stamp(pentaLight, Std.int(pentagram.x - pentaLight.width/2), Std.int(pentagram.y-pentaLight.height/2));
+		darkness.stamp(pentaLight, Std.int(pentagram.x - pentaLight.width/2 + 17), Std.int(pentagram.y-pentaLight.height/2 + 17));
 		add(darkness);
 	
 		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
@@ -331,7 +333,7 @@ class PlayState extends FlxState {
 				monster.kill();
 				monster.solid = false;
 				won = true;
-				FlxG.camera.fade(FlxColor.BLACK, .33, false, doneFadeout);
+				FlxG.camera.fade(FlxColor.BLACK, 3, false, doneFadeout);
 
 			}
 		}

@@ -33,9 +33,6 @@ class Pentagram extends FlxSprite {
 		loadGraphic("assets/images/pent" + color + ".png", true, 128, 128);
 		animation.add("pulse", [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0], 15, true);
 		animation.play("pulse");
-		//blend = BlendMode.SCREEN;
-		
-		//stamp(this, 678, 322);
 		
 		width -= 100;
 		height -= 100;

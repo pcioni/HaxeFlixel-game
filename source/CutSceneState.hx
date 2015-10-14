@@ -31,7 +31,7 @@ class CutSceneState extends FlxState
 		monsterRoarSnd = FlxG.sound.load(AssetPaths.monster_roar_3__ogg);
 		magicSnd = FlxG.sound.load(AssetPaths.magic__ogg);
 		quakeSnd = FlxG.sound.load(AssetPaths.quake__ogg);
-		monsterSpeech = FlxG.sound.load(AssetPaths.monster_speech__ogg);
+		//monsterSpeech = FlxG.sound.load(AssetPaths.monster_speech__ogg);
 		
 		add(scene1);
 		magicSnd.play(true);

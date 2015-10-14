@@ -42,7 +42,7 @@ class Shelf extends FlxSprite {
 			offset.x = 30;
 		}
 		else if (position == "bottom") {
-			loadGraphic("assets/images/" + color + "ShelfBottom.png", true, 65, 154);
+			loadGraphic("assets/images/" + color + "ShelfBottom.png", true, 130, 154);
 			width -= 62;
 			offset.x = 30;	
 		}
