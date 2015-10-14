@@ -451,6 +451,7 @@ class PlayState extends FlxState {
 					if (dist < radius * 3) {
 					M.speed = 90;
 					M.playerPos.copyFrom(player.getMidpoint());
+						
 						if (dist < radius * 2) {
 							M.speed = 110;			
 							M.playerPos.copyFrom(player.getMidpoint());
