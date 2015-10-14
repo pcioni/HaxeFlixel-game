@@ -219,9 +219,17 @@ class PlayState extends FlxState {
 		
 		pentaLight = new FlxSprite();
 		pentaLight.loadGraphic("assets/images/light.png", false, 400, 400);
-		pentaLight.blend = BlendMode.SCREEN;
-		darkness.stamp(pentaLight, Std.int(pentagram.x - pentaLight.width / 2 + 17), Std.int(pentagram.y - pentaLight.height / 2 + 17));
+		//pentaLight.blend = BlendMode.SCREEN;
+		//darkness.stamp(pentaLight, Std.int(pentagram.x - pentaLight.width / 2 + 17), Std.int(pentagram.y - pentaLight.height / 2 + 17));
+		
+		pentaLight.scale.set(1.5, 1.5);
+		pentaLight.alpha = 0.1;
+		pentaLight.color = FlxColor.WHITE;
+		pentaLight.setPosition(pentagram.x - pentaLight.width / 2 + 17, pentagram.y - pentaLight.height / 2 + 17);
+		
 		add(darkness);
+		
+		add(pentaLight);
 	
 		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
 		add( readBar = new FlxBar(50, 50, FlxBar.FILL_LEFT_TO_RIGHT, 150, 20, player, "testShelf.timer.progress", 0.0, 1.0, true) );
