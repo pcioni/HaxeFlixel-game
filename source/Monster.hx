@@ -230,6 +230,6 @@ class Monster extends FlxSprite
 	}
 	
 	public function winGame(Timer:FlxTimer):Void {
-		FlxG.switchState(new CutSceneState());
+		FlxG.switchState(new GameOver(true,100));
 	}
 }
