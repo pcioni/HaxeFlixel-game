@@ -234,8 +234,8 @@ class PlayState extends FlxState {
 		
 		add(bookGood = new FlxSprite() ); 
 		add(bookBad = new FlxSprite() );
-		bookGood.x = 800; bookGood.y = 450;
-		bookBad.x = 800; bookGood.y = 450;
+		bookBad.x = (FlxG.width/2) - 216; bookBad.y = (FlxG.height/2) - 216;
+		bookGood.x = (FlxG.width/2) - 216; bookBad.y = (FlxG.height/2) - 216;
 		bookGood.loadGraphic("assets/images/openBookGood.png", false, 512, 256);
 		bookBad.loadGraphic("assets/images/openBookBad.png", false, 512, 256);
 		bookGood.kill(); bookBad.kill();
