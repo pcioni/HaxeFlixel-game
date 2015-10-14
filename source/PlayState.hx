@@ -69,6 +69,8 @@ class PlayState extends FlxState {
 	private var level:FlxTilemap;
 	
 	public static var currentSequence:Int;
+	public static var bookGood:FlxSprite;
+	public static var bookBad:FlxSprite;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -213,6 +215,14 @@ class PlayState extends FlxState {
 		add( useText = new FlxText(player.x , player.y, 20, "!", 100, false) );
 		useText.kill();
 		
+		add(bookGood = new FlxSprite() ); 
+		add(bookBad = new FlxSprite() );
+		bookGood.x = 800; bookGood.y = 450;
+		bookBad.x = 800; bookGood.y = 450;
+		bookGood.loadGraphic("assets/images/openBookGood.png", false, 512, 256);
+		bookBad.loadGraphic("assets/images/openBookBad.png", false, 512, 256);
+		bookGood.kill(); bookBad.kill();
+		
 		//health bar 
 		healthBar = new FlxBar(0, 0, FlxBar.FILL_RIGHT_TO_LEFT, 150, 20, player, "health", 0.0, 100.0, true);
 		healthBar.createFilledBar(FlxColor.BLACK, FlxColor.CRIMSON, true, FlxColor.WHITE);
@@ -223,9 +233,9 @@ class PlayState extends FlxState {
 		enemyGroup.add(monster);
 		
 		//sounds
-		bookSnd = FlxG.sound.load(AssetPaths.book_multiple_pages__wav);
-		deathSnd = FlxG.sound.load(AssetPaths.PC_death__wav);
-		monsterRoarSnd = FlxG.sound.load(AssetPaths.monster_roar_1__wav);
+		bookSnd = FlxG.sound.load(AssetPaths.book_multiple_pages__ogg);
+		deathSnd = FlxG.sound.load(AssetPaths.PC_death__ogg);
+		monsterRoarSnd = FlxG.sound.load(AssetPaths.monster_roar_1__ogg);
 		
 	}
 	
@@ -298,6 +308,8 @@ class PlayState extends FlxState {
 				readBar.kill();
 				useText.kill();
 				lastHitShelf.stopTimer();
+				bookBad.kill();
+				bookGood.kill();
 			}
 		}
 		else {
@@ -364,7 +376,7 @@ class PlayState extends FlxState {
 
 	private function playerTouchShelf(P:Player, S:Shelf):Void {
 		if ( FlxG.keys.anyPressed(["E"]) ) {
-			bookSnd.play(true);
+			bookSnd.play(false);
 			lastHitShelf = S;
 			readBar.currentValue = S.timer.progress;
 			S.startTimer();
@@ -409,7 +421,7 @@ class PlayState extends FlxState {
 			P.alpha = 1;
 			if (P.alive) {
 				//play the death animation
-				deathSnd.play(true);
+				deathSnd.play(false);
 				P.kill();
 			}
 			//on completion, switch to end state/cut scene
@@ -440,7 +452,7 @@ class PlayState extends FlxState {
 			// The outermost loop is the outermost ring
 			// The monster constantly checks its position and increases speed as he gets closer to the enemy
 			if (player.lightOn) {
-				monsterRoarSnd.play();
+				monsterRoarSnd.play(false);
 				M.seesPlayer = true;
 				M.speed = 60;
 				M.playerPos.copyFrom(player.getMidpoint());

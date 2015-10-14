@@ -53,13 +53,13 @@ class Player extends FlxSprite
 
 		drag.set(RUN_SPEED * 9, RUN_SPEED * 9);
 		maxVelocity.set(RUN_SPEED * 2, RUN_SPEED * 2);
-		health = 100;
+		health = 100000;
 		facing = FlxObject.RIGHT;
 		parent = Parent;
 		updateHitbox();
 		
-		candleSnd = FlxG.sound.load(AssetPaths.candle__wav);
-		stepSnd = FlxG.sound.load(AssetPaths.step__wav);
+		candleSnd = FlxG.sound.load(AssetPaths.candle__ogg);
+		stepSnd = FlxG.sound.load(AssetPaths.step__ogg);
 		
 		currentSequenceNumber = 1;
 	}
@@ -80,7 +80,7 @@ class Player extends FlxSprite
 		if (alive){
 			if (FlxG.keys.anyPressed(["LEFT", "A"]) && x > 100 ) {
 				if (x > PADDING) {
-					stepSnd.play(true);
+					stepSnd.play(false);
 					acceleration.x = -drag.x;
 					flipX = true;
 					facing = FlxObject.LEFT;
@@ -89,7 +89,7 @@ class Player extends FlxSprite
 			}
 			if (FlxG.keys.anyPressed(["RIGHT", "D"])) {
 				if (x + width < FlxG.width - PADDING) {
-					stepSnd.play(true);
+					stepSnd.play(false);
 					acceleration.x = drag.x;
 					flipX = false;
 					facing = FlxObject.RIGHT;
@@ -98,7 +98,7 @@ class Player extends FlxSprite
 			}
 			if (FlxG.keys.anyPressed(["UP", "W"]) && y > 180) {
 				if (y > PADDING) {
-					stepSnd.play(true);
+					stepSnd.play(false);
 					acceleration.y = -drag.y;
 					facing = FlxObject.UP;
 				}
@@ -106,7 +106,7 @@ class Player extends FlxSprite
 			}
 			if (FlxG.keys.anyPressed(["DOWN", "S"]) && y < 660) {
 				if (y + height < FlxG.height - PADDING) {
-					stepSnd.play(true);
+					stepSnd.play(false);
 					acceleration.y = drag.y;
 					facing = FlxObject.DOWN;
 				}

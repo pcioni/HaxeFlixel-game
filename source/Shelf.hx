@@ -30,7 +30,6 @@ class Shelf extends FlxSprite {
 		resetTimer = false;
 		mySequenceNum = -1;
 		
-		
 		// Initialize our shelves with proper orientation and hitboxes.
 		// Modify our collision box to be a thin pixel line extending from the middle. 
 		if (position == "left") {
@@ -74,7 +73,7 @@ class Shelf extends FlxSprite {
 		
 		if (mySequenceNum == PlayState.currentSequence) {
 			trace("changing playstate from " + PlayState.currentSequence + " to " + (PlayState.currentSequence + 1));
-			
+			PlayState.bookGood.exists = true;
 			if (PlayState.currentSequence == 5) {
 				trace("kill state triggered");
 				PlayState.pentagram.changeColor("charged");
@@ -85,6 +84,9 @@ class Shelf extends FlxSprite {
 				PlayState.currentSequence += 1;
 				PlayState.pentagram.changeColor( PlayState.goalShelves[PlayState.currentSequence - 1].myColor ) ;
 			}
+		}
+		else {
+			PlayState.bookBad.exists = true;
 		}
 		resetTimer = true;
 	}
