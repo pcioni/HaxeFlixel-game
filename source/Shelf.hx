@@ -14,7 +14,6 @@ import haxe.Timer;
  * 
  */
 class Shelf extends FlxSprite {
-	public static inline var RUN_SPEED:Int = 90;
 	var parent:PlayState;
 	public var timer:FlxTimer;
 	public var myColor:String;
@@ -33,12 +32,12 @@ class Shelf extends FlxSprite {
 		// Initialize our shelves with proper orientation and hitboxes.
 		// Modify our collision box to be a thin pixel line extending from the middle. 
 		if (position == "left") {
-			loadGraphic("assets/images/" + color + "ShelfLeft.png", true, 90, 128);
+			loadGraphic("assets/images/" + color + "ShelfLeft.png", true, 155, 128);
 			height -= 127;
 			offset.y = 60;
 		}
 		else if (position == "top") {
-			loadGraphic("assets/images/" + color + "ShelfTop.png", true, 65, 154);
+			loadGraphic("assets/images/" + color + "ShelfTop.png", true, 130, 154);
 			width -= 62;
 			offset.x = 30;
 		}

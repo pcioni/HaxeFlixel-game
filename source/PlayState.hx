@@ -102,8 +102,8 @@ class PlayState extends FlxState {
 		 * 	Run from the top right corner to the bottom right corner in a 'U' shape, adding bookshelves 
 		 * 	along the way at a set increment. Pick random colors from the list of colors.
 		 */
-		var x:Int = 1535;
-		var y:Int = 20;
+		var x:Int = 1455;
+		var y:Int = 13;
 		var init:Bool = true;
 		var init2:Bool = true;
 		var shelfColors:Array<String> = ["red", "purple", "green", "orange"];
@@ -115,16 +115,16 @@ class PlayState extends FlxState {
 		while ( x + y < 2450) {
 			if (x > 60 && y < 300) {
 				add( tmp = new Shelf(x, y, this, "top", FlxRandom.getObject(shelfColors, 0) ) );
-				x -= 100;
+				x -= 185;
 			}
 			else if (x < 60 && y < 800) {
 				if (init) { 
-					y += 200; 
+					y += 260; 
 					init = false;
 				}
 				x = 0;
 				add( tmp = new Shelf(x, y, this, "left", FlxRandom.getObject(shelfColors, 0) ) );
-				y += 145;
+				y += 195;
 			}
 			else {
 				if (init2) {

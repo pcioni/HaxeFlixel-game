@@ -74,6 +74,14 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/openBookBad.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/openBookGood.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/orangeShelfBottom.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -138,11 +146,11 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/s_book_512x216.png");
+		urls.push ("assets/images/s_boulder_160x128.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/s_boulder_160x128.png");
+		urls.push ("assets/images/s_credits_1600x900.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -151,6 +159,10 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/images/s_cutscene_2.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/s_end_1600x900.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -186,55 +198,55 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
-		urls.push ("assets/sounds/book_multiple_pages.wav");
+		urls.push ("assets/sounds/book_multiple_pages.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/book_single_page.wav");
+		urls.push ("assets/sounds/book_single_page.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/book_single_page_2.wav");
+		urls.push ("assets/sounds/book_single_page_2.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/candle.wav");
+		urls.push ("assets/sounds/candle.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/magic.wav");
+		urls.push ("assets/sounds/magic.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/monster_attack.wav");
+		urls.push ("assets/sounds/monster_attack.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/monster_roar_1.wav");
+		urls.push ("assets/sounds/monster_roar_1.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/monster_roar_2.wav");
+		urls.push ("assets/sounds/monster_roar_2.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/monster_roar_3.wav");
+		urls.push ("assets/sounds/monster_roar_3.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/monster_roar_4.wav");
+		urls.push ("assets/sounds/monster_roar_4.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/PC_death.wav");
+		urls.push ("assets/sounds/PC_death.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/quake.wav");
+		urls.push ("assets/sounds/quake.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sounds/quake_bookshelf_crack.wav");
+		urls.push ("assets/sounds/quake_bookshelf_crack.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
@@ -242,7 +254,7 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
-		urls.push ("assets/sounds/step.wav");
+		urls.push ("assets/sounds/step.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
@@ -330,7 +342,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "35",
+			build: "59",
 			company: "HaxeFlixel",
 			file: "Haxegame",
 			fps: 60,

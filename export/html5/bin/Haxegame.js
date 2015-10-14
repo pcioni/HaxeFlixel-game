@@ -45,6 +45,10 @@ ApplicationMain.create = function() {
 	types.push("TEXT");
 	urls.push("assets/images/light.png");
 	types.push("IMAGE");
+	urls.push("assets/images/openBookBad.png");
+	types.push("IMAGE");
+	urls.push("assets/images/openBookGood.png");
+	types.push("IMAGE");
 	urls.push("assets/images/orangeShelfBottom.png");
 	types.push("IMAGE");
 	urls.push("assets/images/orangeShelfLeft.png");
@@ -77,13 +81,15 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/images/s_bookshelf_64x129.png");
 	types.push("IMAGE");
-	urls.push("assets/images/s_book_512x216.png");
-	types.push("IMAGE");
 	urls.push("assets/images/s_boulder_160x128.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_credits_1600x900.png");
 	types.push("IMAGE");
 	urls.push("assets/images/s_cutscene_1.png");
 	types.push("IMAGE");
 	urls.push("assets/images/s_cutscene_2.png");
+	types.push("IMAGE");
+	urls.push("assets/images/s_end_1600x900.png");
 	types.push("IMAGE");
 	urls.push("assets/images/s_heart_32x32.png");
 	types.push("IMAGE");
@@ -101,35 +107,35 @@ ApplicationMain.create = function() {
 	types.push("MUSIC");
 	urls.push("assets/music/music-goes-here.txt");
 	types.push("TEXT");
-	urls.push("assets/sounds/book_multiple_pages.wav");
+	urls.push("assets/sounds/book_multiple_pages.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/book_single_page.wav");
+	urls.push("assets/sounds/book_single_page.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/book_single_page_2.wav");
+	urls.push("assets/sounds/book_single_page_2.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/candle.wav");
+	urls.push("assets/sounds/candle.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/magic.wav");
+	urls.push("assets/sounds/magic.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/monster_attack.wav");
+	urls.push("assets/sounds/monster_attack.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/monster_roar_1.wav");
+	urls.push("assets/sounds/monster_roar_1.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/monster_roar_2.wav");
+	urls.push("assets/sounds/monster_roar_2.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/monster_roar_3.wav");
+	urls.push("assets/sounds/monster_roar_3.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/monster_roar_4.wav");
+	urls.push("assets/sounds/monster_roar_4.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/PC_death.wav");
+	urls.push("assets/sounds/PC_death.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/quake.wav");
+	urls.push("assets/sounds/quake.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/quake_bookshelf_crack.wav");
+	urls.push("assets/sounds/quake_bookshelf_crack.ogg");
 	types.push("SOUND");
 	urls.push("assets/sounds/sounds-go-here.txt");
 	types.push("TEXT");
-	urls.push("assets/sounds/step.wav");
+	urls.push("assets/sounds/step.ogg");
 	types.push("SOUND");
 	urls.push("assets/sounds/beep.mp3");
 	types.push("MUSIC");
@@ -165,7 +171,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "35", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "59", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -3366,6 +3372,12 @@ var DefaultAssetLibrary = function() {
 	id = "assets/images/light.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
+	id = "assets/images/openBookBad.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/openBookGood.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
 	id = "assets/images/orangeShelfBottom.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
@@ -3414,16 +3426,19 @@ var DefaultAssetLibrary = function() {
 	id = "assets/images/s_bookshelf_64x129.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
-	id = "assets/images/s_book_512x216.png";
+	id = "assets/images/s_boulder_160x128.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
-	id = "assets/images/s_boulder_160x128.png";
+	id = "assets/images/s_credits_1600x900.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/images/s_cutscene_1.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/images/s_cutscene_2.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/images/s_end_1600x900.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/images/s_heart_32x32.png";
@@ -3450,49 +3465,49 @@ var DefaultAssetLibrary = function() {
 	id = "assets/music/music-goes-here.txt";
 	this.path.set(id,id);
 	this.type.set(id,"TEXT");
-	id = "assets/sounds/book_multiple_pages.wav";
+	id = "assets/sounds/book_multiple_pages.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/book_single_page.wav";
+	id = "assets/sounds/book_single_page.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/book_single_page_2.wav";
+	id = "assets/sounds/book_single_page_2.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/candle.wav";
+	id = "assets/sounds/candle.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/magic.wav";
+	id = "assets/sounds/magic.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/monster_attack.wav";
+	id = "assets/sounds/monster_attack.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/monster_roar_1.wav";
+	id = "assets/sounds/monster_roar_1.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/monster_roar_2.wav";
+	id = "assets/sounds/monster_roar_2.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/monster_roar_3.wav";
+	id = "assets/sounds/monster_roar_3.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/monster_roar_4.wav";
+	id = "assets/sounds/monster_roar_4.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/PC_death.wav";
+	id = "assets/sounds/PC_death.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/quake.wav";
+	id = "assets/sounds/quake.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sounds/quake_bookshelf_crack.wav";
+	id = "assets/sounds/quake_bookshelf_crack.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
 	id = "assets/sounds/sounds-go-here.txt";
 	this.path.set(id,id);
 	this.type.set(id,"TEXT");
-	id = "assets/sounds/step.wav";
+	id = "assets/sounds/step.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
 	id = "assets/sounds/beep.mp3";
@@ -4328,6 +4343,8 @@ PlayState.__name__ = ["PlayState"];
 PlayState.pentagram = null;
 PlayState.goalShelves = null;
 PlayState.currentSequence = null;
+PlayState.bookGood = null;
+PlayState.bookBad = null;
 PlayState.__super__ = flixel_FlxState;
 PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	player: null
@@ -4430,14 +4447,24 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.readBar.kill();
 		this.add(this.useText = new flixel_text_FlxText(this.player.x,this.player.y,20,"!",100,false));
 		this.useText.kill();
+		this.add(PlayState.bookGood = new flixel_FlxSprite());
+		this.add(PlayState.bookBad = new flixel_FlxSprite());
+		PlayState.bookGood.set_x(800);
+		PlayState.bookGood.set_y(450);
+		PlayState.bookBad.set_x(800);
+		PlayState.bookGood.set_y(450);
+		PlayState.bookGood.loadGraphic("assets/images/openBookGood.png",false,512,256);
+		PlayState.bookBad.loadGraphic("assets/images/openBookBad.png",false,512,256);
+		PlayState.bookGood.kill();
+		PlayState.bookBad.kill();
 		this.healthBar = new flixel_ui_FlxBar(0,0,2,150,20,this.player,"health",0.0,100.0,true);
 		this.healthBar.createFilledBar(-16777216,-2354116,true,-1);
 		this.add(this.healthBar);
 		this.healthBar.trackParent(-47,-40);
 		this.enemyGroup.add(this.monster);
-		this.bookSnd = flixel_FlxG.sound.load("assets/sounds/book_multiple_pages.wav");
-		this.deathSnd = flixel_FlxG.sound.load("assets/sounds/PC_death.wav");
-		this.monsterRoarSnd = flixel_FlxG.sound.load("assets/sounds/monster_roar_1.wav");
+		this.bookSnd = flixel_FlxG.sound.load("assets/sounds/book_multiple_pages.ogg");
+		this.deathSnd = flixel_FlxG.sound.load("assets/sounds/PC_death.ogg");
+		this.monsterRoarSnd = flixel_FlxG.sound.load("assets/sounds/monster_roar_1.ogg");
 	}
 	,destroy: function() {
 		this.bookSnd = flixel_util_FlxDestroyUtil.destroy(this.bookSnd);
@@ -4480,6 +4507,8 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 				this.readBar.kill();
 				this.useText.kill();
 				this.lastHitShelf.stopTimer();
+				PlayState.bookBad.kill();
+				PlayState.bookGood.kill();
 			}
 		} else if(this.player.animation.get_finished()) flixel_FlxG.camera.fade(-16777216,.33,false,$bind(this,this.doneFadeout));
 		if(PlayState.pentagram.charged) {
@@ -4512,12 +4541,12 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.boulderGroup = flixel_util_FlxDestroyUtil.destroy(this.boulderGroup);
 		this.boulderGroup = new flixel_group_FlxTypedGroup();
 		flixel_FlxG.cameras.shake();
-		var randomX = flixel_util_FlxRandom.intRanged(200,flixel_FlxG.width - 200);
-		var randomY = flixel_util_FlxRandom.intRanged(200,flixel_FlxG.height - 200);
+		var randomX = flixel_util_FlxRandom.intRanged(100,1500);
+		var randomY = flixel_util_FlxRandom.intRanged(180,660);
 		this.numBoulders = this.randomBoulders(3,5);
 		while(this.numBoulders != 0) {
-			randomX = flixel_util_FlxRandom.intRanged(0,1200);
-			randomY = flixel_util_FlxRandom.intRanged(0,600);
+			randomX = flixel_util_FlxRandom.intRanged(100,1500);
+			randomY = flixel_util_FlxRandom.intRanged(180,660);
 			this.spawnBoulders(randomX,randomY);
 			this.numBoulders -= 1;
 		}
@@ -4530,7 +4559,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,playerTouchShelf: function(P,S) {
 		if(flixel_FlxG.keys.checkKeyStatus(["E"],1)) {
-			this.bookSnd.play(true);
+			this.bookSnd.play(false);
 			this.lastHitShelf = S;
 			this.readBar.set_currentValue(S.timer.get_progress());
 			S.startTimer();
@@ -4565,7 +4594,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		if(P.health <= 0) {
 			P.set_alpha(1);
 			if(P.alive) {
-				this.deathSnd.play(true);
+				this.deathSnd.play(false);
 				P.kill();
 			}
 		}
@@ -4587,19 +4616,23 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			var dist = flixel_util_FlxMath.getDistance(m_pos,p_pos);
 			var radius = this.light.getRadius();
 			if(this.player.lightOn) {
-				this.monsterRoarSnd.play();
+				this.monsterRoarSnd.play(false);
 				M.seesPlayer = true;
-				M.speed = 60;
+				M.speed = 80;
 				M.playerPos.copyFrom(this.player.getMidpoint());
-				if(dist < radius * 3) {
-					M.speed = 80;
+				if(dist > radius * 3) {
+					M.speed = 110;
 					M.playerPos.copyFrom(this.player.getMidpoint());
-					if(dist < radius * 2) {
-						M.speed = 110;
+					if(dist < radius * 3) {
+						M.speed = 90;
 						M.playerPos.copyFrom(this.player.getMidpoint());
-						if(dist < radius) {
-							M.speed = 150;
+						if(dist < radius * 2) {
+							M.speed = 110;
 							M.playerPos.copyFrom(this.player.getMidpoint());
+							if(dist < radius) {
+								M.speed = 150;
+								M.playerPos.copyFrom(this.player.getMidpoint());
+							}
 						}
 					}
 				}
@@ -4629,12 +4662,12 @@ var Player = function(X,Y,Parent) {
 	this.animation.add("death",[0,1,2],1,false);
 	this.drag.set(1440,1440);
 	this.maxVelocity.set(320,320);
-	this.health = 100;
+	this.health = 100000;
 	this.set_facing(16);
 	this.parent = Parent;
 	this.updateHitbox();
-	this.candleSnd = flixel_FlxG.sound.load("assets/sounds/candle.wav");
-	this.stepSnd = flixel_FlxG.sound.load("assets/sounds/step.wav");
+	this.candleSnd = flixel_FlxG.sound.load("assets/sounds/candle.ogg");
+	this.stepSnd = flixel_FlxG.sound.load("assets/sounds/step.ogg");
 	this.currentSequenceNumber = 1;
 };
 $hxClasses["Player"] = Player;
@@ -4662,7 +4695,7 @@ Player.prototype = $extend(flixel_FlxSprite.prototype,{
 		if(this.alive) {
 			if(flixel_FlxG.keys.checkKeyStatus(["LEFT","A"],1) && this.x > 100) {
 				if(this.x > 40) {
-					this.stepSnd.play(true);
+					this.stepSnd.play(false);
 					this.acceleration.set_x(-this.drag.x);
 					this.set_flipX(true);
 					this.set_facing(1);
@@ -4670,7 +4703,7 @@ Player.prototype = $extend(flixel_FlxSprite.prototype,{
 			}
 			if(flixel_FlxG.keys.checkKeyStatus(["RIGHT","D"],1)) {
 				if(this.x + this.get_width() < flixel_FlxG.width - 40) {
-					this.stepSnd.play(true);
+					this.stepSnd.play(false);
 					this.acceleration.set_x(this.drag.x);
 					this.set_flipX(false);
 					this.set_facing(16);
@@ -4678,14 +4711,14 @@ Player.prototype = $extend(flixel_FlxSprite.prototype,{
 			}
 			if(flixel_FlxG.keys.checkKeyStatus(["UP","W"],1) && this.y > 180) {
 				if(this.y > 40) {
-					this.stepSnd.play(true);
+					this.stepSnd.play(false);
 					this.acceleration.set_y(-this.drag.y);
 					this.set_facing(256);
 				} else this.set_y(40);
 			}
 			if(flixel_FlxG.keys.checkKeyStatus(["DOWN","S"],1) && this.y < 660) {
 				if(this.y + this.get_height() < flixel_FlxG.height - 40) {
-					this.stepSnd.play(true);
+					this.stepSnd.play(false);
 					this.acceleration.set_y(this.drag.y);
 					this.set_facing(4096);
 				} else this.set_y(flixel_FlxG.height - 40 - this.get_height());
@@ -4813,7 +4846,7 @@ var Shelf = function(X,Y,Parent,position,color) {
 		_g.set_height(_g.get_height() - 127);
 		this.offset.set_y(60);
 	} else if(position == "top") {
-		this.loadGraphic("assets/images/" + color + "ShelfTop.png",true,65,154);
+		this.loadGraphic("assets/images/" + color + "ShelfTop.png",true,129,154);
 		var _g1 = this;
 		_g1.set_width(_g1.get_width() - 62);
 		this.offset.set_x(30);
@@ -4845,18 +4878,19 @@ Shelf.prototype = $extend(flixel_FlxSprite.prototype,{
 		}
 	}
 	,readBook: function(Timer) {
-		haxe_Log.trace("reading mySeq = " + this.mySequenceNum + " || currSeq = " + PlayState.currentSequence,{ fileName : "Shelf.hx", lineNumber : 73, className : "Shelf", methodName : "readBook"});
+		haxe_Log.trace("reading mySeq = " + this.mySequenceNum + " || currSeq = " + PlayState.currentSequence,{ fileName : "Shelf.hx", lineNumber : 72, className : "Shelf", methodName : "readBook"});
 		if(this.mySequenceNum == PlayState.currentSequence) {
-			haxe_Log.trace("changing playstate from " + PlayState.currentSequence + " to " + (PlayState.currentSequence + 1),{ fileName : "Shelf.hx", lineNumber : 76, className : "Shelf", methodName : "readBook"});
+			haxe_Log.trace("changing playstate from " + PlayState.currentSequence + " to " + (PlayState.currentSequence + 1),{ fileName : "Shelf.hx", lineNumber : 75, className : "Shelf", methodName : "readBook"});
+			PlayState.bookGood.set_exists(true);
 			if(PlayState.currentSequence == 5) {
-				haxe_Log.trace("kill state triggered",{ fileName : "Shelf.hx", lineNumber : 79, className : "Shelf", methodName : "readBook"});
+				haxe_Log.trace("kill state triggered",{ fileName : "Shelf.hx", lineNumber : 78, className : "Shelf", methodName : "readBook"});
 				PlayState.pentagram.changeColor("charged");
 				PlayState.currentSequence += 1;
 			} else {
 				PlayState.currentSequence += 1;
 				PlayState.pentagram.changeColor(PlayState.goalShelves[PlayState.currentSequence - 1].myColor);
 			}
-		}
+		} else PlayState.bookBad.set_exists(true);
 		this.resetTimer = true;
 	}
 	,startTimer: function() {
@@ -9121,9 +9155,7 @@ openfl_display_BitmapData.prototype = {
 				while(_g3 < _g2) {
 					var xx = _g3++;
 					position = (width_yy + xx) * 4;
-					pixelValue = openfl_Memory._setPositionTemporarily(position,function() {
-						return openfl_Memory.gcRef.readInt();
-					});
+					pixelValue = openfl_Memory.getI32(position);
 					pixelMask = pixelValue & mask;
 					i = openfl_display_BitmapData.__ucompare(pixelMask,thresholdMask);
 					test = false;
@@ -9185,9 +9217,7 @@ openfl_display_BitmapData.prototype = {
 				while(_g11 < dw) {
 					var xx1 = _g11++;
 					position1 = (xx1 + sx + (yy1 + sy) * sw) * 4;
-					pixelValue1 = openfl_Memory._setPositionTemporarily(canvasMemory + position1,function() {
-						return openfl_Memory.gcRef.readInt();
-					});
+					pixelValue1 = openfl_Memory.getI32(canvasMemory + position1);
 					pixelMask1 = pixelValue1 & mask;
 					i1 = openfl_display_BitmapData.__ucompare(pixelMask1,thresholdMask1);
 					test1 = false;
@@ -25267,6 +25297,7 @@ lime__$backend_html5_HTML5Renderer.prototype = {
 				this.parent.context = lime_graphics_RenderContext.CANVAS(this.parent.window.backend.canvas.getContext("2d"));
 				this.parent.type = lime_graphics_RendererType.CANVAS;
 			} else {
+				webgl = WebGLDebugUtils.makeDebugContext(webgl);
 				lime_graphics_opengl_GL.context = webgl;
 				this.parent.context = lime_graphics_RenderContext.OPENGL(lime_graphics_opengl_GL.context);
 				this.parent.type = lime_graphics_RendererType.OPENGL;
@@ -37008,24 +37039,29 @@ openfl_Memory._setPositionTemporarily = function(position,action) {
 	return value;
 };
 openfl_Memory.getByte = function(addr) {
+	if(addr < 0 || addr + 1 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	return openfl_Memory.gcRef.data.getInt8(addr);
 };
 openfl_Memory.getDouble = function(addr) {
+	if(addr < 0 || addr + 8 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readDouble();
 	});
 };
 openfl_Memory.getFloat = function(addr) {
+	if(addr < 0 || addr + 4 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readFloat();
 	});
 };
 openfl_Memory.getI32 = function(addr) {
+	if(addr < 0 || addr + 4 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readInt();
 	});
 };
 openfl_Memory.getUI16 = function(addr) {
+	if(addr < 0 || addr + 2 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readUnsignedShort();
 	});
@@ -37035,24 +37071,29 @@ openfl_Memory.select = function(inBytes) {
 	if(inBytes != null) openfl_Memory.len = inBytes.length; else openfl_Memory.len = 0;
 };
 openfl_Memory.setByte = function(addr,v) {
+	if(addr < 0 || addr + 1 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	openfl_Memory.gcRef.data.setUint8(addr,v);
 };
 openfl_Memory.setDouble = function(addr,v) {
+	if(addr < 0 || addr + 8 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeDouble(v);
 	});
 };
 openfl_Memory.setFloat = function(addr,v) {
+	if(addr < 0 || addr + 4 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeFloat(v);
 	});
 };
 openfl_Memory.setI16 = function(addr,v) {
+	if(addr < 0 || addr + 2 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeUnsignedShort(v);
 	});
 };
 openfl_Memory.setI32 = function(addr,v) {
+	if(addr < 0 || addr + 4 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeInt(v);
 	});
@@ -55374,6 +55415,8 @@ AssetPaths.greenShelfLeft__png = "assets/images/greenShelfLeft.png";
 AssetPaths.greenShelfTop__png = "assets/images/greenShelfTop.png";
 AssetPaths.images_go_here__txt = "assets/images/images-go-here.txt";
 AssetPaths.light__png = "assets/images/light.png";
+AssetPaths.openBookBad__png = "assets/images/openBookBad.png";
+AssetPaths.openBookGood__png = "assets/images/openBookGood.png";
 AssetPaths.orangeShelfBottom__png = "assets/images/orangeShelfBottom.png";
 AssetPaths.orangeShelfLeft__png = "assets/images/orangeShelfLeft.png";
 AssetPaths.orangeShelfTop__png = "assets/images/orangeShelfTop.png";
@@ -55390,10 +55433,11 @@ AssetPaths.redShelfLeft__png = "assets/images/redShelfLeft.png";
 AssetPaths.redShelfTop__png = "assets/images/redShelfTop.png";
 AssetPaths.shelf__png = "assets/images/shelf.png";
 AssetPaths.s_bookshelf_64x129__png = "assets/images/s_bookshelf_64x129.png";
-AssetPaths.s_book_512x216__png = "assets/images/s_book_512x216.png";
 AssetPaths.s_boulder_160x128__png = "assets/images/s_boulder_160x128.png";
+AssetPaths.s_credits_1600x900__png = "assets/images/s_credits_1600x900.png";
 AssetPaths.s_cutscene_1__png = "assets/images/s_cutscene_1.png";
 AssetPaths.s_cutscene_2__png = "assets/images/s_cutscene_2.png";
+AssetPaths.s_end_1600x900__png = "assets/images/s_end_1600x900.png";
 AssetPaths.s_heart_32x32__png = "assets/images/s_heart_32x32.png";
 AssetPaths.s_heart_64x64__png = "assets/images/s_heart_64x64.png";
 AssetPaths.s_monster_128x128__png = "assets/images/s_monster_128x128.png";
@@ -55402,21 +55446,21 @@ AssetPaths.s_title_1600x900__png = "assets/images/s_title_1600x900.png";
 AssetPaths.s_wip_cultist__png = "assets/images/s_wip_cultist.png";
 AssetPaths.bgm__ogg = "assets/music/bgm.ogg";
 AssetPaths.music_goes_here__txt = "assets/music/music-goes-here.txt";
-AssetPaths.book_multiple_pages__wav = "assets/sounds/book_multiple_pages.wav";
-AssetPaths.book_single_page__wav = "assets/sounds/book_single_page.wav";
-AssetPaths.book_single_page_2__wav = "assets/sounds/book_single_page_2.wav";
-AssetPaths.candle__wav = "assets/sounds/candle.wav";
-AssetPaths.magic__wav = "assets/sounds/magic.wav";
-AssetPaths.monster_attack__wav = "assets/sounds/monster_attack.wav";
-AssetPaths.monster_roar_1__wav = "assets/sounds/monster_roar_1.wav";
-AssetPaths.monster_roar_2__wav = "assets/sounds/monster_roar_2.wav";
-AssetPaths.monster_roar_3__wav = "assets/sounds/monster_roar_3.wav";
-AssetPaths.monster_roar_4__wav = "assets/sounds/monster_roar_4.wav";
-AssetPaths.PC_death__wav = "assets/sounds/PC_death.wav";
-AssetPaths.quake__wav = "assets/sounds/quake.wav";
-AssetPaths.quake_bookshelf_crack__wav = "assets/sounds/quake_bookshelf_crack.wav";
+AssetPaths.book_multiple_pages__ogg = "assets/sounds/book_multiple_pages.ogg";
+AssetPaths.book_single_page__ogg = "assets/sounds/book_single_page.ogg";
+AssetPaths.book_single_page_2__ogg = "assets/sounds/book_single_page_2.ogg";
+AssetPaths.candle__ogg = "assets/sounds/candle.ogg";
+AssetPaths.magic__ogg = "assets/sounds/magic.ogg";
+AssetPaths.monster_attack__ogg = "assets/sounds/monster_attack.ogg";
+AssetPaths.monster_roar_1__ogg = "assets/sounds/monster_roar_1.ogg";
+AssetPaths.monster_roar_2__ogg = "assets/sounds/monster_roar_2.ogg";
+AssetPaths.monster_roar_3__ogg = "assets/sounds/monster_roar_3.ogg";
+AssetPaths.monster_roar_4__ogg = "assets/sounds/monster_roar_4.ogg";
+AssetPaths.PC_death__ogg = "assets/sounds/PC_death.ogg";
+AssetPaths.quake__ogg = "assets/sounds/quake.ogg";
+AssetPaths.quake_bookshelf_crack__ogg = "assets/sounds/quake_bookshelf_crack.ogg";
 AssetPaths.sounds_go_here__txt = "assets/sounds/sounds-go-here.txt";
-AssetPaths.step__wav = "assets/sounds/step.wav";
+AssetPaths.step__ogg = "assets/sounds/step.ogg";
 flixel_FlxBasic._ACTIVECOUNT = 0;
 flixel_FlxBasic._VISIBLECOUNT = 0;
 flixel_util_FlxRect._pool = new flixel_util_FlxPool(flixel_util_FlxRect);
@@ -56965,3 +57009,5 @@ openfl_ui_Keyboard.RIGHTBRACKET = 221;
 openfl_ui_Keyboard.QUOTE = 222;
 ApplicationMain.main();
 })(typeof console != "undefined" ? console : {log:function(){}}, typeof window != "undefined" ? window : exports);
+
+//# sourceMappingURL=Haxegame.js.map

@@ -23,12 +23,12 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="flixel=3.3.11&#xA;openfl=3.3.6&#xA;lime=2.6.6&#xA;openfl-next&#xA;tools=2.6.6&#xA;no-compilation&#xA;NAPE_RELEASE_BUILD&#xA;native&#xA;lime-native&#xA;openfl-native&#xA;FLX_RENDER_TILE&#xA;windows&#xA;desktop&#xA;display" />
+    <option directives="flixel=3.3.11&#xA;openfl=3.3.6&#xA;lime=2.6.6&#xA;openfl-next&#xA;tools=2.6.6&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;openfl-native&#xA;FLX_RENDER_TILE&#xA;windows&#xA;desktop&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="False" />
-    <option additional="--remap flash:openfl&#xA;#--macro keep(&quot;Main&quot;)" />
+    <option additional="--remap flash:openfl&#xA;#--macro keep(&quot;Main&quot;)&#xA;-debug " />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
