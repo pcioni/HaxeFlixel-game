@@ -220,7 +220,7 @@ class PlayState extends FlxState {
 		pentaLight = new FlxSprite();
 		pentaLight.loadGraphic("assets/images/light.png", false, 400, 400);
 		pentaLight.blend = BlendMode.SCREEN;
-		darkness.stamp(pentaLight, Std.int(pentagram.x - pentaLight.width/2 + 17), Std.int(pentagram.y-pentaLight.height/2 + 17));
+		darkness.stamp(pentaLight, Std.int(pentagram.x - pentaLight.width / 2 + 17), Std.int(pentagram.y - pentaLight.height / 2 + 17));
 		add(darkness);
 	
 		//The "read bar". dissapears when not in use. Follows the player's head when in use. Tracks the elapsed time on the shelf timer.
@@ -351,7 +351,7 @@ class PlayState extends FlxState {
 		
 		//Checks if the light is toggled on then draws the light
 		if (player.lightOn) {
-			light.reset(player.getCenter().x-light.width/2, player.getCenter().y-light.height/2);
+			light.reset(player.getCenter().x - light.width / 2, player.getCenter().y - light.height / 2);
 			darkness.kill();
 		}
 		else { 
@@ -420,7 +420,7 @@ class PlayState extends FlxState {
 	}
 	private function playerTouchBoulder(P:Player, B:Boulder):Void {
 		if (P.invulnerable == false) {
-			P.hurt(10);
+			if (!P.godmode) { P.hurt(10); }
 			P.invulnerable = true;
 			P.alpha = 0.4;
 			B.kill();	
@@ -441,7 +441,7 @@ class PlayState extends FlxState {
 	{
 		if (P.invulnerable == false) {
 			monsterAttackSnd.play(false);
-			P.hurt(34);
+			if (!P.godmode) { P.hurt(34); }
 			P.invulnerable = true;
 			P.alpha = 0.4;	
 		}

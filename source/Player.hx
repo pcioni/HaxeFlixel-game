@@ -24,6 +24,7 @@ class Player extends FlxSprite
 	public var reading = false;
 	public var touchingShelf:Bool = false;
 	public var invulnerable:Bool = false;
+	public var godmode = false;
 	
 	var parent:PlayState;
 	private var centerX:Int;
@@ -129,6 +130,12 @@ class Player extends FlxSprite
 				candleSnd.play(true);
 				if (!lightOn) { lightOn = true; }
 				else { lightOn = false; }
+			}
+			
+			//chekc for godmode
+			if (FlxG.keys.justPressed.G) {
+				if (!godmode) { godmode = true; }
+				else { godmode = false; }
 			}
 			
 			//check velocities to play corresponding animations
