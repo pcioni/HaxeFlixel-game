@@ -82,11 +82,11 @@ class PlayState extends FlxState {
 	override public function create():Void {
 		
 		super.create();
-		/*
+		
 		level = new FlxTilemap();
 		level.loadMap(Assets.getText("assets/data/map.csv"), "assets/data/tile_sheet.png", 64, 64);
 		add(level);
-		*/
+		
 		
 		FlxG.state.bgColor = FlxColor.CHARCOAL;
 		FlxG.sound.playMusic(AssetPaths.bgm__ogg);

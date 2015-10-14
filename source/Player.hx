@@ -97,7 +97,7 @@ class Player extends FlxSprite
 				else { x = FlxG.width - PADDING - width; }
 			}
 			if (FlxG.keys.anyPressed(["UP", "W"]) && y > 180) {
-				if (y > PADDING) {
+				if (y > PADDING) {  
 					stepSnd.play(false);
 					acceleration.y = -drag.y;
 					facing = FlxObject.UP;
