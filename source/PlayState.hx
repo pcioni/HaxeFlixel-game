@@ -65,6 +65,10 @@ class PlayState extends FlxState {
 	private var bookSnd:FlxSound;
 	private var deathSnd:FlxSound;
 	private var monsterRoarSnd:FlxSound;
+	private var monsterRoarSnd2:FlxSound;
+
+	private var monsterAttackSnd:FlxSound;
+	private var quakeSnd:FlxSound;
 	
 	private var level:FlxTilemap;
 	
@@ -236,7 +240,11 @@ class PlayState extends FlxState {
 		bookSnd = FlxG.sound.load(AssetPaths.book_multiple_pages__ogg);
 		deathSnd = FlxG.sound.load(AssetPaths.PC_death__ogg);
 		monsterRoarSnd = FlxG.sound.load(AssetPaths.monster_roar_1__ogg);
-		
+		monsterRoarSnd2 = FlxG.sound.load(AssetPaths.monster_roar_2__ogg,.5);
+
+		monsterAttackSnd = FlxG.sound.load(AssetPaths.monster_attack__ogg);
+
+		quakeSnd = FlxG.sound.load(AssetPaths.quake__ogg);
 	}
 	
 	/**
@@ -263,7 +271,7 @@ class PlayState extends FlxState {
 		}
 		else {
 			Earthquake();
-			earthquakeTimer = FlxRandom.intRanged(200, 600);
+			earthquakeTimer = FlxRandom.intRanged(300, 800);
 		}
 		if (ending) {
 			return;
@@ -322,6 +330,9 @@ class PlayState extends FlxState {
 			if (FlxG.overlap(pentagram, monster)) {
 				monster.kill();
 				monster.solid = false;
+				won = true;
+				FlxG.camera.fade(FlxColor.BLACK, .33, false, doneFadeout);
+
 			}
 		}
 		
@@ -356,9 +367,10 @@ class PlayState extends FlxState {
 			boulderGroup = FlxDestroyUtil.destroy(boulderGroup);
 			boulderGroup = new FlxTypedGroup<Boulder>();
 			FlxG.cameras.shake();
+			quakeSnd.play(false);
 			var randomX = FlxRandom.intRanged(100, 1500);
 			var randomY = FlxRandom.intRanged(180, 660);
-			numBoulders = randomBoulders(3,5);
+			numBoulders = randomBoulders(3,6);
 			while (numBoulders != 0) {
 				randomX = FlxRandom.intRanged(100, 1500);
 				randomY = FlxRandom.intRanged(180, 660);
@@ -403,6 +415,7 @@ class PlayState extends FlxState {
 			P.alpha = 1;
 			if (P.alive) {
 				//play the death animation
+				deathSnd.play(false);
 				P.kill();
 			}	
 			//on completion, switch to end state/cut scene
@@ -412,6 +425,7 @@ class PlayState extends FlxState {
 	private function playerTouchEnemy(P:Player, M:Monster):Void
 	{
 		if (P.invulnerable == false) {
+			monsterAttackSnd.play(false);
 			P.hurt(34);
 			P.invulnerable = true;
 			P.alpha = 0.4;	
@@ -430,6 +444,7 @@ class PlayState extends FlxState {
 	}
 	private function enemyTouchBoulder(M:Monster, B:Boulder):Void
 	{
+		monsterRoarSnd2.play(false);
 		B.kill();
 		if (M.stunned == false) {
 			M.stunned = true;

@@ -113,6 +113,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -224,6 +225,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/sounds/monster_roar_3.ogg", AssetType.SOUND);
 		className.set ("assets/sounds/monster_roar_4.ogg", __ASSET__assets_sounds_monster_roar_4_ogg);
 		type.set ("assets/sounds/monster_roar_4.ogg", AssetType.SOUND);
+		className.set ("assets/sounds/monster_speech.ogg", __ASSET__assets_sounds_monster_speech_ogg);
+		type.set ("assets/sounds/monster_speech.ogg", AssetType.SOUND);
 		className.set ("assets/sounds/PC_death.ogg", __ASSET__assets_sounds_pc_death_ogg);
 		type.set ("assets/sounds/PC_death.ogg", AssetType.SOUND);
 		className.set ("assets/sounds/quake.ogg", __ASSET__assets_sounds_quake_ogg);
@@ -459,6 +462,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.SOUND);
+		id = "assets/sounds/monster_speech.ogg";
+		path.set (id, id);
+		
+		type.set (id, AssetType.SOUND);
 		id = "assets/sounds/PC_death.ogg";
 		path.set (id, id);
 		
@@ -676,6 +683,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/sounds/monster_roar_4.ogg", __ASSET__assets_sounds_monster_roar_4_ogg);
 		type.set ("assets/sounds/monster_roar_4.ogg", AssetType.SOUND);
+		
+		className.set ("assets/sounds/monster_speech.ogg", __ASSET__assets_sounds_monster_speech_ogg);
+		type.set ("assets/sounds/monster_speech.ogg", AssetType.SOUND);
 		
 		className.set ("assets/sounds/PC_death.ogg", __ASSET__assets_sounds_pc_death_ogg);
 		type.set ("assets/sounds/PC_death.ogg", AssetType.SOUND);
@@ -1305,7 +1315,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 			var bytes = ByteArray.readFile ("assets/manifest");
 			#elseif (mac && java)
 			var bytes = ByteArray.readFile ("../Resources/manifest");
-			#elseif ios
+			#elseif (ios || tvos)
 			var bytes = ByteArray.readFile ("assets/manifest");
 			#else
 			var bytes = ByteArray.readFile ("manifest");
@@ -1327,7 +1337,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 							
 							if (!className.exists (asset.id)) {
 								
-								#if ios
+								#if (ios || tvos)
 								path.set (asset.id, "assets/" + asset.path);
 								#else
 								path.set (asset.id, asset.path);
@@ -1479,6 +1489,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_monster_roar_2_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_monster_roar_3_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_monster_roar_4_ogg extends null { }
+@:keep @:bind #if display private #end class __ASSET__assets_sounds_monster_speech_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_pc_death_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_quake_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_quake_bookshelf_crack_ogg extends null { }
@@ -1493,6 +1504,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 #elseif html5
+
 
 
 
@@ -1618,6 +1630,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:file("assets/sounds/monster_roar_2.ogg") #if display private #end class __ASSET__assets_sounds_monster_roar_2_ogg extends lime.utils.ByteArray {}
 @:file("assets/sounds/monster_roar_3.ogg") #if display private #end class __ASSET__assets_sounds_monster_roar_3_ogg extends lime.utils.ByteArray {}
 @:file("assets/sounds/monster_roar_4.ogg") #if display private #end class __ASSET__assets_sounds_monster_roar_4_ogg extends lime.utils.ByteArray {}
+@:file("assets/sounds/monster_speech.ogg") #if display private #end class __ASSET__assets_sounds_monster_speech_ogg extends lime.utils.ByteArray {}
 @:file("assets/sounds/PC_death.ogg") #if display private #end class __ASSET__assets_sounds_pc_death_ogg extends lime.utils.ByteArray {}
 @:file("assets/sounds/quake.ogg") #if display private #end class __ASSET__assets_sounds_quake_ogg extends lime.utils.ByteArray {}
 @:file("assets/sounds/quake_bookshelf_crack.ogg") #if display private #end class __ASSET__assets_sounds_quake_bookshelf_crack_ogg extends lime.utils.ByteArray {}

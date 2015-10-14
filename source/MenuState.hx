@@ -27,15 +27,12 @@ class MenuState extends FlxState
 		//FlxG.state.bgColor = FlxColor.BLUE;
 		var menuBg = new FlxSprite(0, 30, 'assets/images/s_title_1600x900.png');
 		add(menuBg);
+		//FlxG.sound.playMusic(AssetPaths.bgm__ogg);
 
 		opt0txt = new FlxText(FlxG.width /2 - 160, FlxG.height * 3/4, 320, "Start");
 		opt0txt.size = 64;
 		opt0txt.color  = FlxColor.BLACK;
 		add(opt0txt);
-		pointer = new FlxSprite();
-		pointer.makeGraphic(32, 32, FlxColor.RED);
-		pointer.x = opt0txt.x - pointer.width - 10;
-		add(pointer);
 		super.create();
 	}
 	
@@ -53,28 +50,12 @@ class MenuState extends FlxState
 	 */
 	override public function update():Void
 	{
-		//set y position of cursor based on option choice
-		switch(option) {
-		case 0:
-			pointer.y = opt0txt.y + pointer.height/2;
-		}
 		
-		//listen for keys
-		
-		if (FlxG.keys.justPressed.UP) {
-			option = (option - 1 + OPTIONS) % OPTIONS;
-		}
-		if (FlxG.keys.justPressed.DOWN) {
-			option = (option + 1 + OPTIONS) % OPTIONS;
-		}
 		if (FlxG.keys.anyJustPressed(["SPACE", "ENTER"])) {
 			switch(option) {
 			case 0:
 				FlxG.state.bgColor = FlxColor.BLACK;
 				FlxG.switchState(new CutSceneState());
-			case 1:
-				FlxG.openURL("http://haxeflixel.com/documentation/cheat-sheet/");
-
 			}
 		}
 		super.update();

@@ -19,7 +19,9 @@ class GameOver extends FlxState
 	private var txt_title:FlxText;
 	private var spr_score:FlxSprite;
 	private var	btn_mainMenu:FlxButton;
-	
+	private var index:Int = 0;
+	private var end:FlxSprite;
+	private var credits:FlxSprite;
 	public function new(win:Bool, score:Int) 
 	{
 		_win = win;
@@ -31,16 +33,15 @@ class GameOver extends FlxState
 		#if !FLX_NO_MOUSE
 		FlxG.mouse.visible = true;
 		#end
-		txt_title = new FlxText(0, 20, 0, _win ? "You win!" : "Game Over!", 36);
-		txt_title.alignment = "center";
-		txt_title.color = FlxColor.WHITE;
-		txt_title.screenCenter(true, false);
-		add(txt_title);
-		
-		btn_mainMenu = new FlxButton(0, FlxG.height - 32, "Play again", switchStates);
-		btn_mainMenu.screenCenter(true, false);
-		add(btn_mainMenu);
-		
+		end = new FlxSprite(0, 30, 'assets/images/s_end_1600x900.png');
+		credits = new FlxSprite(0, 30, 'assets/images/s_credits_1600x900.png');
+	
+		if (_win) {
+			add(end);
+		}
+		else {
+			add(credits);
+		}
 		FlxG.camera.fade(FlxColor.BLACK, .33, true);
 		super.create();
 		
@@ -55,8 +56,27 @@ class GameOver extends FlxState
 	{
 		super.destroy();
 		
-		txt_title = FlxDestroyUtil.destroy(txt_title);
 		
 	}
-	
+	override public function update():Void
+	{
+		if (FlxG.keys.anyJustPressed(["SPACE", "ENTER"])) {
+			
+			switch(index) {
+				case 0:
+					if (_win) {
+						index++;
+						add(credits);
+					}
+					else {
+						FlxG.switchState(new MenuState());
+					}
+
+				case 1:
+					FlxG.switchState(new MenuState());
+				}
+		
+		}
+		super.update();
+	}
 }

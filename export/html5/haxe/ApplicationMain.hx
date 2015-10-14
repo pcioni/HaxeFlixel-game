@@ -238,6 +238,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
+		urls.push ("assets/sounds/monster_speech.ogg");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
 		urls.push ("assets/sounds/PC_death.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
@@ -342,7 +346,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "59",
+			build: "115",
 			company: "HaxeFlixel",
 			file: "Haxegame",
 			fps: 60,
@@ -427,7 +431,15 @@ class ApplicationMain {
 			
 		}
 		
+		#if !flash
+		if (openfl.Lib.current.stage.window.fullscreen) {
+			
+			openfl.Lib.current.stage.dispatchEvent (new openfl.events.FullScreenEvent (openfl.events.FullScreenEvent.FULL_SCREEN, false, false, true, true));
+			
+		}
+		
 		openfl.Lib.current.stage.dispatchEvent (new openfl.events.Event (openfl.events.Event.RESIZE, false, false));
+		#end
 		
 	}
 	

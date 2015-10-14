@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
@@ -13,9 +14,12 @@ import flixel.util.FlxColor;
  */
 class CutSceneState extends FlxState
 {
-	public static inline var OPTIONS:Int = 2;
 	private var index:Int = 0;
-	
+	private var monsterRoarSnd:FlxSound;
+	private var magicSnd:FlxSound;
+	private var quakeSnd:FlxSound;
+	//private var monsterSpeech:FlxSound;
+
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -23,8 +27,17 @@ class CutSceneState extends FlxState
 	{
 		//FlxG.state.bgColor = FlxColor.BLUE;
 		var scene1 = new FlxSprite(0, 30, 'assets/images/s_cutscene_1.png');
+		
+		monsterRoarSnd = FlxG.sound.load(AssetPaths.monster_roar_3__ogg);
+		magicSnd = FlxG.sound.load(AssetPaths.magic__ogg);
+		quakeSnd = FlxG.sound.load(AssetPaths.quake__ogg);
+		monsterSpeech = FlxG.sound.load(AssetPaths.monster_speech__ogg);
+		
 		add(scene1);
+		magicSnd.play(true);
+		quakeSnd.play(true);
 		super.create();
+		
 	}
 	
 	/**
@@ -50,6 +63,7 @@ class CutSceneState extends FlxState
 				index++;
 				//FlxG.camera.fade(FlxColor.BLACK, 1, true, doneFadeIn);
 				var scene2 = new FlxSprite(0, 30, 'assets/images/s_cutscene_2.png');
+				//monsterSpeech.play(false);
 				add(scene2);
 
 			case 1:
@@ -58,8 +72,5 @@ class CutSceneState extends FlxState
 			}
 		}
 		super.update();
-	}
-	private function doneFadeIn():Void {
-
 	}
 }

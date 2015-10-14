@@ -127,6 +127,8 @@ ApplicationMain.create = function() {
 	types.push("SOUND");
 	urls.push("assets/sounds/monster_roar_4.ogg");
 	types.push("SOUND");
+	urls.push("assets/sounds/monster_speech.ogg");
+	types.push("SOUND");
 	urls.push("assets/sounds/PC_death.ogg");
 	types.push("SOUND");
 	urls.push("assets/sounds/quake.ogg");
@@ -171,7 +173,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "59", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "115", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -190,6 +192,7 @@ ApplicationMain.start = function() {
 	if(hasMain) Reflect.callMethod(entryPoint,Reflect.field(entryPoint,"main"),[]); else {
 		var instance = Type.createInstance(DocumentClass,[]);
 	}
+	if(openfl_Lib.current.stage.window.__fullscreen) openfl_Lib.current.stage.dispatchEvent(new openfl_events_FullScreenEvent(openfl_events_FullScreenEvent.FULL_SCREEN,false,false,true,true));
 	openfl_Lib.current.stage.dispatchEvent(new openfl_events_Event(openfl_events_Event.RESIZE,false,false));
 };
 var openfl_events_IEventDispatcher = function() { };
@@ -392,6 +395,7 @@ openfl_display_DisplayObject.prototype = $extend(openfl_events_EventDispatcher.p
 	,__worldTransform: null
 	,__alpha: null
 	,__blendMode: null
+	,__children: null
 	,__filters: null
 	,__graphics: null
 	,__interactive: null
@@ -723,12 +727,18 @@ openfl_display_DisplayObject.prototype = $extend(openfl_events_EventDispatcher.p
 		return this.__mask = value;
 	}
 	,get_mouseX: function() {
-		if(this.stage != null) return this.__getWorldTransform().__transformInverseX(this.stage.__mouseX,this.stage.__mouseY);
-		return 0;
+		var mouseX;
+		if(this.stage != null) mouseX = this.stage.__mouseX; else mouseX = openfl_Lib.current.stage.__mouseX;
+		var mouseY;
+		if(this.stage != null) mouseY = this.stage.__mouseY; else mouseY = openfl_Lib.current.stage.__mouseY;
+		return this.__getWorldTransform().__transformInverseX(mouseX,mouseY);
 	}
 	,get_mouseY: function() {
-		if(this.stage != null) return this.__getWorldTransform().__transformInverseY(this.stage.__mouseX,this.stage.__mouseY);
-		return 0;
+		var mouseX;
+		if(this.stage != null) mouseX = this.stage.__mouseX; else mouseX = openfl_Lib.current.stage.__mouseX;
+		var mouseY;
+		if(this.stage != null) mouseY = this.stage.__mouseY; else mouseY = openfl_Lib.current.stage.__mouseY;
+		return this.__getWorldTransform().__transformInverseY(mouseX,mouseY);
 	}
 	,get_name: function() {
 		return this.__name;
@@ -950,7 +960,6 @@ openfl_display_DisplayObjectContainer.prototype = $extend(openfl_display_Interac
 	mouseChildren: null
 	,numChildren: null
 	,tabChildren: null
-	,__children: null
 	,__removedChildren: null
 	,addChild: function(child) {
 		if(child != null) {
@@ -1065,6 +1074,17 @@ openfl_display_DisplayObjectContainer.prototype = $extend(openfl_display_Interac
 			this.removeChildAt(beginIndex);
 			numRemovals--;
 		}
+	}
+	,resolve: function(fieldName) {
+		if(this.__children == null) return null;
+		var _g = 0;
+		var _g1 = this.__children;
+		while(_g < _g1.length) {
+			var child = _g1[_g];
+			++_g;
+			if(child.get_name() == fieldName) return child;
+		}
+		return null;
 	}
 	,setChildIndex: function(child,index) {
 		if(index >= 0 && index <= this.__children.length && child.parent == this) {
@@ -1666,7 +1686,7 @@ var flixel_FlxObject = function(X,Y,Width,Height) {
 	this.allowCollisions = 4369;
 	this.wasTouching = 0;
 	this.touching = 0;
-	this.health = 1;
+	this.health = 100;
 	this.maxAngular = 10000;
 	this.angularDrag = 0;
 	this.angularAcceleration = 0;
@@ -3226,9 +3246,19 @@ CutSceneState.__name__ = ["CutSceneState"];
 CutSceneState.__super__ = flixel_FlxState;
 CutSceneState.prototype = $extend(flixel_FlxState.prototype,{
 	index: null
+	,monsterRoarSnd: null
+	,magicSnd: null
+	,quakeSnd: null
+	,monsterSpeech: null
 	,create: function() {
 		var scene1 = new flixel_FlxSprite(0,30,"assets/images/s_cutscene_1.png");
+		this.monsterRoarSnd = flixel_FlxG.sound.load("assets/sounds/monster_roar_3.ogg");
+		this.magicSnd = flixel_FlxG.sound.load("assets/sounds/magic.ogg");
+		this.quakeSnd = flixel_FlxG.sound.load("assets/sounds/quake.ogg");
+		this.monsterSpeech = flixel_FlxG.sound.load("assets/sounds/monster_speech.ogg");
 		this.add(scene1);
+		this.magicSnd.play(true);
+		this.quakeSnd.play(true);
 		flixel_FlxState.prototype.create.call(this);
 	}
 	,destroy: function() {
@@ -3242,6 +3272,7 @@ CutSceneState.prototype = $extend(flixel_FlxState.prototype,{
 			case 0:
 				this.index++;
 				var scene2 = new flixel_FlxSprite(0,30,"assets/images/s_cutscene_2.png");
+				this.monsterSpeech.play(false);
 				this.add(scene2);
 				break;
 			case 1:
@@ -3250,8 +3281,6 @@ CutSceneState.prototype = $extend(flixel_FlxState.prototype,{
 			}
 		}
 		flixel_FlxState.prototype.update.call(this);
-	}
-	,doneFadeIn: function() {
 	}
 	,__class__: CutSceneState
 });
@@ -3493,6 +3522,9 @@ var DefaultAssetLibrary = function() {
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
 	id = "assets/sounds/monster_roar_4.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sounds/monster_speech.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
 	id = "assets/sounds/PC_death.ogg";
@@ -3875,6 +3907,7 @@ FSM.prototype = {
 	,__class__: FSM
 };
 var GameOver = function(win,score) {
+	this.index = 0;
 	this._score = 0;
 	this._win = win;
 	this._score = score;
@@ -3889,16 +3922,14 @@ GameOver.prototype = $extend(flixel_FlxState.prototype,{
 	,txt_title: null
 	,spr_score: null
 	,btn_mainMenu: null
+	,index: null
+	,end: null
+	,credits: null
 	,create: function() {
 		flixel_FlxG.mouse.set_visible(true);
-		this.txt_title = new flixel_text_FlxText(0,20,0,this._win?"You win!":"Game Over!",36);
-		this.txt_title.set_alignment("center");
-		this.txt_title.set_color(-1);
-		flixel_util_FlxSpriteUtil.screenCenter(this.txt_title,true,false);
-		this.add(this.txt_title);
-		this.btn_mainMenu = new flixel_ui_FlxButton(0,flixel_FlxG.height - 32,"Play again",$bind(this,this.switchStates));
-		flixel_util_FlxSpriteUtil.screenCenter(this.btn_mainMenu,true,false);
-		this.add(this.btn_mainMenu);
+		this.end = new flixel_FlxSprite(0,30,"assets/images/s_end_1600x900.png");
+		this.credits = new flixel_FlxSprite(0,30,"assets/images/s_credits_1600x900.png");
+		if(this._win) this.add(this.end); else this.add(this.credits);
 		flixel_FlxG.camera.fade(-16777216,.33,true);
 		flixel_FlxState.prototype.create.call(this);
 	}
@@ -3909,7 +3940,23 @@ GameOver.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,destroy: function() {
 		flixel_FlxState.prototype.destroy.call(this);
-		this.txt_title = flixel_util_FlxDestroyUtil.destroy(this.txt_title);
+	}
+	,update: function() {
+		if(flixel_FlxG.keys.checkKeyStatus(["SPACE","ENTER"],2)) {
+			var _g = this.index;
+			switch(_g) {
+			case 0:
+				if(this._win) {
+					this.index++;
+					this.add(this.credits);
+				} else flixel_FlxG.switchState(new MenuState());
+				break;
+			case 1:
+				flixel_FlxG.switchState(new MenuState());
+				break;
+			}
+		}
+		flixel_FlxState.prototype.update.call(this);
 	}
 	,__class__: GameOver
 });
@@ -4076,33 +4123,18 @@ MenuState.prototype = $extend(flixel_FlxState.prototype,{
 		this.opt0txt.set_size(64);
 		this.opt0txt.set_color(-16777216);
 		this.add(this.opt0txt);
-		this.pointer = new flixel_FlxSprite();
-		this.pointer.makeGraphic(32,32,-65536);
-		this.pointer.set_x(this.opt0txt.x - this.pointer.get_width() - 10);
-		this.add(this.pointer);
 		flixel_FlxState.prototype.create.call(this);
 	}
 	,destroy: function() {
 		flixel_FlxState.prototype.destroy.call(this);
 	}
 	,update: function() {
-		var _g = this.option;
-		switch(_g) {
-		case 0:
-			this.pointer.set_y(this.opt0txt.y + this.pointer.get_height() / 2);
-			break;
-		}
-		if(flixel_FlxG.keys.checkStatus(38,flixel_FlxG.keys.justPressed.checkStatus)) this.option = (this.option - 1 + 1) % 1;
-		if(flixel_FlxG.keys.checkStatus(40,flixel_FlxG.keys.justPressed.checkStatus)) this.option = (this.option + 1 + 1) % 1;
 		if(flixel_FlxG.keys.checkKeyStatus(["SPACE","ENTER"],2)) {
-			var _g1 = this.option;
-			switch(_g1) {
+			var _g = this.option;
+			switch(_g) {
 			case 0:
 				flixel_FlxG.game._state.set_bgColor(-16777216);
 				flixel_FlxG.switchState(new CutSceneState());
-				break;
-			case 1:
-				flixel_FlxG.openURL("http://haxeflixel.com/documentation/cheat-sheet/",null);
 				break;
 			}
 		}
@@ -4306,7 +4338,7 @@ var Pentagram = function(X,Y,color) {
 	if(X == null) X = 0;
 	flixel_FlxSprite.call(this,X,Y);
 	this.updateHitbox();
-	this.charged = false;
+	this.charged = true;
 	this.set_immovable(true);
 	this.loadGraphic("assets/images/pent" + color + ".png",true,128,128);
 	this.animation.add("pulse",[0,1,2,3,4,5,4,3,2,1,0],15,true);
@@ -4374,6 +4406,9 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,bookSnd: null
 	,deathSnd: null
 	,monsterRoarSnd: null
+	,monsterRoarSnd2: null
+	,monsterAttackSnd: null
+	,quakeSnd: null
 	,level: null
 	,create: function() {
 		flixel_FlxState.prototype.create.call(this);
@@ -4386,23 +4421,23 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.shelfGroup);
 		this.add(this.enemyGroup);
 		this.earthquakeTimer = flixel_util_FlxRandom.intRanged(200,600);
-		var x = 1535;
-		var y = 20;
+		var x = 1455;
+		var y = 13;
 		var init = true;
 		var init2 = true;
 		var shelfColors = ["red","purple","green","orange"];
 		while(x + y < 2450) {
 			if(x > 60 && y < 300) {
 				this.add(this.tmp = new Shelf(x,y,this,"top",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-				x -= 100;
+				x -= 185;
 			} else if(x < 60 && y < 800) {
 				if(init) {
-					y += 200;
+					y += 260;
 					init = false;
 				}
 				x = 0;
 				this.add(this.tmp = new Shelf(x,y,this,"left",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-				y += 145;
+				y += 195;
 			} else {
 				if(init2) {
 					x = 150;
@@ -4465,6 +4500,9 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.bookSnd = flixel_FlxG.sound.load("assets/sounds/book_multiple_pages.ogg");
 		this.deathSnd = flixel_FlxG.sound.load("assets/sounds/PC_death.ogg");
 		this.monsterRoarSnd = flixel_FlxG.sound.load("assets/sounds/monster_roar_1.ogg");
+		this.monsterRoarSnd2 = flixel_FlxG.sound.load("assets/sounds/monster_roar_2.ogg",.5);
+		this.monsterAttackSnd = flixel_FlxG.sound.load("assets/sounds/monster_attack.ogg");
+		this.quakeSnd = flixel_FlxG.sound.load("assets/sounds/quake.ogg");
 	}
 	,destroy: function() {
 		this.bookSnd = flixel_util_FlxDestroyUtil.destroy(this.bookSnd);
@@ -4476,7 +4514,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		flixel_FlxState.prototype.update.call(this);
 		if(this.earthquakeTimer > 0) this.earthquakeTimer -= 1; else {
 			this.Earthquake();
-			this.earthquakeTimer = flixel_util_FlxRandom.intRanged(200,600);
+			this.earthquakeTimer = flixel_util_FlxRandom.intRanged(300,800);
 		}
 		if(this.ending) return;
 		if(this.monster.alive) {
@@ -4515,6 +4553,8 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			if(flixel_FlxG.overlap(PlayState.pentagram,this.monster)) {
 				this.monster.kill();
 				this.monster.set_solid(false);
+				this.won = true;
+				flixel_FlxG.camera.fade(-16777216,.33,false,$bind(this,this.doneFadeout));
 			}
 		}
 		if(this.player.lightOn) {
@@ -4541,9 +4581,10 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.boulderGroup = flixel_util_FlxDestroyUtil.destroy(this.boulderGroup);
 		this.boulderGroup = new flixel_group_FlxTypedGroup();
 		flixel_FlxG.cameras.shake();
+		this.quakeSnd.play(false);
 		var randomX = flixel_util_FlxRandom.intRanged(100,1500);
 		var randomY = flixel_util_FlxRandom.intRanged(180,660);
-		this.numBoulders = this.randomBoulders(3,5);
+		this.numBoulders = this.randomBoulders(3,6);
 		while(this.numBoulders != 0) {
 			randomX = flixel_util_FlxRandom.intRanged(100,1500);
 			randomY = flixel_util_FlxRandom.intRanged(180,660);
@@ -4582,11 +4623,15 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 		if(P.health <= 0) {
 			P.set_alpha(1);
-			if(P.alive) P.kill();
+			if(P.alive) {
+				this.deathSnd.play(false);
+				P.kill();
+			}
 		}
 	}
 	,playerTouchEnemy: function(P,M) {
 		if(P.invulnerable == false) {
+			this.monsterAttackSnd.play(false);
 			P.hurt(34);
 			P.invulnerable = true;
 			P.set_alpha(0.4);
@@ -4600,6 +4645,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 	}
 	,enemyTouchBoulder: function(M,B) {
+		this.monsterRoarSnd2.play(false);
 		B.kill();
 		if(M.stunned == false) {
 			M.stunned = true;
@@ -4662,7 +4708,7 @@ var Player = function(X,Y,Parent) {
 	this.animation.add("death",[0,1,2],1,false);
 	this.drag.set(1440,1440);
 	this.maxVelocity.set(320,320);
-	this.health = 100000;
+	this.health = 100;
 	this.set_facing(16);
 	this.parent = Parent;
 	this.updateHitbox();
@@ -4841,12 +4887,12 @@ var Shelf = function(X,Y,Parent,position,color) {
 	this.resetTimer = false;
 	this.mySequenceNum = -1;
 	if(position == "left") {
-		this.loadGraphic("assets/images/" + color + "ShelfLeft.png",true,90,128);
+		this.loadGraphic("assets/images/" + color + "ShelfLeft.png",true,155,128);
 		var _g = this;
 		_g.set_height(_g.get_height() - 127);
 		this.offset.set_y(60);
 	} else if(position == "top") {
-		this.loadGraphic("assets/images/" + color + "ShelfTop.png",true,129,154);
+		this.loadGraphic("assets/images/" + color + "ShelfTop.png",true,130,154);
 		var _g1 = this;
 		_g1.set_width(_g1.get_width() - 62);
 		this.offset.set_x(30);
@@ -4878,12 +4924,12 @@ Shelf.prototype = $extend(flixel_FlxSprite.prototype,{
 		}
 	}
 	,readBook: function(Timer) {
-		haxe_Log.trace("reading mySeq = " + this.mySequenceNum + " || currSeq = " + PlayState.currentSequence,{ fileName : "Shelf.hx", lineNumber : 72, className : "Shelf", methodName : "readBook"});
+		haxe_Log.trace("reading mySeq = " + this.mySequenceNum + " || currSeq = " + PlayState.currentSequence,{ fileName : "Shelf.hx", lineNumber : 71, className : "Shelf", methodName : "readBook"});
 		if(this.mySequenceNum == PlayState.currentSequence) {
-			haxe_Log.trace("changing playstate from " + PlayState.currentSequence + " to " + (PlayState.currentSequence + 1),{ fileName : "Shelf.hx", lineNumber : 75, className : "Shelf", methodName : "readBook"});
+			haxe_Log.trace("changing playstate from " + PlayState.currentSequence + " to " + (PlayState.currentSequence + 1),{ fileName : "Shelf.hx", lineNumber : 74, className : "Shelf", methodName : "readBook"});
 			PlayState.bookGood.set_exists(true);
 			if(PlayState.currentSequence == 5) {
-				haxe_Log.trace("kill state triggered",{ fileName : "Shelf.hx", lineNumber : 78, className : "Shelf", methodName : "readBook"});
+				haxe_Log.trace("kill state triggered",{ fileName : "Shelf.hx", lineNumber : 77, className : "Shelf", methodName : "readBook"});
 				PlayState.pentagram.changeColor("charged");
 				PlayState.currentSequence += 1;
 			} else {
@@ -8855,7 +8901,9 @@ openfl_display_BitmapData.prototype = {
 	,getColorBoundsRect: function(mask,color,findColor) {
 		if(findColor == null) findColor = true;
 		if(!this.__isValid) return new openfl_geom_Rectangle(0,0,this.width,this.height);
-		var rect = this.image.getColorBoundsRect(mask,color,findColor,1);
+		var color1 = color;
+		if((color1 >> 24 & 255) == 0) color1 = 0;
+		var rect = this.image.getColorBoundsRect(mask,color1,findColor,1);
 		return new openfl_geom_Rectangle(rect.x,rect.y,rect.width,rect.height);
 	}
 	,getPixel: function(x,y) {
@@ -9155,7 +9203,9 @@ openfl_display_BitmapData.prototype = {
 				while(_g3 < _g2) {
 					var xx = _g3++;
 					position = (width_yy + xx) * 4;
-					pixelValue = openfl_Memory.getI32(position);
+					pixelValue = openfl_Memory._setPositionTemporarily(position,function() {
+						return openfl_Memory.gcRef.readInt();
+					});
 					pixelMask = pixelValue & mask;
 					i = openfl_display_BitmapData.__ucompare(pixelMask,thresholdMask);
 					test = false;
@@ -9217,7 +9267,9 @@ openfl_display_BitmapData.prototype = {
 				while(_g11 < dw) {
 					var xx1 = _g11++;
 					position1 = (xx1 + sx + (yy1 + sy) * sw) * 4;
-					pixelValue1 = openfl_Memory.getI32(canvasMemory + position1);
+					pixelValue1 = openfl_Memory._setPositionTemporarily(canvasMemory + position1,function() {
+						return openfl_Memory.gcRef.readInt();
+					});
 					pixelMask1 = pixelValue1 & mask;
 					i1 = openfl_display_BitmapData.__ucompare(pixelMask1,thresholdMask1);
 					test1 = false;
@@ -22276,10 +22328,17 @@ openfl_geom_ColorTransform.prototype = {
 	,redMultiplier: null
 	,redOffset: null
 	,concat: function(second) {
-		this.redMultiplier += second.redMultiplier;
-		this.greenMultiplier += second.greenMultiplier;
-		this.blueMultiplier += second.blueMultiplier;
-		this.alphaMultiplier += second.alphaMultiplier;
+		this.redMultiplier *= second.redMultiplier;
+		this.greenMultiplier *= second.greenMultiplier;
+		this.blueMultiplier *= second.blueMultiplier;
+		this.alphaMultiplier *= second.alphaMultiplier;
+		this.redOffset = second.redMultiplier * this.redOffset + second.redOffset;
+		this.greenOffset = second.greenMultiplier * this.greenOffset + second.greenOffset;
+		this.blueOffset = second.blueMultiplier * this.blueOffset + second.blueOffset;
+		this.alphaOffset = second.alphaMultiplier * this.alphaOffset + second.alphaOffset;
+	}
+	,__clone: function() {
+		return new openfl_geom_ColorTransform(this.redMultiplier,this.greenMultiplier,this.blueMultiplier,this.alphaMultiplier,this.redOffset,this.greenOffset,this.blueOffset,this.alphaOffset);
 	}
 	,__combine: function(ct) {
 		this.redMultiplier *= ct.redMultiplier;
@@ -22294,9 +22353,6 @@ openfl_geom_ColorTransform.prototype = {
 	,__equals: function(ct,skipAlphaMultiplier) {
 		if(skipAlphaMultiplier == null) skipAlphaMultiplier = false;
 		return ct != null && this.redMultiplier == ct.redMultiplier && this.greenMultiplier == ct.greenMultiplier && this.blueMultiplier == ct.blueMultiplier && (skipAlphaMultiplier || this.alphaMultiplier == ct.alphaMultiplier) && this.redOffset == ct.redOffset && this.greenOffset == ct.greenOffset && this.blueOffset == ct.blueOffset && this.alphaOffset == ct.alphaOffset;
-	}
-	,__clone: function() {
-		return new openfl_geom_ColorTransform(this.redMultiplier,this.greenMultiplier,this.blueMultiplier,this.alphaMultiplier,this.redOffset,this.greenOffset,this.blueOffset,this.alphaOffset);
 	}
 	,get_color: function() {
 		return (this.redOffset | 0) << 16 | (this.greenOffset | 0) << 8 | (this.blueOffset | 0);
@@ -24712,9 +24768,9 @@ lime_Assets.getAudioBuffer = function(id,useCache) {
 				var audio1 = library.getAudioBuffer(symbolName);
 				if(useCache && lime_Assets.cache.enabled) lime_Assets.cache.audio.set(id,audio1);
 				return audio1;
-			} else haxe_Log.trace("[Assets] Audio asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 121, className : "lime.Assets", methodName : "getAudioBuffer"});
-		} else haxe_Log.trace("[Assets] There is no audio asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 127, className : "lime.Assets", methodName : "getAudioBuffer"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 133, className : "lime.Assets", methodName : "getAudioBuffer"});
+			} else haxe_Log.trace("[Assets] Audio asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 122, className : "lime.Assets", methodName : "getAudioBuffer"});
+		} else haxe_Log.trace("[Assets] There is no audio asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 128, className : "lime.Assets", methodName : "getAudioBuffer"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 134, className : "lime.Assets", methodName : "getAudioBuffer"});
 	return null;
 };
 lime_Assets.getBytes = function(id) {
@@ -24726,9 +24782,9 @@ lime_Assets.getBytes = function(id) {
 	var library = lime_Assets.getLibrary(libraryName);
 	if(library != null) {
 		if(library.exists(symbolName,"BINARY")) {
-			if(library.isLocal(symbolName,"BINARY")) return library.getBytes(symbolName); else haxe_Log.trace("[Assets] String or ByteArray asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 170, className : "lime.Assets", methodName : "getBytes"});
-		} else haxe_Log.trace("[Assets] There is no String or ByteArray asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 176, className : "lime.Assets", methodName : "getBytes"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 182, className : "lime.Assets", methodName : "getBytes"});
+			if(library.isLocal(symbolName,"BINARY")) return library.getBytes(symbolName); else haxe_Log.trace("[Assets] String or ByteArray asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 171, className : "lime.Assets", methodName : "getBytes"});
+		} else haxe_Log.trace("[Assets] There is no String or ByteArray asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 177, className : "lime.Assets", methodName : "getBytes"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 183, className : "lime.Assets", methodName : "getBytes"});
 	return null;
 };
 lime_Assets.getFont = function(id,useCache) {
@@ -24746,9 +24802,9 @@ lime_Assets.getFont = function(id,useCache) {
 				var font = library.getFont(symbolName);
 				if(useCache && lime_Assets.cache.enabled) lime_Assets.cache.font.set(id,font);
 				return font;
-			} else haxe_Log.trace("[Assets] Font asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 233, className : "lime.Assets", methodName : "getFont"});
-		} else haxe_Log.trace("[Assets] There is no Font asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 239, className : "lime.Assets", methodName : "getFont"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 245, className : "lime.Assets", methodName : "getFont"});
+			} else haxe_Log.trace("[Assets] Font asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 234, className : "lime.Assets", methodName : "getFont"});
+		} else haxe_Log.trace("[Assets] There is no Font asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 240, className : "lime.Assets", methodName : "getFont"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 246, className : "lime.Assets", methodName : "getFont"});
 	return null;
 };
 lime_Assets.getImage = function(id,useCache) {
@@ -24769,9 +24825,9 @@ lime_Assets.getImage = function(id,useCache) {
 				var image1 = library.getImage(symbolName);
 				if(useCache && lime_Assets.cache.enabled) lime_Assets.cache.image.set(id,image1);
 				return image1;
-			} else haxe_Log.trace("[Assets] Image asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 303, className : "lime.Assets", methodName : "getImage"});
-		} else haxe_Log.trace("[Assets] There is no Image asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 309, className : "lime.Assets", methodName : "getImage"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 315, className : "lime.Assets", methodName : "getImage"});
+			} else haxe_Log.trace("[Assets] Image asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 304, className : "lime.Assets", methodName : "getImage"});
+		} else haxe_Log.trace("[Assets] There is no Image asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 310, className : "lime.Assets", methodName : "getImage"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 316, className : "lime.Assets", methodName : "getImage"});
 	return null;
 };
 lime_Assets.getLibrary = function(name) {
@@ -24786,8 +24842,8 @@ lime_Assets.getPath = function(id) {
 	symbolName = HxOverrides.substr(id,pos,null);
 	var library = lime_Assets.getLibrary(libraryName);
 	if(library != null) {
-		if(library.exists(symbolName,null)) return library.getPath(symbolName); else haxe_Log.trace("[Assets] There is no asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 363, className : "lime.Assets", methodName : "getPath"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 369, className : "lime.Assets", methodName : "getPath"});
+		if(library.exists(symbolName,null)) return library.getPath(symbolName); else haxe_Log.trace("[Assets] There is no asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 364, className : "lime.Assets", methodName : "getPath"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 370, className : "lime.Assets", methodName : "getPath"});
 	return null;
 };
 lime_Assets.getText = function(id) {
@@ -24799,9 +24855,9 @@ lime_Assets.getText = function(id) {
 	var library = lime_Assets.getLibrary(libraryName);
 	if(library != null) {
 		if(library.exists(symbolName,"TEXT")) {
-			if(library.isLocal(symbolName,"TEXT")) return library.getText(symbolName); else haxe_Log.trace("[Assets] String asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 406, className : "lime.Assets", methodName : "getText"});
-		} else haxe_Log.trace("[Assets] There is no String asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 412, className : "lime.Assets", methodName : "getText"});
-	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 418, className : "lime.Assets", methodName : "getText"});
+			if(library.isLocal(symbolName,"TEXT")) return library.getText(symbolName); else haxe_Log.trace("[Assets] String asset \"" + id + "\" exists, but only asynchronously",{ fileName : "Assets.hx", lineNumber : 407, className : "lime.Assets", methodName : "getText"});
+		} else haxe_Log.trace("[Assets] There is no String asset with an ID of \"" + id + "\"",{ fileName : "Assets.hx", lineNumber : 413, className : "lime.Assets", methodName : "getText"});
+	} else haxe_Log.trace("[Assets] There is no asset library named \"" + libraryName + "\"",{ fileName : "Assets.hx", lineNumber : 419, className : "lime.Assets", methodName : "getText"});
 	return null;
 };
 lime_Assets.initialize = function() {
@@ -25297,7 +25353,6 @@ lime__$backend_html5_HTML5Renderer.prototype = {
 				this.parent.context = lime_graphics_RenderContext.CANVAS(this.parent.window.backend.canvas.getContext("2d"));
 				this.parent.type = lime_graphics_RendererType.CANVAS;
 			} else {
-				webgl = WebGLDebugUtils.makeDebugContext(webgl);
 				lime_graphics_opengl_GL.context = webgl;
 				this.parent.context = lime_graphics_RenderContext.OPENGL(lime_graphics_opengl_GL.context);
 				this.parent.type = lime_graphics_RendererType.OPENGL;
@@ -27524,22 +27579,28 @@ lime_app_Preloader.prototype = {
 			var _g2 = types[i];
 			switch(_g2) {
 			case "IMAGE":
-				var image = new Image();
-				lime_app_Preloader.images.set(url,image);
-				image.onload = $bind(this,this.image_onLoad);
-				image.src = url;
-				this.total++;
+				if(!lime_app_Preloader.images.exists(url)) {
+					var image = new Image();
+					lime_app_Preloader.images.set(url,image);
+					image.onload = $bind(this,this.image_onLoad);
+					image.src = url;
+					this.total++;
+				}
 				break;
 			case "BINARY":
-				var loader = new lime_net_URLLoader();
-				loader.set_dataFormat(lime_net_URLLoaderDataFormat.BINARY);
-				lime_app_Preloader.loaders.set(url,loader);
-				this.total++;
+				if(!lime_app_Preloader.loaders.exists(url)) {
+					var loader = new lime_net_URLLoader();
+					loader.set_dataFormat(lime_net_URLLoaderDataFormat.BINARY);
+					lime_app_Preloader.loaders.set(url,loader);
+					this.total++;
+				}
 				break;
 			case "TEXT":
-				var loader1 = new lime_net_URLLoader();
-				lime_app_Preloader.loaders.set(url,loader1);
-				this.total++;
+				if(!lime_app_Preloader.loaders.exists(url)) {
+					var loader1 = new lime_net_URLLoader();
+					lime_app_Preloader.loaders.set(url,loader1);
+					this.total++;
+				}
 				break;
 			case "FONT":
 				this.total++;
@@ -35309,7 +35370,7 @@ lime_system_Endian.BIG_ENDIAN.__enum__ = lime_system_Endian;
 var lime_system_System = function() { };
 $hxClasses["lime.system.System"] = lime_system_System;
 lime_system_System.__name__ = ["lime","system","System"];
-lime_system_System.__properties__ = {get_userDirectory:"get_userDirectory",get_numDisplays:"get_numDisplays",get_fontsDirectory:"get_fontsDirectory",get_endianness:"get_endianness",get_documentsDirectory:"get_documentsDirectory",get_desktopDirectory:"get_desktopDirectory",get_applicationStorageDirectory:"get_applicationStorageDirectory",get_applicationDirectory:"get_applicationDirectory"}
+lime_system_System.__properties__ = {get_userDirectory:"get_userDirectory",get_numDisplays:"get_numDisplays",get_fontsDirectory:"get_fontsDirectory",get_endianness:"get_endianness",get_documentsDirectory:"get_documentsDirectory",get_desktopDirectory:"get_desktopDirectory",get_applicationStorageDirectory:"get_applicationStorageDirectory",get_applicationDirectory:"get_applicationDirectory",set_allowScreenTimeout:"set_allowScreenTimeout",get_allowScreenTimeout:"get_allowScreenTimeout"}
 lime_system_System.applicationDirectory = null;
 lime_system_System.applicationStorageDirectory = null;
 lime_system_System.desktopDirectory = null;
@@ -35357,6 +35418,12 @@ lime_system_System.load = function(library,method,args,lazy) {
 	if(lazy == null) lazy = false;
 	if(args == null) args = 0;
 	return lime_system_CFFI.load(library,method,args,lazy);
+};
+lime_system_System.get_allowScreenTimeout = function() {
+	return true;
+};
+lime_system_System.set_allowScreenTimeout = function(value) {
+	return true;
 };
 lime_system_System.get_applicationDirectory = function() {
 	return null;
@@ -36966,9 +37033,6 @@ openfl_display_MovieClip.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,prevFrame: function() {
 	}
-	,resolve: function(fieldName) {
-		return this.getChildByName(fieldName);
-	}
 	,stop: function() {
 	}
 	,get_currentFrame: function() {
@@ -37039,29 +37103,24 @@ openfl_Memory._setPositionTemporarily = function(position,action) {
 	return value;
 };
 openfl_Memory.getByte = function(addr) {
-	if(addr < 0 || addr + 1 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	return openfl_Memory.gcRef.data.getInt8(addr);
 };
 openfl_Memory.getDouble = function(addr) {
-	if(addr < 0 || addr + 8 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readDouble();
 	});
 };
 openfl_Memory.getFloat = function(addr) {
-	if(addr < 0 || addr + 4 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readFloat();
 	});
 };
 openfl_Memory.getI32 = function(addr) {
-	if(addr < 0 || addr + 4 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readInt();
 	});
 };
 openfl_Memory.getUI16 = function(addr) {
-	if(addr < 0 || addr + 2 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readUnsignedShort();
 	});
@@ -37071,29 +37130,24 @@ openfl_Memory.select = function(inBytes) {
 	if(inBytes != null) openfl_Memory.len = inBytes.length; else openfl_Memory.len = 0;
 };
 openfl_Memory.setByte = function(addr,v) {
-	if(addr < 0 || addr + 1 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	openfl_Memory.gcRef.data.setUint8(addr,v);
 };
 openfl_Memory.setDouble = function(addr,v) {
-	if(addr < 0 || addr + 8 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeDouble(v);
 	});
 };
 openfl_Memory.setFloat = function(addr,v) {
-	if(addr < 0 || addr + 4 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeFloat(v);
 	});
 };
 openfl_Memory.setI16 = function(addr,v) {
-	if(addr < 0 || addr + 2 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeUnsignedShort(v);
 	});
 };
 openfl_Memory.setI32 = function(addr,v) {
-	if(addr < 0 || addr + 4 > openfl_Memory.len) throw new js__$Boot_HaxeError("Bad address");
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeInt(v);
 	});
@@ -37589,7 +37643,7 @@ openfl__$internal_renderer_DrawCommandBuffer.prototype = {
 				data.advance();
 				data.prev = openfl__$internal_renderer_DrawCommandType.LINE_BITMAP_STYLE;
 				c13 = data;
-				this.lineBitmapStyle(c13.buffer.o[c13.oPos],c13.buffer.o[c13.oPos + 1],c13.buffer.o[c13.oPos + 2],c13.buffer.o[c13.oPos + 3]);
+				this.lineBitmapStyle(c13.buffer.o[c13.oPos],c13.buffer.o[c13.oPos + 1],c13.buffer.b[c13.bPos],c13.buffer.b[c13.bPos + 1]);
 				break;
 			case 14:
 				var c14;
@@ -38289,10 +38343,10 @@ openfl__$internal_renderer__$DrawCommandReader_LineBitmapStyleView_$Impl_$.get_m
 	return this1.buffer.o[this1.oPos + 1];
 };
 openfl__$internal_renderer__$DrawCommandReader_LineBitmapStyleView_$Impl_$.get_repeat = function(this1) {
-	return this1.buffer.o[this1.oPos + 2];
+	return this1.buffer.b[this1.bPos];
 };
 openfl__$internal_renderer__$DrawCommandReader_LineBitmapStyleView_$Impl_$.get_smooth = function(this1) {
-	return this1.buffer.o[this1.oPos + 3];
+	return this1.buffer.b[this1.bPos + 1];
 };
 var openfl__$internal_renderer__$DrawCommandReader_LineGradientStyleView_$Impl_$ = {};
 $hxClasses["openfl._internal.renderer._DrawCommandReader.LineGradientStyleView_Impl_"] = openfl__$internal_renderer__$DrawCommandReader_LineGradientStyleView_$Impl_$;
@@ -39035,7 +39089,7 @@ openfl__$internal_renderer_cairo_CairoGraphics.playCommands = function(commands,
 				c10 = data;
 				if(stroke && openfl__$internal_renderer_cairo_CairoGraphics.hasStroke) openfl__$internal_renderer_cairo_CairoGraphics.closePath();
 				openfl__$internal_renderer_cairo_CairoGraphics.cairo.moveTo(positionX - offsetX,positionY - offsetY);
-				openfl__$internal_renderer_cairo_CairoGraphics.strokePattern = openfl__$internal_renderer_cairo_CairoGraphics.createImagePattern(c10.buffer.o[c10.oPos],c10.buffer.o[c10.oPos + 1],c10.buffer.o[c10.oPos + 2]);
+				openfl__$internal_renderer_cairo_CairoGraphics.strokePattern = openfl__$internal_renderer_cairo_CairoGraphics.createImagePattern(c10.buffer.o[c10.oPos],c10.buffer.o[c10.oPos + 1],c10.buffer.b[c10.bPos]);
 				openfl__$internal_renderer_cairo_CairoGraphics.hasStroke = true;
 				break;
 			case 0:
@@ -39764,7 +39818,7 @@ openfl__$internal_renderer_canvas_CanvasGraphics.hitTest = function(graphics,x,y
 				data.advance();
 				data.prev = openfl__$internal_renderer_DrawCommandType.LINE_BITMAP_STYLE;
 				c5 = data;
-				openfl__$internal_renderer_canvas_CanvasGraphics.strokeCommands.lineBitmapStyle(c5.buffer.o[c5.oPos],c5.buffer.o[c5.oPos + 1],c5.buffer.o[c5.oPos + 2],c5.buffer.o[c5.oPos + 3]);
+				openfl__$internal_renderer_canvas_CanvasGraphics.strokeCommands.lineBitmapStyle(c5.buffer.o[c5.oPos],c5.buffer.o[c5.oPos + 1],c5.buffer.b[c5.bPos],c5.buffer.b[c5.bPos + 1]);
 				break;
 			case 15:
 				var c6;
@@ -40057,7 +40111,7 @@ openfl__$internal_renderer_canvas_CanvasGraphics.playCommands = function(command
 			c9 = data;
 			if(stroke && openfl__$internal_renderer_canvas_CanvasGraphics.hasStroke) openfl__$internal_renderer_canvas_CanvasGraphics.closePath();
 			openfl__$internal_renderer_canvas_CanvasGraphics.context.moveTo(positionX - offsetX,positionY - offsetY);
-			openfl__$internal_renderer_canvas_CanvasGraphics.context.strokeStyle = openfl__$internal_renderer_canvas_CanvasGraphics.createBitmapFill(c9.buffer.o[c9.oPos],c9.buffer.o[c9.oPos + 2]);
+			openfl__$internal_renderer_canvas_CanvasGraphics.context.strokeStyle = openfl__$internal_renderer_canvas_CanvasGraphics.createBitmapFill(c9.buffer.o[c9.oPos],c9.buffer.b[c9.bPos]);
 			openfl__$internal_renderer_canvas_CanvasGraphics.hasStroke = true;
 			break;
 		case 0:
@@ -40255,7 +40309,7 @@ openfl__$internal_renderer_canvas_CanvasGraphics.render = function(graphics,rend
 						data.advance();
 						data.prev = openfl__$internal_renderer_DrawCommandType.LINE_BITMAP_STYLE;
 						c6 = data;
-						openfl__$internal_renderer_canvas_CanvasGraphics.strokeCommands.lineBitmapStyle(c6.buffer.o[c6.oPos],c6.buffer.o[c6.oPos + 1],c6.buffer.o[c6.oPos + 2],c6.buffer.o[c6.oPos + 3]);
+						openfl__$internal_renderer_canvas_CanvasGraphics.strokeCommands.lineBitmapStyle(c6.buffer.o[c6.oPos],c6.buffer.o[c6.oPos + 1],c6.buffer.b[c6.bPos],c6.buffer.b[c6.bPos + 1]);
 						break;
 					case 0:case 1:case 2:
 						openfl__$internal_renderer_canvas_CanvasGraphics.endFill();
@@ -40556,13 +40610,13 @@ openfl__$internal_renderer_canvas_CanvasGraphics.render = function(graphics,rend
 							}
 							if(rect != null && rect.width > 0 && rect.height > 0 && center != null) {
 								openfl__$internal_renderer_canvas_CanvasGraphics.context.save();
-								openfl__$internal_renderer_canvas_CanvasGraphics.context.translate(c15.buffer.ff[c15.ffPos][index],c15.buffer.ff[c15.ffPos][index + 1]);
+								openfl__$internal_renderer_canvas_CanvasGraphics.context.translate(c15.buffer.ff[c15.ffPos][index] - offsetX,c15.buffer.ff[c15.ffPos][index + 1] - offsetY);
 								if(useRotation) openfl__$internal_renderer_canvas_CanvasGraphics.context.rotate(c15.buffer.ff[c15.ffPos][index + rotationIndex]);
 								var scale = 1.0;
 								if(useScale) scale = c15.buffer.ff[c15.ffPos][index + scaleIndex];
 								if(useTransform) openfl__$internal_renderer_canvas_CanvasGraphics.context.transform(c15.buffer.ff[c15.ffPos][index + transformIndex],c15.buffer.ff[c15.ffPos][index + transformIndex + 1],c15.buffer.ff[c15.ffPos][index + transformIndex + 2],c15.buffer.ff[c15.ffPos][index + transformIndex + 3],0,0);
 								if(useAlpha) openfl__$internal_renderer_canvas_CanvasGraphics.context.globalAlpha = c15.buffer.ff[c15.ffPos][index + alphaIndex];
-								openfl__$internal_renderer_canvas_CanvasGraphics.context.drawImage(surface,rect.x,rect.y,rect.width,rect.height,-center.x * scale - offsetX,-center.y * scale - offsetY,rect.width * scale,rect.height * scale);
+								openfl__$internal_renderer_canvas_CanvasGraphics.context.drawImage(surface,rect.x,rect.y,rect.width,rect.height,-center.x * scale,-center.y * scale,rect.width * scale,rect.height * scale);
 								openfl__$internal_renderer_canvas_CanvasGraphics.context.restore();
 							}
 							index += numValues;
@@ -47749,10 +47803,16 @@ openfl_display_Stage.prototype = $extend(openfl_display_DisplayObjectContainer.p
 	,set_displayState: function(value) {
 		if(this.window != null) switch(value[1]) {
 		case 0:
-			this.window.set_fullscreen(false);
+			if(this.window.__fullscreen) {
+				this.window.set_fullscreen(false);
+				this.dispatchEvent(new openfl_events_FullScreenEvent(openfl_events_FullScreenEvent.FULL_SCREEN,false,false,false,true));
+			}
 			break;
 		default:
-			this.window.set_fullscreen(true);
+			if(!this.window.__fullscreen) {
+				this.window.set_fullscreen(true);
+				this.dispatchEvent(new openfl_events_FullScreenEvent(openfl_events_FullScreenEvent.FULL_SCREEN,false,false,true,true));
+			}
 		}
 		return this.__displayState = value;
 	}
@@ -49137,6 +49197,33 @@ openfl_events_FocusEvent.prototype = $extend(openfl_events_Event.prototype,{
 		return "[FocusEvent type=\"" + this.type + "\" bubbles=" + Std.string(this.bubbles) + " cancelable=" + Std.string(this.cancelable) + " relatedObject=" + Std.string(this.relatedObject) + " shiftKey=" + Std.string(this.shiftKey) + " keyCode=" + this.keyCode + "]";
 	}
 	,__class__: openfl_events_FocusEvent
+});
+var openfl_events_FullScreenEvent = function(type,bubbles,cancelable,fullScreen,interactive) {
+	if(interactive == null) interactive = false;
+	if(fullScreen == null) fullScreen = false;
+	if(cancelable == null) cancelable = false;
+	if(bubbles == null) bubbles = false;
+	openfl_events_Event.call(this,type,bubbles,cancelable);
+	this.fullScreen = fullScreen;
+	this.interactive = interactive;
+};
+$hxClasses["openfl.events.FullScreenEvent"] = openfl_events_FullScreenEvent;
+openfl_events_FullScreenEvent.__name__ = ["openfl","events","FullScreenEvent"];
+openfl_events_FullScreenEvent.__super__ = openfl_events_Event;
+openfl_events_FullScreenEvent.prototype = $extend(openfl_events_Event.prototype,{
+	fullScreen: null
+	,interactive: null
+	,clone: function() {
+		var event = new openfl_events_FullScreenEvent(this.type,this.bubbles,this.cancelable,this.fullScreen,this.interactive);
+		event.target = this.target;
+		event.currentTarget = this.currentTarget;
+		event.eventPhase = this.eventPhase;
+		return event;
+	}
+	,toString: function() {
+		return "[FullscreenEvent type=\"" + this.type + "\" bubbles=" + Std.string(this.bubbles) + " cancelable=" + Std.string(this.cancelable) + " fullscreen=" + Std.string(this.fullScreen) + " interactive=" + Std.string(this.interactive) + "]";
+	}
+	,__class__: openfl_events_FullScreenEvent
 });
 var openfl_events_GameInputEvent = function(type,bubbles,cancelable,device) {
 	if(cancelable == null) cancelable = false;
@@ -55456,6 +55543,7 @@ AssetPaths.monster_roar_1__ogg = "assets/sounds/monster_roar_1.ogg";
 AssetPaths.monster_roar_2__ogg = "assets/sounds/monster_roar_2.ogg";
 AssetPaths.monster_roar_3__ogg = "assets/sounds/monster_roar_3.ogg";
 AssetPaths.monster_roar_4__ogg = "assets/sounds/monster_roar_4.ogg";
+AssetPaths.monster_speech__ogg = "assets/sounds/monster_speech.ogg";
 AssetPaths.PC_death__ogg = "assets/sounds/PC_death.ogg";
 AssetPaths.quake__ogg = "assets/sounds/quake.ogg";
 AssetPaths.quake_bookshelf_crack__ogg = "assets/sounds/quake_bookshelf_crack.ogg";
@@ -55476,14 +55564,12 @@ flixel_FlxObject.WALL = 17;
 flixel_FlxObject.ANY = 4369;
 flixel_FlxObject._firstSeparateFlxRect = flixel_util_FlxRect.get(null,null,null,null);
 flixel_FlxObject._secondSeparateFlxRect = flixel_util_FlxRect.get(null,null,null,null);
-CutSceneState.OPTIONS = 2;
 openfl_text_Font.__registeredFonts = [];
 Light.LIGHT_R = 160;
 Light.CANVAS_SIZE = 960;
 MenuState.OPTIONS = 1;
 Player.RUN_SPEED = 160;
 Player.PADDING = 40;
-Shelf.RUN_SPEED = 90;
 Xml.Element = 0;
 Xml.Document = 6;
 flixel_FlxCamera.STYLE_LOCKON = 0;
@@ -56860,6 +56946,8 @@ openfl_events_FocusEvent.FOCUS_IN = "focusIn";
 openfl_events_FocusEvent.FOCUS_OUT = "focusOut";
 openfl_events_FocusEvent.KEY_FOCUS_CHANGE = "keyFocusChange";
 openfl_events_FocusEvent.MOUSE_FOCUS_CHANGE = "mouseFocusChange";
+openfl_events_FullScreenEvent.FULL_SCREEN = "fullScreen";
+openfl_events_FullScreenEvent.FULL_SCREEN_INTERACTIVE_ACCEPTED = "fullScreenInteractiveAccepted";
 openfl_events_GameInputEvent.DEVICE_ADDED = "deviceAdded";
 openfl_events_GameInputEvent.DEVICE_REMOVED = "deviceRemoved";
 openfl_events_GameInputEvent.DEVICE_UNUSABLE = "deviceUnusable";
@@ -57009,5 +57097,3 @@ openfl_ui_Keyboard.RIGHTBRACKET = 221;
 openfl_ui_Keyboard.QUOTE = 222;
 ApplicationMain.main();
 })(typeof console != "undefined" ? console : {log:function(){}}, typeof window != "undefined" ? window : exports);
-
-//# sourceMappingURL=Haxegame.js.map
