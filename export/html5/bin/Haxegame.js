@@ -173,7 +173,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "115", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "138", company : "HaxeFlixel", file : "Haxegame", fps : 60, name : "Haxegame", orientation : "portrait", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 768, parameters : "{}", resizable : true, stencilBuffer : true, title : "Haxegame", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -1686,7 +1686,7 @@ var flixel_FlxObject = function(X,Y,Width,Height) {
 	this.allowCollisions = 4369;
 	this.wasTouching = 0;
 	this.touching = 0;
-	this.health = 100;
+	this.health = 1;
 	this.maxAngular = 10000;
 	this.angularDrag = 0;
 	this.angularAcceleration = 0;
@@ -3249,13 +3249,11 @@ CutSceneState.prototype = $extend(flixel_FlxState.prototype,{
 	,monsterRoarSnd: null
 	,magicSnd: null
 	,quakeSnd: null
-	,monsterSpeech: null
 	,create: function() {
 		var scene1 = new flixel_FlxSprite(0,30,"assets/images/s_cutscene_1.png");
 		this.monsterRoarSnd = flixel_FlxG.sound.load("assets/sounds/monster_roar_3.ogg");
 		this.magicSnd = flixel_FlxG.sound.load("assets/sounds/magic.ogg");
 		this.quakeSnd = flixel_FlxG.sound.load("assets/sounds/quake.ogg");
-		this.monsterSpeech = flixel_FlxG.sound.load("assets/sounds/monster_speech.ogg");
 		this.add(scene1);
 		this.magicSnd.play(true);
 		this.quakeSnd.play(true);
@@ -3272,7 +3270,6 @@ CutSceneState.prototype = $extend(flixel_FlxState.prototype,{
 			case 0:
 				this.index++;
 				var scene2 = new flixel_FlxSprite(0,30,"assets/images/s_cutscene_2.png");
-				this.monsterSpeech.play(false);
 				this.add(scene2);
 				break;
 			case 1:
@@ -4230,11 +4227,6 @@ Monster.prototype = $extend(flixel_FlxSprite.prototype,{
 		}
 		flixel_util_FlxVelocity.moveTowardsPoint(this,this.randomPos,this.speed | 0);
 	}
-	,tweenMonster: function() {
-		flixel_tweens_FlxTween.tween(this,{ x : 300, y : 400},3.0,{ ease : flixel_tweens_FlxEase.quadInOut});
-	}
-	,monsterPatrol: function() {
-	}
 	,draw: function() {
 		if(this.alive) {
 			if(this.velocity.x != 0) {
@@ -4338,7 +4330,7 @@ var Pentagram = function(X,Y,color) {
 	if(X == null) X = 0;
 	flixel_FlxSprite.call(this,X,Y);
 	this.updateHitbox();
-	this.charged = true;
+	this.charged = false;
 	this.set_immovable(true);
 	this.loadGraphic("assets/images/pent" + color + ".png",true,128,128);
 	this.animation.add("pulse",[0,1,2,3,4,5,4,3,2,1,0],15,true);
@@ -4421,15 +4413,17 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.shelfGroup);
 		this.add(this.enemyGroup);
 		this.earthquakeTimer = flixel_util_FlxRandom.intRanged(200,600);
-		var x = 1455;
+		var x = 1400;
 		var y = 13;
+		var lastX = 0;
 		var init = true;
 		var init2 = true;
 		var shelfColors = ["red","purple","green","orange"];
 		while(x + y < 2450) {
 			if(x > 60 && y < 300) {
 				this.add(this.tmp = new Shelf(x,y,this,"top",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-				x -= 185;
+				lastX = x;
+				x -= 235;
 			} else if(x < 60 && y < 800) {
 				if(init) {
 					y += 260;
@@ -4440,12 +4434,12 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 				y += 195;
 			} else {
 				if(init2) {
-					x = 150;
+					x = lastX;
 					init2 = false;
 				}
 				y = 805;
 				this.add(this.tmp = new Shelf(x,y,this,"bottom",flixel_util_FlxRandom.getObject_String(shelfColors,0)));
-				x += 100;
+				x += 235;
 			}
 			this.shelfGroup.add(this.tmp);
 		}
@@ -4460,6 +4454,15 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 				count += 1;
 			}
 		}
+		var boulderCounter = 6;
+		var x_pos = flixel_util_FlxRandom.intRanged(100,1500);
+		var y_pos = flixel_util_FlxRandom.intRanged(180,660);
+		while(boulderCounter > 0) {
+			x_pos = flixel_util_FlxRandom.intRanged(100,1500);
+			y_pos = flixel_util_FlxRandom.intRanged(180,660);
+			this.spawnBoulders(x_pos,y_pos);
+			boulderCounter -= 1;
+		}
 		this.add(PlayState.pentagram = new Pentagram(730,390,this.tmp.myColor));
 		PlayState.currentSequence = 1;
 		this.lastHitShelf = this.tmp;
@@ -4469,13 +4472,13 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.darkness.makeGraphic(flixel_FlxG.width,flixel_FlxG.height,-16777216,false);
 		this.darkness.scrollFactor.set_x(this.darkness.scrollFactor.set_y(0));
 		this.darkness.set_blend(openfl_display_BlendMode.MULTIPLY);
-		this.darkness.set_alpha(0.8);
+		this.darkness.set_alpha(0.9);
 		this.light = new Light(0,0,this.darkness,this);
 		this.add(this.light);
 		this.pentaLight = new flixel_FlxSprite();
 		this.pentaLight.loadGraphic("assets/images/light.png",false,400,400);
 		this.pentaLight.set_blend(openfl_display_BlendMode.SCREEN);
-		this.darkness.stamp(this.pentaLight,Std["int"](PlayState.pentagram.x - this.pentaLight.get_width() / 2),Std["int"](PlayState.pentagram.y - this.pentaLight.get_height() / 2));
+		this.darkness.stamp(this.pentaLight,Std["int"](PlayState.pentagram.x - this.pentaLight.get_width() / 2 + 17),Std["int"](PlayState.pentagram.y - this.pentaLight.get_height() / 2 + 17));
 		this.add(this.darkness);
 		this.add(this.readBar = new flixel_ui_FlxBar(50,50,1,150,20,this.player,"testShelf.timer.progress",0.0,1.0,true));
 		this.readBar.trackParent(-47,-30);
@@ -4554,7 +4557,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 				this.monster.kill();
 				this.monster.set_solid(false);
 				this.won = true;
-				flixel_FlxG.camera.fade(-16777216,.33,false,$bind(this,this.doneFadeout));
+				flixel_FlxG.camera.fade(-16777216,3,false,$bind(this,this.doneFadeout));
 			}
 		}
 		if(this.player.lightOn) {
@@ -4578,17 +4581,17 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		return flixel_util_FlxRandom.intRanged(min,max);
 	}
 	,Earthquake: function() {
-		this.boulderGroup = flixel_util_FlxDestroyUtil.destroy(this.boulderGroup);
-		this.boulderGroup = new flixel_group_FlxTypedGroup();
+		this.boulderGroup.kill();
 		flixel_FlxG.cameras.shake();
 		this.quakeSnd.play(false);
 		var randomX = flixel_util_FlxRandom.intRanged(100,1500);
 		var randomY = flixel_util_FlxRandom.intRanged(180,660);
 		this.numBoulders = this.randomBoulders(3,6);
 		while(this.numBoulders != 0) {
+			var cur = this.boulderGroup.getFirstAvailable();
 			randomX = flixel_util_FlxRandom.intRanged(100,1500);
 			randomY = flixel_util_FlxRandom.intRanged(180,660);
-			this.spawnBoulders(randomX,randomY);
+			cur.reset(randomX,randomY);
 			this.numBoulders -= 1;
 		}
 	}
@@ -4739,7 +4742,7 @@ Player.prototype = $extend(flixel_FlxSprite.prototype,{
 		this.acceleration.set_x(0);
 		this.acceleration.set_y(0);
 		if(this.alive) {
-			if(flixel_FlxG.keys.checkKeyStatus(["LEFT","A"],1) && this.x > 100) {
+			if(flixel_FlxG.keys.checkKeyStatus(["LEFT","A"],1) && this.x > 165) {
 				if(this.x > 40) {
 					this.stepSnd.play(false);
 					this.acceleration.set_x(-this.drag.x);
@@ -4762,7 +4765,7 @@ Player.prototype = $extend(flixel_FlxSprite.prototype,{
 					this.set_facing(256);
 				} else this.set_y(40);
 			}
-			if(flixel_FlxG.keys.checkKeyStatus(["DOWN","S"],1) && this.y < 660) {
+			if(flixel_FlxG.keys.checkKeyStatus(["DOWN","S"],1) && this.y < 670) {
 				if(this.y + this.get_height() < flixel_FlxG.height - 40) {
 					this.stepSnd.play(false);
 					this.acceleration.set_y(this.drag.y);
@@ -4897,7 +4900,7 @@ var Shelf = function(X,Y,Parent,position,color) {
 		_g1.set_width(_g1.get_width() - 62);
 		this.offset.set_x(30);
 	} else if(position == "bottom") {
-		this.loadGraphic("assets/images/" + color + "ShelfBottom.png",true,65,154);
+		this.loadGraphic("assets/images/" + color + "ShelfBottom.png",true,130,154);
 		var _g2 = this;
 		_g2.set_width(_g2.get_width() - 62);
 		this.offset.set_x(30);

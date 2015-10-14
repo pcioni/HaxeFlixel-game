@@ -169,14 +169,7 @@ class Monster extends FlxSprite
 
 		FlxVelocity.moveTowardsPoint(this, randomPos, Std.int(speed));
 	}
-	private function tweenMonster():Void {
-		FlxTween.tween(this, { x:300, y:400 }, 3.0, { ease: FlxEase.quadInOut});
-		//return a tween for each monster.
-	}
-	//
-	private function monsterPatrol():Void {
-		//patrol state
-	}
+
 	public override function draw():Void {
 		if (alive) {
 			if (velocity.x != 0) {

@@ -156,6 +156,17 @@ class PlayState extends FlxState {
 			}
 		}
 		
+		//MAX BOULDER COUNTER INIT HERE
+		var boulderCounter:Int = 6;
+		var x_pos = FlxRandom.intRanged(100, 1500);
+		var	y_pos = FlxRandom.intRanged(180, 660);
+
+		while (boulderCounter > 0) {
+			x_pos = FlxRandom.intRanged(100, 1500);
+			y_pos = FlxRandom.intRanged(180, 660);
+			spawnBoulders(x_pos, y_pos);
+			boulderCounter -= 1;
+		}
 
 		/*
 		 * These numbers are for testing
@@ -366,20 +377,22 @@ class PlayState extends FlxState {
 		return FlxRandom.intRanged(min,max);
 	}
 	private function Earthquake() {
-			boulderGroup = FlxDestroyUtil.destroy(boulderGroup);
-			boulderGroup = new FlxTypedGroup<Boulder>();
+			boulderGroup.kill();
+			//boulderGroup = new FlxTypedGroup<Boulder>();
 			FlxG.cameras.shake();
 			quakeSnd.play(false);
 			var randomX = FlxRandom.intRanged(100, 1500);
 			var randomY = FlxRandom.intRanged(180, 660);
 			numBoulders = randomBoulders(3,6);
+			
 			while (numBoulders != 0) {
+				var cur = boulderGroup.getFirstAvailable();
 				randomX = FlxRandom.intRanged(100, 1500);
 				randomY = FlxRandom.intRanged(180, 660);
-				spawnBoulders(randomX, randomY);
+				cur.reset(randomX, randomY);
+				//spawnBoulders(randomX, randomY);
 				numBoulders -= 1;
 			}
-			
 	}
 	private function spawnBoulders(x, y) {
 			var randomFloat = FlxRandom.floatRanged(0.3, .7);
