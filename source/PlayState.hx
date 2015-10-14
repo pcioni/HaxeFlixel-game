@@ -156,6 +156,9 @@ class PlayState extends FlxState {
 			}
 		}
 		
+		currentSequence = 1;
+		add(pentagram = new Pentagram(730, 390, goalShelves[currentSequence - 1].myColor));
+		
 		//MAX BOULDER COUNTER INIT HERE
 		var boulderCounter:Int = 6;
 		var x_pos = FlxRandom.intRanged(100, 1500);
@@ -194,9 +197,6 @@ class PlayState extends FlxState {
 		 * These numbers are for testing
 		 */
 		
-		add(pentagram = new Pentagram(730, 390, tmp.myColor));
-		
-		currentSequence = 1;
 		
 		//keep track of the last shelf we interacted with
 		lastHitShelf = tmp;
