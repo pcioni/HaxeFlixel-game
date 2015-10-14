@@ -344,12 +344,12 @@ class PlayState extends FlxState {
 			boulderGroup = FlxDestroyUtil.destroy(boulderGroup);
 			boulderGroup = new FlxTypedGroup<Boulder>();
 			FlxG.cameras.shake();
-			var randomX = FlxRandom.intRanged(200, FlxG.width-200);
-			var randomY = FlxRandom.intRanged(200, FlxG.height-200);
+			var randomX = FlxRandom.intRanged(100, 1500);
+			var randomY = FlxRandom.intRanged(180, 660);
 			numBoulders = randomBoulders(3,5);
 			while (numBoulders != 0) {
-				randomX = FlxRandom.intRanged(0, 1200);
-				randomY = FlxRandom.intRanged(0, 600);
+				randomX = FlxRandom.intRanged(100, 1500);
+				randomY = FlxRandom.intRanged(180, 660);
 				spawnBoulders(randomX, randomY);
 				numBoulders -= 1;
 			}
@@ -442,20 +442,26 @@ class PlayState extends FlxState {
 			if (player.lightOn) {
 				monsterRoarSnd.play();
 				M.seesPlayer = true;
-				M.speed = 60;
+				M.speed = 80;
 				M.playerPos.copyFrom(player.getMidpoint());
-				if (dist < radius * 3) {
-					M.speed = 80;
+				if (dist > radius * 3) {
+					M.speed = 110;
 					M.playerPos.copyFrom(player.getMidpoint());
-					if (dist < radius * 2) {
-						M.speed = 110;			
-						M.playerPos.copyFrom(player.getMidpoint());
-						if (dist < radius) {
-							M.speed = 150;
+				
+					if (dist < radius * 3) {
+					M.speed = 90;
+					M.playerPos.copyFrom(player.getMidpoint());
+						if (dist < radius * 2) {
+							M.speed = 110;			
 							M.playerPos.copyFrom(player.getMidpoint());
+							
+							if (dist < radius) {
+								M.speed = 150;
+								M.playerPos.copyFrom(player.getMidpoint());
 						}
 					}
 				}
+			}
 			}
 			else {
 				M.seesPlayer = false;
